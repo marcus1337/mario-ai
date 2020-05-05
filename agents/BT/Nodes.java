@@ -8,9 +8,9 @@ public class Nodes {
 	static STATE RUNNING = STATE.RUNNING;
 	static STATE FAILURE = STATE.FAILURE;
 	
-	boolean prevActions[] = new boolean[5];
-	boolean actions[] = new boolean[5];
-	MarioForwardModel model = null;
+	public boolean prevActions[] = new boolean[5];
+	public boolean actions[] = new boolean[5];
+	public MarioForwardModel model = null;
 	public int ticksSinceStartJump;
 	
 	STATE stopRun(){
@@ -72,26 +72,6 @@ public class Nodes {
 		return (model.mayMarioJump() || !model.isMarioOnGround()) && (model.getMarioCanJumpHigher() || ticksSinceStartJump == 0);
 	}
 	
-	STATE jumpingTowardLimit(int limit){ //7 is max
-		if(ticksSinceStartJump < limit){
-			actions[MarioActions.JUMP.getValue()] = true;
-			return RUNNING;
-		}
-		return SUCCESS;
-	}
-	
-	boolean reachedJumpLimit(int limit){
-		return limit == ticksSinceStartJump && prevActions[MarioActions.JUMP.getValue()] == true;
-	}
-	
-	STATE jumpTowardLimit(int limit){
-		if (canJump())
-			return jumpingTowardLimit(limit);
-		if(reachedJumpLimit(limit))
-			return SUCCESS;
-		return FAILURE;
-	}
-	
 	STATE highJump(){
 		return jumpTowardLimit(7);
 	}
@@ -103,12 +83,24 @@ public class Nodes {
 	STATE smallJump(){
 		return jumpTowardLimit(1);
 	}
-
-	STATE pressJump() {
-		if (model.mayMarioJump() || !model.isMarioOnGround()){
+	
+	private STATE jumpingTowardLimit(int limit){ //7 is max
+		if(ticksSinceStartJump < limit){
 			actions[MarioActions.JUMP.getValue()] = true;
-			return SUCCESS;
+			return RUNNING;
 		}
+		return SUCCESS;
+	}
+	
+	private boolean reachedJumpLimit(int limit){
+		return limit == ticksSinceStartJump && prevActions[MarioActions.JUMP.getValue()] == true;
+	}
+	
+	private STATE jumpTowardLimit(int limit){
+		if (canJump())
+			return jumpingTowardLimit(limit);
+		if(reachedJumpLimit(limit))
+			return SUCCESS;
 		return FAILURE;
 	}
 

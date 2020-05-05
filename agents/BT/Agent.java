@@ -40,7 +40,9 @@ public class Agent implements MarioAgent {
 
 		prepareActionData();
 		nodes.pressRight();
-		nodes.duck();
+		nodes.highJump();
+		nodes.shoot();
+		//nodes.duck();
 		
 		return processReturnedActions();
 	}
