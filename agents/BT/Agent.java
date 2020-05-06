@@ -2,12 +2,12 @@ package agents.BT;
 
 import java.util.Arrays;
 
+import agents.BT.BT.STATE;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
 import engine.core.MarioTimer;
 import engine.helper.MarioActions;
 import engine.sprites.Mario;
-import agents.BT.STATE;
 
 
 public class Agent implements MarioAgent {
