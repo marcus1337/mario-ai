@@ -37,5 +37,12 @@ public class Task extends Node {
 	public void reset() {
 		status = FRESH;
 	}
+	
+	@Override
+	public NodeTypes getType(){
+		if(isCondition())
+			return NodeTypes.CONDITION;
+		return NodeTypes.ACTION;
+	}
 
 }

@@ -28,6 +28,16 @@ public class Tree {
 		}
 	}
 	
+	void addInterior(ArrayList<Node> interiors, Scanner fi){
+		int numChildren = fi.nextInt();
+		int interiorType = fi.nextInt();
+		int interiorID = fi.nextInt();
+		
+		Interior interior = (Interior) nodemap.getNode(interiorType, interiorID, actions, conditions);
+		addChildrenToInterior(interior, numChildren, fi);
+		interiors.add(interior);
+	}
+	
 	public Tree(String treeString){
 		init();
 
@@ -35,15 +45,8 @@ public class Tree {
 		int numInteriors = fi.nextInt();
 		ArrayList<Node> interiors = new ArrayList<Node>();
 		
-		for(int i = 0 ; i < numInteriors; i++){
-			int numChildren = fi.nextInt();
-			int interiorType = fi.nextInt();
-			int interiorID = fi.nextInt();
-			
-			Interior interior = (Interior) nodemap.getNode(interiorType, interiorID, actions, conditions);
-			addChildrenToInterior(interior, numChildren, fi);
-			interiors.add(interior);
-		}
+		for(int i = 0 ; i < numInteriors; i++)
+			addInterior(interiors, fi);
 		
 		root = interiors.get(0);
 		

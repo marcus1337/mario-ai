@@ -17,5 +17,10 @@ public class Decorator extends Interior{
 		}
 		return children.get(0).status;
 	}
+	
+	@Override
+	public NodeTypes getType(){
+		return NodeTypes.DECORATOR;
+	}
 
 }

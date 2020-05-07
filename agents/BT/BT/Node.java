@@ -11,6 +11,7 @@ public abstract class Node {
 	
 	public STATE status;
 	public Node parent;
+	public abstract NodeTypes getType();
 	
 	public abstract STATE run();
 	public abstract void reset();

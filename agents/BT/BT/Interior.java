@@ -17,6 +17,11 @@ public abstract class Interior extends Node {
 	}
 	
 	@Override
+	public NodeTypes getType(){
+		return NodeTypes.INTERIOR;
+	}
+	
+	@Override
 	public void reset(){
 		status = FRESH;
 		for(Node child : children){
