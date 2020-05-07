@@ -6,11 +6,31 @@ import java.util.Scanner;
 public class Tree {
 
 	Node root;
+	NodeMap nodemap;
+	Actions actions;
+	Conditions conditions;
+	public Blackboard blackboard;
 	
-	public Tree(String treeString, Actions actions, Conditions conditions){
+	public Tree(){
+		nodemap = new NodeMap();
+		blackboard = new Blackboard();
+		actions = new Actions(blackboard);
+		conditions = new Conditions(blackboard);
+	}
+	
+	void addChildrenToInterior(Interior interior, int numChildren, Scanner fi){
+		for(int j = 0 ; j < numChildren; j++){
+			int childType = fi.nextInt();
+			int childID = fi.nextInt();
+			Node child = nodemap.getNode(childType, childID, actions, conditions);
+			interior.addChild(child);
+		}
+	}
+	
+	public Tree(String treeString){
+		System.out.println(treeString);
 		Scanner fi = new Scanner(treeString);
 		int numInteriors = fi.nextInt();
-		NodeMap nodemap = new NodeMap();
 		
 		ArrayList<Node> interiors = new ArrayList<Node>();
 		
@@ -19,15 +39,14 @@ public class Tree {
 			int interiorType = fi.nextInt();
 			int interiorID = fi.nextInt();
 			Interior interior = (Interior) nodemap.getNode(interiorType, interiorID, actions, conditions);
-			for(int j = 0 ; j < numChildren; j++){
-				int childType = fi.nextInt();
-				int childID = fi.nextInt();
-				Node child = nodemap.getNode(childType, childID, actions, conditions);
-				interior.addChild(child);
-			}
-			
-			interiors.add(interior);
+			//addChildrenToInterior(interior, numChildren, fi);
+
+			//interiors.add(interior);
 		}
+		
+		
+		
+		
 	}
 
 }

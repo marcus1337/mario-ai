@@ -17,29 +17,22 @@ import engine.sprites.Mario;
 
 public class Agent implements MarioAgent {
 	
-	Blackboard blackboard;
-	Actions actions;
-	Conditions conditions;
-	
 	Tree tree;
 	
 	public Agent(String treeStr){
-		blackboard = new Blackboard();
-		actions = new Actions(blackboard);
-		conditions = new Conditions(blackboard);
-		tree = new Tree(treeStr, actions, conditions);
+		tree = new Tree(treeStr);
 	}
 
 	boolean[] processReturnedActions(MarioForwardModel model) {
-		blackboard.ticksSinceStartJump++;
+		tree.blackboard.ticksSinceStartJump++;
 		if (model.isMarioOnGround())
-			blackboard.ticksSinceStartJump = 0;
-		blackboard.prevActions = blackboard.actions;
-		return blackboard.actions;
+			tree.blackboard.ticksSinceStartJump = 0;
+		tree.blackboard.prevActions = tree.blackboard.actions;
+		return tree.blackboard.actions;
 	}
 
 	void prepareActionData() {
-		blackboard.actions = new boolean[5];
+		tree.blackboard.actions = new boolean[5];
 	}
 	
 	float smallest = 9999;
@@ -49,9 +42,7 @@ public class Agent implements MarioAgent {
 
 		prepareActionData();
 		
-		Task test = actions.makeAction(0);
-		actions.model = model;
-		test.run();
+		
 		
 		return processReturnedActions(model);
 	}
@@ -63,6 +54,6 @@ public class Agent implements MarioAgent {
 
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
-		
+		System.out.println("second");
 	}
 }
