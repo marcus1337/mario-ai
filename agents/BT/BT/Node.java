@@ -14,6 +14,11 @@ public abstract class Node {
 	public abstract NodeTypes getType();
 	
 	public abstract STATE run();
+	public STATE runAndUpdate(){
+		status = run();
+		return status;
+	}
+	
 	public abstract void reset();
 	
 	protected boolean shouldRun(){

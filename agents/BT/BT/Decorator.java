@@ -8,7 +8,7 @@ public class Decorator extends Interior{
 	@Override
 	public STATE run() {
 		if(children.get(0).shouldRun()){
-			STATE result = children.get(0).run();
+			STATE result = children.get(0).runAndUpdate();
 			if(result == SUCCESS)
 				result = FAILURE;
 			else if(result == FAILURE)

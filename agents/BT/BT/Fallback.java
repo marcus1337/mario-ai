@@ -9,7 +9,7 @@ public class Fallback extends Interior {
 		for (int i = 0; i < children.size(); i++) {
 			if (!children.get(i).shouldRun())
 				return SUCCESS;
-			STATE result = children.get(i).run();
+			STATE result = children.get(i).runAndUpdate();
 			if (result != FAILURE)
 				return result;
 		}

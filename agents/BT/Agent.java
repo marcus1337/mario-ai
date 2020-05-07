@@ -26,19 +26,20 @@ public class Agent implements MarioAgent {
 		return tree.blackboard.actions;
 	}
 
-	void prepareActionData() {
+	void prepareData(MarioForwardModel model) {
 		tree.blackboard.actions = new boolean[5];
+		tree.actions.model = model;
+		tree.conditions.model = model;
 	}
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
-		prepareActionData();
+		prepareData(model);
 		
 		if(tree.root.status == STATE.SUCCESS){
 			tree.root.reset();
-	
 		}
-		tree.root.run();
+		tree.root.runAndUpdate();
 		
 		return processReturnedActions(model);
 	}
