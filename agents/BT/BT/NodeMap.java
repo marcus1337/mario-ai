@@ -1,21 +1,10 @@
 package agents.BT.BT;
 
-public enum NodeMapping {
-	INTERIOR(0), DECORATOR(1), ACTION(2), CONDITION(4);
-
-	private int id;
-	public static final int maxInteriorID = 1;
-	public static final int maxDecoratorID = 0;
-	public static final int maxActionID = 9;
-	public static final int maxConditionID = 0;
-
-	NodeMapping(int id) {
-		this.id = id;
-	}
-
-	public int value() {
-		return id;
-	}
+public class NodeMap {
+	static NodeTypes INTERIOR = NodeTypes.INTERIOR;
+	static NodeTypes DECORATOR = NodeTypes.DECORATOR;
+	static NodeTypes ACTION = NodeTypes.ACTION;
+	static NodeTypes CONDITION = NodeTypes.CONDITION;
 	
 	public Node getNode(int typeID, int ID, Actions actions, Conditions conditions){
 		if(typeID == INTERIOR.value())

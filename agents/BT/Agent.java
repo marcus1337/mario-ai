@@ -7,6 +7,7 @@ import agents.BT.BT.Blackboard;
 import agents.BT.BT.Conditions;
 import agents.BT.BT.STATE;
 import agents.BT.BT.Task;
+import agents.BT.BT.Tree;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
 import engine.core.MarioTimer;
@@ -20,11 +21,13 @@ public class Agent implements MarioAgent {
 	Actions actions;
 	Conditions conditions;
 	
-	@Override
-	public void initialize(MarioForwardModel model, MarioTimer timer) {
+	Tree tree;
+	
+	public Agent(String treeStr){
 		blackboard = new Blackboard();
 		actions = new Actions(blackboard);
 		conditions = new Conditions(blackboard);
+		tree = new Tree(treeStr, actions, conditions);
 	}
 
 	boolean[] processReturnedActions(MarioForwardModel model) {
@@ -56,5 +59,10 @@ public class Agent implements MarioAgent {
 	@Override
 	public String getAgentName() {
 		return "DoNothingAgent";
+	}
+
+	@Override
+	public void initialize(MarioForwardModel model, MarioTimer timer) {
+		
 	}
 }
