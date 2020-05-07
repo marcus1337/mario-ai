@@ -2,17 +2,10 @@ package agents.BT;
 
 import java.util.Arrays;
 
-import agents.BT.BT.Actions;
-import agents.BT.BT.Blackboard;
-import agents.BT.BT.Conditions;
-import agents.BT.BT.STATE;
-import agents.BT.BT.Task;
 import agents.BT.BT.Tree;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
 import engine.core.MarioTimer;
-import engine.helper.MarioActions;
-import engine.sprites.Mario;
 
 
 public class Agent implements MarioAgent {
@@ -42,7 +35,8 @@ public class Agent implements MarioAgent {
 
 		prepareActionData();
 		
-		
+		tree.root.reset();
+		tree.root.run();
 		
 		return processReturnedActions(model);
 	}

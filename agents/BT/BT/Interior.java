@@ -17,7 +17,7 @@ public abstract class Interior extends Node {
 	}
 	
 	@Override
-	void reset(){
+	public void reset(){
 		status = FRESH;
 		for(Node child : children){
 			child.reset();

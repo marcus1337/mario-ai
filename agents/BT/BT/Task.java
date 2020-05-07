@@ -34,7 +34,7 @@ public class Task extends Node {
 	}
 
 	@Override
-	void reset() {
+	public void reset() {
 		status = FRESH;
 	}
 

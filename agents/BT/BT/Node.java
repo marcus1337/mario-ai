@@ -13,7 +13,7 @@ public abstract class Node {
 	public Node parent;
 	
 	public abstract STATE run();
-	abstract void reset();
+	public abstract void reset();
 	
 	protected boolean shouldRun(){
 		return status != SUCCESS;

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Tree {
 
-	Node root;
+	public Node root;
 	NodeMap nodemap;
 	Actions actions;
 	Conditions conditions;
