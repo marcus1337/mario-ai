@@ -6,7 +6,7 @@ public class Decorator extends Interior{
 	
 
 	@Override
-	STATE run(MarioForwardModel model) {
+	public STATE run(MarioForwardModel model) {
 		if(children.get(0).shouldRun()){
 			STATE result = children.get(0).run(model);
 			if(result == SUCCESS)

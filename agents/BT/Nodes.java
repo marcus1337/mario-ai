@@ -14,16 +14,6 @@ public class Nodes {
 	public MarioForwardModel model = null;
 	public int ticksSinceStartJump;
 	
-	STATE stopRun(){
-		actions[MarioActions.SPEED.getValue()] = false;
-		return SUCCESS;
-	}
-	
-	STATE run(){
-		actions[MarioActions.SPEED.getValue()] = true;
-		return SUCCESS;
-	}
-	
 	STATE shoot(){
 		if(model.getMarioMode() == 2){
 			if(prevActions[MarioActions.SPEED.getValue()]){

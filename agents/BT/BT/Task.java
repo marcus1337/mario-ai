@@ -4,15 +4,13 @@ import java.util.function.Function;
 
 import engine.core.MarioForwardModel;
 
-public abstract class Task extends Node {
+public class Task extends Node {
 
 	Function<MarioForwardModel, STATE> action = null;
 	Function<MarioForwardModel, STATE> condition = null;
-	Blackboard blackboard;
 
-	public Task(Blackboard blackboard, Function<MarioForwardModel, STATE> action,
+	public Task(Function<MarioForwardModel, STATE> action,
 			Function<MarioForwardModel, STATE> condition) {
-		this.blackboard = blackboard;
 		this.action = action;
 		this.condition = condition;
 	}
@@ -26,7 +24,7 @@ public abstract class Task extends Node {
 	}
 
 	@Override
-	STATE run(MarioForwardModel model) {
+	public STATE run(MarioForwardModel model) {
 		if (isCondition())
 			return condition.apply(model);
 		if(conditionFail(model))

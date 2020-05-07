@@ -35,8 +35,8 @@ public class PlayLevel {
     public static void main(String[] args) {
         MarioGame game = new MarioGame();
         
-        MarioResult result = game.runGame(new agents.human.Agent(), getLevel("levels/original/lvl-1.txt"), 120, 2, true, 21);
-        //MarioResult result = game.runGame(new agents.BT.Agent(), getLevel("levels/original/lvl-1.txt"), 120, 2, true, 21);
+        //MarioResult result = game.runGame(new agents.human.Agent(), getLevel("levels/original/lvl-1.txt"), 120, 2, true, 21);
+        MarioResult result = game.runGame(new agents.BT.Agent(), getLevel("levels/original/lvl-1.txt"), 120, 2, true, 21);
         printResults(result);
     }
 }

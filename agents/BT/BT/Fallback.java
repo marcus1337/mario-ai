@@ -5,7 +5,7 @@ import engine.core.MarioForwardModel;
 public class Fallback extends Interior {
 
 	@Override
-	STATE run(MarioForwardModel model) {
+	public STATE run(MarioForwardModel model) {
 		for (int i = 0; i < children.size(); i++) {
 			if (!children.get(i).shouldRun())
 				return SUCCESS;

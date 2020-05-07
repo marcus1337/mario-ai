@@ -2,7 +2,10 @@ package agents.BT;
 
 import java.util.Arrays;
 
+import agents.BT.BT.Actions;
+import agents.BT.BT.Blackboard;
 import agents.BT.BT.STATE;
+import agents.BT.BT.Task;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
 import engine.core.MarioTimer;
@@ -13,23 +16,25 @@ import engine.sprites.Mario;
 public class Agent implements MarioAgent {
 	
 	Nodes nodes;
+	Blackboard blackboard;
 	
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
 		nodes = new Nodes();
 		nodes.model = model;
+		blackboard = new Blackboard();
 	}
 
 	boolean[] processReturnedActions() {
-		nodes.ticksSinceStartJump++;
+		blackboard.ticksSinceStartJump++;
 		if (nodes.model.isMarioOnGround())
-			nodes.ticksSinceStartJump = 0;
-		nodes.prevActions = nodes.actions;
-		return nodes.actions;
+			blackboard.ticksSinceStartJump = 0;
+		blackboard.prevActions = blackboard.actions;
+		return blackboard.actions;
 	}
 
 	void prepareActionData() {
-		nodes.actions = new boolean[5];
+		blackboard.actions = new boolean[5];
 	}
 	
 	float smallest = 9999;
@@ -39,9 +44,10 @@ public class Agent implements MarioAgent {
 		nodes.model = model;
 
 		prepareActionData();
-		nodes.pressRight();
-		nodes.highJump();
-		nodes.shoot();
+		
+		Actions actions = new Actions(blackboard);
+		Task test = actions.makeAction(0);
+		test.run(model);
 		//nodes.duck();
 		
 		return processReturnedActions();
