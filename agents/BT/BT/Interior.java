@@ -29,6 +29,11 @@ public abstract class Interior extends Node {
 		}
 	}
 	
+	public void copy(Interior other){
+		children = other.children;
+		status = other.status;
+		lastUnfinishedChildIndex = other.lastUnfinishedChildIndex;
+	}
 	
 
 }

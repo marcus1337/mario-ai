@@ -20,5 +20,9 @@ public abstract class Node {
 		return status != SUCCESS;
 	}
 	
+	public boolean isParent(){
+		return getType() == NodeTypes.INTERIOR || getType() == NodeTypes.DECORATOR;
+	}
+	
 
 }
