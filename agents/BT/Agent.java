@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import agents.BT.BT.Actions;
 import agents.BT.BT.Blackboard;
+import agents.BT.BT.Conditions;
 import agents.BT.BT.STATE;
 import agents.BT.BT.Task;
 import engine.core.MarioAgent;
@@ -16,10 +17,14 @@ import engine.sprites.Mario;
 public class Agent implements MarioAgent {
 	
 	Blackboard blackboard;
+	Actions actions;
+	Conditions conditions;
 	
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
 		blackboard = new Blackboard();
+		actions = new Actions(blackboard);
+		conditions = new Conditions(blackboard);
 	}
 
 	boolean[] processReturnedActions(MarioForwardModel model) {
@@ -41,11 +46,9 @@ public class Agent implements MarioAgent {
 
 		prepareActionData();
 		
-		Actions actions = new Actions(blackboard);
 		Task test = actions.makeAction(0);
 		actions.model = model;
 		test.run();
-		//nodes.duck();
 		
 		return processReturnedActions(model);
 	}

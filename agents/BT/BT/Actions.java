@@ -16,10 +16,26 @@ public class Actions {
 
 	public Task makeAction(int ID) {
 		Task task = null;
-		
 		if(ID == 0)
 			task = new Task(null, this::shoot);
-
+		if(ID == 1)
+			task = new Task(null, this::duck);
+		if(ID == 2)
+			task = new Task(null, this::pressLeft);
+		if(ID == 3)
+			task = new Task(null, this::pressRight);
+		if(ID == 4)
+			task = new Task(null, this::highJump);
+		if(ID == 5)
+			task = new Task(null, this::mediumJump);
+		if(ID == 6)
+			task = new Task(null, this::smallJump);
+		if(ID == 7)
+			task = new Task(null, this::stopDuck);
+		if(ID == 8)
+			task = new Task(null, this::releaseLeft);
+		if(ID == 9)
+			task = new Task(null, this::releaseRight);
 		return task;
 	}
 
@@ -67,12 +83,7 @@ public class Actions {
 		blackboard.actions[MarioActions.RIGHT.getValue()] = true;
 		return SUCCESS;
 	}
-
-	boolean canJump() {
-		return (model.mayMarioJump() || !model.isMarioOnGround())
-				&& (model.getMarioCanJumpHigher() || blackboard.ticksSinceStartJump == 0);
-	}
-
+	
 	STATE highJump() {
 		return jumpTowardLimit(7);
 	}
@@ -83,6 +94,11 @@ public class Actions {
 
 	STATE smallJump() {
 		return jumpTowardLimit(1);
+	}
+
+	private boolean canJump() {
+		return (model.mayMarioJump() || !model.isMarioOnGround())
+				&& (model.getMarioCanJumpHigher() || blackboard.ticksSinceStartJump == 0);
 	}
 
 	private STATE jumpingTowardLimit(int limit) { // 7 is max
