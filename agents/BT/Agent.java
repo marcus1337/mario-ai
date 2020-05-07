@@ -15,19 +15,16 @@ import engine.sprites.Mario;
 
 public class Agent implements MarioAgent {
 	
-	Nodes nodes;
 	Blackboard blackboard;
 	
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
-		nodes = new Nodes();
-		nodes.model = model;
 		blackboard = new Blackboard();
 	}
 
-	boolean[] processReturnedActions() {
+	boolean[] processReturnedActions(MarioForwardModel model) {
 		blackboard.ticksSinceStartJump++;
-		if (nodes.model.isMarioOnGround())
+		if (model.isMarioOnGround())
 			blackboard.ticksSinceStartJump = 0;
 		blackboard.prevActions = blackboard.actions;
 		return blackboard.actions;
@@ -41,7 +38,6 @@ public class Agent implements MarioAgent {
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
-		nodes.model = model;
 
 		prepareActionData();
 		
@@ -51,7 +47,7 @@ public class Agent implements MarioAgent {
 		test.run();
 		//nodes.duck();
 		
-		return processReturnedActions();
+		return processReturnedActions(model);
 	}
 
 	@Override
