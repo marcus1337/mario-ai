@@ -49,11 +49,11 @@ public class Agent implements MarioAgent {
 
 	@Override
 	public String getAgentName() {
-		return "DoNothingAgent";
+		return "BTAgent";
 	}
 
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
-		System.out.println("second");
+
 	}
 }

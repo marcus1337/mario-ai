@@ -1,5 +1,6 @@
 package agents.BT.BT;
 
+import java.nio.channels.Selector;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class Tree {
 	Conditions conditions;
 	public Blackboard blackboard;
 	
-	public Tree(){
+	private void init(){
 		nodemap = new NodeMap();
 		blackboard = new Blackboard();
 		actions = new Actions(blackboard);
@@ -28,24 +29,23 @@ public class Tree {
 	}
 	
 	public Tree(String treeString){
-		System.out.println(treeString);
+		init();
+
 		Scanner fi = new Scanner(treeString);
 		int numInteriors = fi.nextInt();
-		
 		ArrayList<Node> interiors = new ArrayList<Node>();
 		
 		for(int i = 0 ; i < numInteriors; i++){
 			int numChildren = fi.nextInt();
 			int interiorType = fi.nextInt();
 			int interiorID = fi.nextInt();
+			
 			Interior interior = (Interior) nodemap.getNode(interiorType, interiorID, actions, conditions);
-			//addChildrenToInterior(interior, numChildren, fi);
-
-			//interiors.add(interior);
+			addChildrenToInterior(interior, numChildren, fi);
+			interiors.add(interior);
 		}
 		
-		
-		
+		root = interiors.get(0);
 		
 	}
 
