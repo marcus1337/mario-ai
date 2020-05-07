@@ -12,7 +12,7 @@ public abstract class Node {
 	public STATE status;
 	public Node parent;
 	
-	public abstract STATE run(MarioForwardModel model);
+	public abstract STATE run();
 	abstract void reset();
 	
 	protected boolean shouldRun(){

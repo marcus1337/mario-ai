@@ -23,7 +23,7 @@ public class Actions {
 		return task;
 	}
 
-	STATE shoot(MarioForwardModel model) {
+	STATE shoot() {
 		if (model.getMarioMode() == 2) {
 			if (blackboard.prevActions[MarioActions.SPEED.getValue()]) {
 				blackboard.actions[MarioActions.SPEED.getValue()] = false;
@@ -35,7 +35,7 @@ public class Actions {
 		return FAILURE;
 	}
 
-	STATE duck(MarioForwardModel model) {
+	STATE duck() {
 		if (model.isMarioOnGround() || blackboard.prevActions[MarioActions.DOWN.getValue()]) {
 			blackboard.actions[MarioActions.DOWN.getValue()] = true;
 			return SUCCESS;
@@ -43,46 +43,46 @@ public class Actions {
 		return FAILURE;
 	}
 
-	STATE stopDuck(MarioForwardModel model) {
+	STATE stopDuck() {
 		blackboard.actions[MarioActions.DOWN.getValue()] = false;
 		return SUCCESS;
 	}
 
-	STATE releaseLeft(MarioForwardModel model) {
+	STATE releaseLeft() {
 		blackboard.actions[MarioActions.LEFT.getValue()] = false;
 		return SUCCESS;
 	}
 
-	STATE pressLeft(MarioForwardModel model) {
+	STATE pressLeft() {
 		blackboard.actions[MarioActions.LEFT.getValue()] = true;
 		return SUCCESS;
 	}
 
-	STATE releaseRight(MarioForwardModel model) {
+	STATE releaseRight() {
 		blackboard.actions[MarioActions.RIGHT.getValue()] = false;
 		return SUCCESS;
 	}
 
-	STATE pressRight(MarioForwardModel model) {
+	STATE pressRight() {
 		blackboard.actions[MarioActions.RIGHT.getValue()] = true;
 		return SUCCESS;
 	}
 
-	boolean canJump(MarioForwardModel model) {
+	boolean canJump() {
 		return (model.mayMarioJump() || !model.isMarioOnGround())
 				&& (model.getMarioCanJumpHigher() || blackboard.ticksSinceStartJump == 0);
 	}
 
-	STATE highJump(MarioForwardModel model) {
-		return jumpTowardLimit(model, 7);
+	STATE highJump() {
+		return jumpTowardLimit(7);
 	}
 
-	STATE mediumJump(MarioForwardModel model) {
-		return jumpTowardLimit(model, 4);
+	STATE mediumJump() {
+		return jumpTowardLimit(4);
 	}
 
-	STATE smallJump(MarioForwardModel model) {
-		return jumpTowardLimit(model, 1);
+	STATE smallJump() {
+		return jumpTowardLimit(1);
 	}
 
 	private STATE jumpingTowardLimit(int limit) { // 7 is max
@@ -97,8 +97,8 @@ public class Actions {
 		return limit == blackboard.ticksSinceStartJump && blackboard.prevActions[MarioActions.JUMP.getValue()] == true;
 	}
 
-	private STATE jumpTowardLimit(MarioForwardModel model, int limit) {
-		if (canJump(model))
+	private STATE jumpTowardLimit(int limit) {
+		if (canJump())
 			return jumpingTowardLimit(limit);
 		if (reachedJumpLimit(limit))
 			return SUCCESS;

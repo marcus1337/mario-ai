@@ -47,7 +47,8 @@ public class Agent implements MarioAgent {
 		
 		Actions actions = new Actions(blackboard);
 		Task test = actions.makeAction(0);
-		test.run(model);
+		actions.model = model;
+		test.run();
 		//nodes.duck();
 		
 		return processReturnedActions();

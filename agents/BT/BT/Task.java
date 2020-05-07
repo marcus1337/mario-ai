@@ -1,16 +1,17 @@
 package agents.BT.BT;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import engine.core.MarioForwardModel;
 
 public class Task extends Node {
 
-	Function<MarioForwardModel, STATE> action = null;
-	Function<MarioForwardModel, STATE> condition = null;
+	Supplier<STATE> action = null;
+	Supplier<STATE> condition = null;
 
-	public Task(Function<MarioForwardModel, STATE> action,
-			Function<MarioForwardModel, STATE> condition) {
+	public Task(Supplier<STATE> action,
+			Supplier<STATE> condition) {
 		this.action = action;
 		this.condition = condition;
 	}
@@ -19,17 +20,17 @@ public class Task extends Node {
 		return condition != null && action == null;
 	}
 	
-	private boolean conditionFail(MarioForwardModel model){
-		return condition != null && condition.apply(model) == FAILURE;
+	private boolean conditionFail(){
+		return condition != null && condition.get() == FAILURE;
 	}
 
 	@Override
-	public STATE run(MarioForwardModel model) {
+	public STATE run() {
 		if (isCondition())
-			return condition.apply(model);
-		if(conditionFail(model))
+			return condition.get();
+		if(conditionFail())
 			return FAILURE;
-		return action.apply(model);
+		return action.get();
 	}
 
 	@Override
