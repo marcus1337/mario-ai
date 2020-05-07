@@ -1,5 +1,7 @@
 package agents.BT.BT;
 
+import engine.core.MarioForwardModel;
+
 public abstract class Node {
 	
 	protected static STATE FRESH = STATE.FRESH;
@@ -10,7 +12,7 @@ public abstract class Node {
 	public STATE status;
 	public Node parent;
 	
-	abstract STATE run();
+	abstract STATE run(MarioForwardModel model);
 	abstract void reset();
 	
 	protected boolean shouldRun(){
