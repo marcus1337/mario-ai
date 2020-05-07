@@ -11,9 +11,10 @@ import engine.core.MarioTimer;
 public class Agent implements MarioAgent {
 	
 	Tree tree;
+	String treeStr;
 	
 	public Agent(String treeStr){
-		tree = new Tree(treeStr);
+		this.treeStr = treeStr;
 	}
 
 	boolean[] processReturnedActions(MarioForwardModel model) {
@@ -48,6 +49,8 @@ public class Agent implements MarioAgent {
 
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
-
+		tree = new Tree(treeStr);
+		tree.actions.model = model;
+		tree.conditions.model = model;
 	}
 }

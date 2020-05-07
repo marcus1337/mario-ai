@@ -8,8 +8,8 @@ public class Tree {
 
 	public Node root;
 	NodeMap nodemap;
-	Actions actions;
-	Conditions conditions;
+	public Actions actions;
+	public Conditions conditions;
 	public Blackboard blackboard;
 	
 	private void init(){

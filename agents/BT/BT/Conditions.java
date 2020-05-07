@@ -6,7 +6,7 @@ import engine.core.MarioForwardModel;
 
 public class Conditions {
 	Blackboard blackboard;
-	MarioForwardModel model;
+	public MarioForwardModel model;
 	
 	public Conditions(Blackboard blackboard){
 		this.blackboard = blackboard;
