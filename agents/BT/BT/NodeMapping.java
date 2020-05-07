@@ -17,6 +17,18 @@ public enum NodeMapping {
 		return id;
 	}
 	
+	public Node getNode(int typeID, int ID, Actions actions, Conditions conditions){
+		if(typeID == INTERIOR.value())
+			return getInterior(ID);
+		if(typeID == DECORATOR.value())
+			return getDectorator(ID);
+		if(typeID == ACTION.value())
+			return getAction(ID, actions);
+		if(typeID == CONDITION.value())
+			return getCondition(ID, conditions);
+		return null;
+	}
+	
 	public Interior getInterior(int ID){
 		if(ID == 0)
 			return new Sequence();
@@ -29,13 +41,11 @@ public enum NodeMapping {
 		return new Decorator();
 	}
 	
-	public Task getAction(int ID){
-		
-		return null;
+	public Task getAction(int ID, Actions actions){
+		return actions.makeAction(ID);
 	}
 	
-	public Task getCondition(int ID){
-		
-		return null;
+	public Task getCondition(int ID, Conditions conditions){
+		return conditions.makeCondition(ID);
 	}
 }
