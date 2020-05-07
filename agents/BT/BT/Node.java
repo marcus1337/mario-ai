@@ -13,5 +13,9 @@ public abstract class Node {
 	abstract STATE run();
 	abstract void reset();
 	
+	protected boolean shouldRun(){
+		return status != SUCCESS;
+	}
+	
 
 }
