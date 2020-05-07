@@ -2,6 +2,7 @@ package agents.BT;
 
 import java.util.Arrays;
 
+import agents.BT.BT.STATE;
 import agents.BT.BT.Tree;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
@@ -28,14 +29,15 @@ public class Agent implements MarioAgent {
 	void prepareActionData() {
 		tree.blackboard.actions = new boolean[5];
 	}
-	
-	float smallest = 9999;
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		prepareActionData();
 		
-		tree.root.reset();
+		if(tree.root.status == STATE.SUCCESS){
+			tree.root.reset();
+	
+		}
 		tree.root.run();
 		
 		return processReturnedActions(model);
