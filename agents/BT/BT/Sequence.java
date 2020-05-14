@@ -1,7 +1,5 @@
 package agents.BT.BT;
 
-import engine.core.MarioForwardModel;
-
 public class Sequence extends Interior {
 
 	@Override

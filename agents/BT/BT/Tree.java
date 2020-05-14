@@ -1,6 +1,5 @@
 package agents.BT.BT;
 
-import java.nio.channels.Selector;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;

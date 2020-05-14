@@ -1,7 +1,5 @@
 package agents.BT.BT;
 
-import engine.core.MarioForwardModel;
-
 public abstract class Node {
 	
 	protected static STATE FRESH = STATE.FRESH;
