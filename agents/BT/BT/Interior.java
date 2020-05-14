@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Interior extends Node {
 
 	protected ArrayList<Node> children;
-	protected int lastUnfinishedChildIndex;
+	public boolean isMemoryNode = false;
 	
 	public void addChild(Node node){
 		children.add(node);
@@ -13,7 +13,6 @@ public abstract class Interior extends Node {
 	
 	public Interior(){
 		children = new ArrayList<Node>();
-		lastUnfinishedChildIndex = 0;
 	}
 	
 	@Override
@@ -32,8 +31,16 @@ public abstract class Interior extends Node {
 	public void copy(Interior other){
 		children = other.children;
 		status = other.status;
-		lastUnfinishedChildIndex = other.lastUnfinishedChildIndex;
 	}
 	
+	@Override
+	public STATE run() {
+		if(isMemoryNode)
+			return runMemory();
+		return runNormal();
+	}
+
+	protected abstract STATE runNormal();
+	protected abstract STATE runMemory();
 
 }

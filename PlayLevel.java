@@ -37,14 +37,18 @@ public class PlayLevel {
         
         //MarioResult result = game.runGame(new agents.human.Agent(), getLevel("levels/original/lvl-1.txt"), 120, 2, true, 21);
         
-        String treeStr = "2 "
-        		+ "3 0 0 "
+        String treeStr = "2 " //number of interiors
+        		+ "3 0 2 "
         		+ "0 0 "
-        		+ "2 5 "
-        		+ "2 3 "
+        		+ "2 0 " //shoot
+        		+ "2 5 " //jump
         		+ "1 0 0 "
-        		+ "      "
-        		+ "2 0 ";
+        		+ "2 3 "; //run right
+        /*String treeStr = "1 "
+        		+ "2 0 0 "
+        		+ "2 3 "
+        		+ "2 3 ";*/
+        
         MarioResult result = game.runGame(new agents.BT.Agent(treeStr), getLevel("levels/original/lvl-1.txt"), 120, 2, true, 21);
         printResults(result);
     }

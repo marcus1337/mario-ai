@@ -2,6 +2,7 @@ package agents.BT;
 
 import java.util.Arrays;
 
+import agents.BT.BT.Interior;
 import agents.BT.BT.STATE;
 import agents.BT.BT.Tree;
 import engine.core.MarioAgent;
@@ -36,10 +37,12 @@ public class Agent implements MarioAgent {
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		prepareData(model);
 		
-		if(tree.root.status == STATE.SUCCESS){
-			tree.root.reset();
-		}
-		tree.root.runAndUpdate();
+
+		//if(tree.root.status == STATE.SUCCESS){
+			//tree.root.reset();
+		//}
+		//System.out.println(((Interior)(tree.root)).isMemoryNode);
+		tree.root.run();
 		
 		return processReturnedActions(model);
 	}

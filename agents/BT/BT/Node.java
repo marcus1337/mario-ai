@@ -9,12 +9,13 @@ public abstract class Node {
 	protected static STATE RUNNING = STATE.RUNNING;
 	protected static STATE FAILURE = STATE.FAILURE;
 	
-	public STATE status;
+	public STATE status = FRESH;
 	public Node parent;
 	public abstract NodeTypes getType();
 	
 	public abstract STATE run();
-	public STATE runAndUpdate(){
+	
+	protected STATE runAndUpdate(){
 		status = run();
 		return status;
 	}
@@ -22,7 +23,7 @@ public abstract class Node {
 	public abstract void reset();
 	
 	protected boolean shouldRun(){
-		return status != SUCCESS;
+		return status != SUCCESS && status != FAILURE;
 	}
 	
 	public boolean isParent(){

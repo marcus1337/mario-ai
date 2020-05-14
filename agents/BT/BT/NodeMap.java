@@ -19,11 +19,20 @@ public class NodeMap {
 	}
 	
 	public Interior getInterior(int ID){
+		Interior tmp = null;
 		if(ID == 0)
-			return new Sequence();
+			tmp = new Sequence();
 		if(ID == 1)
-			return new Fallback();
-		return null;
+			tmp = new Fallback();
+		
+		if(ID == 2)
+			tmp = new Sequence();
+		if(ID == 3)
+			tmp = new Fallback();
+
+		if(ID > 1)
+			tmp.isMemoryNode = true;
+		return tmp;
 	}
 	
 	public Decorator getDectorator(int ID){
