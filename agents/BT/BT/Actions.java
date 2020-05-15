@@ -36,6 +36,11 @@ public class Actions {
 			task = new Task(null, this::releaseLeft);
 		if(ID == 9)
 			task = new Task(null, this::releaseRight);
+		if(ID == 10)
+			task = new Task(null, this::pressSpeed);
+		if(ID == 11)
+			task = new Task(null, this::releaseSpeed);
+		
 		return task;
 	}
 
@@ -81,6 +86,16 @@ public class Actions {
 
 	STATE pressRight() {
 		blackboard.actions[MarioActions.RIGHT.getValue()] = true;
+		return SUCCESS;
+	}
+	
+	STATE pressSpeed() {
+		blackboard.actions[MarioActions.SPEED.getValue()] = true;
+		return SUCCESS;
+	}
+	
+	STATE releaseSpeed() {
+		blackboard.actions[MarioActions.SPEED.getValue()] = false;
 		return SUCCESS;
 	}
 	
