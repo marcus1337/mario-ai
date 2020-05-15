@@ -25,7 +25,8 @@ public abstract class Node {
 	}
 	
 	public boolean isParent(){
-		return getType() == NodeTypes.INTERIOR || getType() == NodeTypes.DECORATOR;
+		return getType() == NodeTypes.OTHER_INTERIOR || 
+				getType() == NodeTypes.UNORDERED_INTERIOR || getType() == NodeTypes.DECORATOR;
 	}
 	
 

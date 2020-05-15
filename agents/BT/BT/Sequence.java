@@ -1,6 +1,11 @@
 package agents.BT.BT;
 
 public class Sequence extends Interior {
+	
+	@Override
+	public NodeTypes getType(){
+		return NodeTypes.OTHER_INTERIOR;
+	}
 
 	@Override
 	protected STATE runNormal(){

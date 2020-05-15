@@ -1,7 +1,5 @@
 package agents.BT.BT;
 
-import java.util.function.Supplier;
-
 import engine.core.MarioForwardModel;
 
 public class Conditions {

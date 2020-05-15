@@ -1,6 +1,11 @@
 package agents.BT.BT;
 
 public class Fallback extends Interior {
+	
+	@Override
+	public NodeTypes getType(){
+		return NodeTypes.OTHER_INTERIOR;
+	}
 
 	@Override
 	protected STATE runNormal(){

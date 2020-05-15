@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Parallel extends Interior {
+	
+	@Override
+	public NodeTypes getType(){
+		return NodeTypes.UNORDERED_INTERIOR;
+	}
 
 	ArrayList<Integer> getChildOrdering() {
 		ArrayList<Integer> result = new ArrayList<Integer>();

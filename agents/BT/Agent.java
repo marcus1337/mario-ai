@@ -36,14 +36,7 @@ public class Agent implements MarioAgent {
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		prepareData(model);
-		
-
-		//if(tree.root.status == STATE.SUCCESS){
-			//tree.root.reset();
-		//}
-		//System.out.println(((Interior)(tree.root)).isMemoryNode);
 		tree.root.run();
-		
 		return processReturnedActions(model);
 	}
 
