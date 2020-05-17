@@ -10,12 +10,12 @@ import engine.core.MarioForwardModel;
 import engine.core.MarioTimer;
 
 
-public class Agent implements MarioAgent {
+public class BTAgent implements MarioAgent {
 	
 	Tree tree;
 	String treeStr;
 	
-	public Agent(String treeStr){
+	public BTAgent(String treeStr){
 		this.treeStr = treeStr;
 	}
 
