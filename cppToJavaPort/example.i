@@ -1,5 +1,6 @@
 /* File : example.i */
 %module example
+
 %include <std_string.i>
 
 %typemap(jni) const string & "jstring"

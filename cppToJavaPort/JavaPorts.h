@@ -10,7 +10,7 @@ enum AIType {
 };
 
 class JavaPorts {
-    BTInterface::Coordinator BTInterface;
+    BTE::Coordinator BTInterface;
     NTE::Coordinator NEATInterface;
     AIType aiType;
 public:
