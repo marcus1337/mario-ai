@@ -10,6 +10,7 @@ public class MarioResult {
     private MarioWorld world;
     private ArrayList<MarioEvent> gameEvents;
     private ArrayList<MarioAgentEvent> agentEvents;
+    public int fitness = 0;
 
     /**
      * Create a mario result object

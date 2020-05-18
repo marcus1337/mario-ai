@@ -8,11 +8,11 @@ import engine.core.MarioResult;
 public class PlayLevel {
 
     public static void main(String[] args) {    	
-    	GATester gaTester = new GATester(10);
+    	GATester gaTester = new GATester(100);
     	
-    	gaTester.evolveBTsFromScratch(10);
-    	//gaTester.continueEvolveBTs(10, 9);
-    	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 9, 5);
+    	//gaTester.evolveBTsFromScratch(20);
+    	gaTester.continueEvolveBTs(17, 10);
+    	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 17, 93);
     	
     	gaTester.cleanUp();
     }

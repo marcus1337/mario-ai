@@ -40,14 +40,11 @@ public class GATester {
 	}
 	
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex){
-		int fitness = levelHandler.simulateAndCheckFitness(agent);
+		MarioResult marioResult = levelHandler.simulateAndCheckFitness(agent);
+		int fitness = marioResult.fitness;
 		evolver.setFitness(aiIndex, fitness);
 		
-		//////DEBUG////////
 		System.out.println("fitness: " + fitness);
-		if(fitness > 139)
-			showBTAgent(agent);
-		//////DEBUG////////
 	}
 	
 	public void cleanUp(){
