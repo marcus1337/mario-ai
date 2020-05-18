@@ -10,33 +10,44 @@ public class GATester {
 	private int numAI;
 	private LevelHandler levelHandler;
 	
+	public String fileNameBT = "TREE_FIRST";
+	
 	public GATester(int numAI){
 		this.numAI = numAI;
 		gaLoader = new GALoader();
 		levelHandler = new LevelHandler();
 	}
 	
+	agents.BT.BTAgent getBTAgent(JavaPorts evolver, int index){
+		return new agents.BT.BTAgent(evolver.getTreeString(index));
+	}
 	
 	ArrayList<agents.BT.BTAgent> getBTAgents(JavaPorts evolver, int numAI){
 		ArrayList<agents.BT.BTAgent> agents = new ArrayList<agents.BT.BTAgent>();
-		for(int i = 0; i < numAI; i++){
-			agents.BT.BTAgent agent = new agents.BT.BTAgent(evolver.getTreeString(i));
-			agents.add(agent);
-		}
+		for(int i = 0; i < numAI; i++)
+			agents.add(getBTAgent(evolver,i));
 		return agents;
 	}
 	
-	public void loadAndShowBTAgent(agents.BT.BTAgent agent){
+	public void loadAndShowBTAgent(String filename, int generation, int aiIndex){
+		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
+		evolver.loadGeneration(filename, generation);
+		showBTAgent(getBTAgent(evolver,aiIndex));
+	}
+	
+	public void showBTAgent(agents.BT.BTAgent agent){
 		levelHandler.runGameWithVisuals(agent);
 	}
 	
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex){
 		int fitness = levelHandler.simulateAndCheckFitness(agent);
 		evolver.setFitness(aiIndex, fitness);
-		System.out.println("fitness: " + fitness);
 		
+		//////DEBUG////////
+		System.out.println("fitness: " + fitness);
 		if(fitness > 139)
-			loadAndShowBTAgent(agent);
+			showBTAgent(agent);
+		//////DEBUG////////
 	}
 	
 	public void testBTGA(int numGenerations){
@@ -49,7 +60,7 @@ public class GATester {
 			for(int aiIndex = 0; aiIndex < numAI; aiIndex++)
 				evaluateBTAgent(evolver, agents.get(aiIndex),aiIndex);
 			
-			evolver.saveGeneration("TREE_FIRST");
+			evolver.saveGeneration(fileNameBT);
 			evolver.evolve();
 		}
 		

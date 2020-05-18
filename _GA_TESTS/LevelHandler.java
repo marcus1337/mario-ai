@@ -16,7 +16,7 @@ public class LevelHandler {
 	
 	public void runGameWithVisuals(agents.BT.BTAgent agent){
 		MarioGame game = new MarioGame(); //21 fps is normal
-		game.runGame(agent, level, 20, 2, true, 21);
+		game.runGame(agent, level, 20, 2, true, 300);
 	}
 
 	public MarioResult runEasyGame(agents.BT.BTAgent agent){

@@ -9,6 +9,7 @@ public class PlayLevel {
 
     public static void main(String[] args) {    	
     	GATester gaTester = new GATester(10);
-    	gaTester.testBTGA(10);
+    	//gaTester.testBTGA(10);
+    	gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 9, 5);
     }
 }
