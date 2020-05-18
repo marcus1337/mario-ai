@@ -50,22 +50,40 @@ public class GATester {
 		//////DEBUG////////
 	}
 	
-	public void testBTGA(int numGenerations){
+	public void cleanUp(){
+		gaLoader.cleanup();
+	}
+	
+	public void continueEvolveBTs(int numGenerations, int generationStart){
+		JavaPorts evolver = getAndInitBTEvolver();
+		evolver.loadGeneration(fileNameBT, generationStart);
+		evolveBTs(evolver, numGenerations);
+	}
+	
+	private void evolveBTGeneration(JavaPorts evolver){
+		ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
+		for(int aiIndex = 0; aiIndex < numAI; aiIndex++)
+			evaluateBTAgent(evolver, agents.get(aiIndex),aiIndex);
+		evolver.saveGeneration(fileNameBT);
+		evolver.evolve();
+	}
+	
+	private JavaPorts getAndInitBTEvolver(){
 		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
 		evolver.init(numAI, NodeTypes.maxOtherInteriorID, NodeTypes.maxUnorderedInteriorID, 
 				NodeTypes.maxDecoratorID, NodeTypes.maxActionID,NodeTypes.maxConditionID);
-		
-		for(int gen = 0; gen < numGenerations; gen++){
-			ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
-			for(int aiIndex = 0; aiIndex < numAI; aiIndex++)
-				evaluateBTAgent(evolver, agents.get(aiIndex),aiIndex);
-			
-			evolver.saveGeneration(fileNameBT);
-			evolver.evolve();
-		}
-		
+		return evolver;
+	}
+	
+	private void evolveBTs(JavaPorts evolver, int numIterations){
+		for(int gen = 0; gen < numIterations; gen++)
+			evolveBTGeneration(evolver);
 		System.out.println("Done evolving BTs");
-		gaLoader.cleanup();
+	}
+	
+	public void evolveBTsFromScratch(int numGenerations){
+		JavaPorts evolver = getAndInitBTEvolver();
+		evolveBTs(evolver, numGenerations);
 	}
 
 }
