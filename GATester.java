@@ -26,21 +26,34 @@ public class GATester {
 		return agents;
 	}
 	
+	public void loadAndShowBTAgent(agents.BT.BTAgent agent){
+		levelHandler.runGameWithVisuals(agent);
+	}
+	
+	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex){
+		int fitness = levelHandler.simulateAndCheckFitness(agent);
+		evolver.setFitness(aiIndex, fitness);
+		System.out.println("fitness: " + fitness);
+		
+		if(fitness > 139)
+			loadAndShowBTAgent(agent);
+	}
+	
 	public void testBTGA(int numGenerations){
 		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
 		evolver.init(numAI, NodeTypes.maxOtherInteriorID, NodeTypes.maxUnorderedInteriorID, 
 				NodeTypes.maxDecoratorID, NodeTypes.maxActionID,NodeTypes.maxConditionID);
-		ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
-		levelHandler.runGame(agents.get(0));
 		
-		/*for(int gen = 0; gen < numGenerations; gen++){
-			for(int aiIndex = 0; aiIndex < numAI; aiIndex++){
-				String treeStr = evolver.getTreeString(0);
-			}
+		for(int gen = 0; gen < numGenerations; gen++){
+			ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
+			for(int aiIndex = 0; aiIndex < numAI; aiIndex++)
+				evaluateBTAgent(evolver, agents.get(aiIndex),aiIndex);
+			
 			evolver.saveGeneration("TREE_FIRST");
 			evolver.evolve();
-		}*/
+		}
 		
+		System.out.println("Done evolving BTs");
 		gaLoader.cleanup();
 	}
 
