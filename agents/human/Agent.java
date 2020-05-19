@@ -24,24 +24,9 @@ public class Agent extends KeyAdapter implements MarioAgent {
 	int[][] enemyField = null;
 	public MarioForwardModel model = null;
 
-	ArrayList<Integer> getObstacleValues() {
-		ArrayList<Integer> result = new ArrayList<Integer>();
-		result.add(MarioForwardModel.OBS_BRICK);
-		result.add(MarioForwardModel.OBS_PIPE);
-		result.add(MarioForwardModel.OBS_PIPE_BODY_LEFT);
-		result.add(MarioForwardModel.OBS_PIPE_BODY_RIGHT);
-		result.add(MarioForwardModel.OBS_PIPE_TOP_LEFT);
-		result.add(MarioForwardModel.OBS_PIPE_TOP_RIGHT);
-		result.add(MarioForwardModel.OBS_CANNON);
-		result.add(MarioForwardModel.OBS_SOLID);
-		result.add(MarioForwardModel.OBS_PYRAMID_SOLID);
-		return result;
-	}
-	ArrayList<Integer> obstacleValues = getObstacleValues();
-
 	STATE isObstacleAhead() {
-		for (int i = 0; i < obstacleValues.size(); i++)
-			if (recField.tunneledFieldContains(field, obstacleValues.get(i)))
+		for (int i = 0; i < recField.obstacleValues.size(); i++)
+			if (recField.tunneledFieldContains(field, recField.obstacleValues.get(i)))
 				return STATE.SUCCESS;
 		return STATE.FAILURE;
 	}
@@ -59,7 +44,7 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		field = recField.getReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
 		// recField.printReceptiveField(field);
-		System.out.println("ENEMY: " + isEnemyAhead());
+		System.out.println("ENEMY: " + isEnemyAhead() + " obstacle: " + isObstacleAhead());
 		return actions;
 	}
 

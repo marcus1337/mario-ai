@@ -1,5 +1,7 @@
 package _GA_TESTS;
 
+import java.util.ArrayList;
+
 import engine.core.MarioForwardModel;
 
 public class ReceptiveField {
@@ -8,6 +10,25 @@ public class ReceptiveField {
 	public final int lenY = 6;
 	private final int midX = 16;
 	private final int midY = 8;
+	
+	ArrayList<Integer> getObstacleValues() {
+		ArrayList<Integer> result = new ArrayList<Integer>();
+		result.add(MarioForwardModel.OBS_BRICK);
+		result.add(MarioForwardModel.OBS_PIPE);
+		result.add(MarioForwardModel.OBS_PIPE_BODY_LEFT);
+		result.add(MarioForwardModel.OBS_PIPE_BODY_RIGHT);
+		result.add(MarioForwardModel.OBS_PIPE_TOP_LEFT);
+		result.add(MarioForwardModel.OBS_PIPE_TOP_RIGHT);
+		result.add(MarioForwardModel.OBS_CANNON);
+		result.add(MarioForwardModel.OBS_SOLID);
+		result.add(MarioForwardModel.OBS_PYRAMID_SOLID);
+		return result;
+	}
+	public ArrayList<Integer> obstacleValues;
+	
+	public ReceptiveField(){
+		obstacleValues = getObstacleValues();
+	}
 	
 	private int[][] getRightReceptiveField(int[][] observations){
 		int[][] field = new int[lenX][lenY];
