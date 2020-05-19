@@ -8,7 +8,7 @@ public enum NodeTypes {
 	public static final int maxUnorderedInteriorID = 0;
 	public static final int maxDecoratorID = 0;
 	public static final int maxActionID = 8;
-	public static final int maxConditionID = 0;
+	public static final int maxConditionID = 6;
 
 	NodeTypes(int id) {
 		this.id = id;

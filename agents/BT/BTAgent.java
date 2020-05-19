@@ -30,7 +30,7 @@ public class BTAgent implements MarioAgent {
 	void prepareData(MarioForwardModel model) {
 		tree.blackboard.actions = new boolean[5];
 		tree.actions.model = model;
-		tree.conditions.model = model;
+		tree.conditions.updateConditionParameters(model);
 	}
 
 	@Override
@@ -49,6 +49,6 @@ public class BTAgent implements MarioAgent {
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
 		tree = new Tree(treeStr);
 		tree.actions.model = model;
-		tree.conditions.model = model;
+		tree.conditions.updateConditionParameters(model);
 	}
 }

@@ -23,6 +23,10 @@ public class Agent extends KeyAdapter implements MarioAgent {
 	int[][] field = null;
 	int[][] enemyField = null;
 	public MarioForwardModel model = null;
+	
+	private int maxXPosReached = 0;
+	private int framesAtMaxXPos = 0;
+	private int frameCounter = 0;
 
 	STATE isObstacleAhead() {
 		for (int i = 0; i < recField.obstacleValues.size(); i++)
@@ -55,9 +59,6 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		return STATE.FAILURE;
 	}
 	
-	private int maxXPosReached = 0;
-	private int framesAtMaxXPos = 0;
-	private int frameCounter = 0;
 	private int getFramesSinceMaxXPos(){
 		return frameCounter - framesAtMaxXPos;
 	}
@@ -73,14 +74,17 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		updateMaxXPos();
 	}
 	
-
-	@Override
-	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
+	public void updateConditionParameters(MarioForwardModel model){
 		this.model = model;
-		
 		updateIdleChecker();
 		field = recField.getReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
+	}
+	
+
+	@Override
+	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
+		updateConditionParameters(model);
 
 		return actions;
 	}
