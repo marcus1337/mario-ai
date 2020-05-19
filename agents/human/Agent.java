@@ -70,9 +70,9 @@ public class Agent extends KeyAdapter implements MarioAgent {
 	}
 	
 	void mirrorReceptiveField(int[][] field){
-		for(int y = 0; y < 6; y++){
-			int swapDist = 5-1;
-			for(int x= 0; x < 5/2; x++){
+		for(int y = 0; y < recLenY; y++){
+			int swapDist = recLenX-1;
+			for(int x= 0; x < recLenX/2; x++){
 				swapArrayElems(field,x,x+swapDist,y);
 				swapDist-=2;
 			}
