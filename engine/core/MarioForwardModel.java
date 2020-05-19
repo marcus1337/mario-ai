@@ -215,6 +215,10 @@ public class MarioForwardModel {
     private int mushrooms;
     private int flowers;
     private int breakBlock;
+    
+    public boolean isFacingRight(){
+    	return this.world.mario.facing == 1;
+    }
 
     /**
      * Create a forward model object
@@ -488,7 +492,8 @@ public class MarioForwardModel {
      * @return the x and y location of mario on the screen as tile values
      */
     public int[] getMarioScreenTilePos() {
-        return new int[]{(int) ((this.world.mario.x - this.world.cameraX) / 16), (int) (this.world.mario.y / 16)};
+        return new int[]{(int) ((this.world.mario.x - this.world.cameraX) / 16), 
+        		(int) ((this.world.mario.y - world.cameraY) / 16)};
     }
 
     /**
