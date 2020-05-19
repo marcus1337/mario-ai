@@ -90,6 +90,13 @@ public class ReceptiveField {
 		int[][] observations = model.getMarioEnemiesObservation();
 		return getField(model, observations);
 	}
+	
+	public boolean upIsPushable(int[][] field){
+		for(int i = 0 ; i < 3; i++)
+			if (field[0][i] == MarioForwardModel.OBS_QUESTION_BLOCK || field[0][i] == MarioForwardModel.OBS_BRICK)
+				return true;
+		return false;
+	}
 
 	public boolean tunneledFieldContains(int[][] field, int itemValue) {
 		for (int x = 0; x < lenX; x++) {

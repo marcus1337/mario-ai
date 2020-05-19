@@ -49,6 +49,12 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		return STATE.FAILURE;
 	}
 	
+	STATE upIsPushable(){
+		if(recField.upIsPushable(field))
+			return STATE.SUCCESS;
+		return STATE.FAILURE;
+	}
+	
 	private int maxXPosReached = 0;
 	private int framesAtMaxXPos = 0;
 	private int frameCounter = 0;
@@ -75,6 +81,8 @@ public class Agent extends KeyAdapter implements MarioAgent {
 
 		field = recField.getReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
+		//System.out.println(upIsPushable());
+		
 		return actions;
 	}
 
