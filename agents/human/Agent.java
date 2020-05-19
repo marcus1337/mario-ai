@@ -36,6 +36,13 @@ public class Agent extends KeyAdapter implements MarioAgent {
 			return STATE.SUCCESS;
 		return STATE.FAILURE;
 	}
+	
+	STATE isGapAhead() {
+		if (recField.isGapAhead(field))
+			return STATE.SUCCESS;
+		return STATE.FAILURE;
+	}
+	
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
@@ -44,7 +51,7 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		field = recField.getReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
 		// recField.printReceptiveField(field);
-		System.out.println("ENEMY: " + isEnemyAhead() + " obstacle: " + isObstacleAhead());
+		System.out.println(isGapAhead());
 		return actions;
 	}
 
