@@ -43,15 +43,38 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		return STATE.FAILURE;
 	}
 	
+	STATE isStuck(){
+		if(getFramesSinceMaxXPos() > 150)
+			return STATE.SUCCESS;
+		return STATE.FAILURE;
+	}
+	
+	private int maxXPosReached = 0;
+	private int framesAtMaxXPos = 0;
+	private int frameCounter = 0;
+	private int getFramesSinceMaxXPos(){
+		return frameCounter - framesAtMaxXPos;
+	}
+	private void updateMaxXPos(){
+		int nowXPos = (int)model.getMarioFloatPos()[0];
+		if(nowXPos > maxXPosReached){
+			maxXPosReached = nowXPos;
+			framesAtMaxXPos = frameCounter;
+		}
+	}
+	private void updateIdleChecker(){
+		frameCounter++;
+		updateMaxXPos();
+	}
+	
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		this.model = model;
+		updateIdleChecker();
 
 		field = recField.getReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
-		// recField.printReceptiveField(field);
-		System.out.println(isGapAhead());
 		return actions;
 	}
 
