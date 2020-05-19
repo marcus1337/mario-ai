@@ -77,12 +77,11 @@ public class Agent extends KeyAdapter implements MarioAgent {
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		this.model = model;
+		
 		updateIdleChecker();
-
 		field = recField.getReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
-		//System.out.println(upIsPushable());
-		
+
 		return actions;
 	}
 

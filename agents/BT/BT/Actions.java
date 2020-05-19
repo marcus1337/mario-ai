@@ -16,31 +16,25 @@ public class Actions {
 
 	public Task makeAction(int ID) {
 		Task task = null;
-		if(ID == 0)
+		if (ID == 0)
 			task = new Task(null, this::shoot);
-		if(ID == 1)
+		if (ID == 1)
 			task = new Task(null, this::duck);
-		if(ID == 2)
-			task = new Task(null, this::pressLeft);
-		if(ID == 3)
-			task = new Task(null, this::pressRight);
-		if(ID == 4)
+		if (ID == 2)
+			task = new Task(null, this::walkLeft);
+		if (ID == 3)
+			task = new Task(null, this::walkRight);
+		if (ID == 4)
 			task = new Task(null, this::highJump);
-		if(ID == 5)
+		if (ID == 5)
 			task = new Task(null, this::mediumJump);
-		if(ID == 6)
+		if (ID == 6)
 			task = new Task(null, this::smallJump);
-		if(ID == 7)
-			task = new Task(null, this::stopDuck);
-		if(ID == 8)
-			task = new Task(null, this::releaseLeft);
-		if(ID == 9)
-			task = new Task(null, this::releaseRight);
-		if(ID == 10)
-			task = new Task(null, this::pressSpeed);
-		if(ID == 11)
-			task = new Task(null, this::releaseSpeed);
-		
+		if (ID == 7)
+			task = new Task(null, this::speed);
+		if (ID == 8)
+			task = new Task(null, this::noOperation);
+
 		return task;
 	}
 
@@ -57,54 +51,43 @@ public class Actions {
 	}
 
 	STATE duck() {
-		if (model.isMarioOnGround() || blackboard.prevActions[MarioActions.DOWN.getValue()]) {
-			blackboard.actions[MarioActions.DOWN.getValue()] = true;
-			return SUCCESS;
-		}
+		if (model.getMarioMode() > 0)
+			if (model.isMarioOnGround() || blackboard.prevActions[MarioActions.DOWN.getValue()]) {
+				blackboard.actions[MarioActions.DOWN.getValue()] = true;
+				return SUCCESS;
+			}
 		return FAILURE;
 	}
 
-	STATE stopDuck() {
-		blackboard.actions[MarioActions.DOWN.getValue()] = false;
-		return SUCCESS;
-	}
-
-	STATE releaseLeft() {
-		blackboard.actions[MarioActions.LEFT.getValue()] = false;
-		return SUCCESS;
-	}
-
-	STATE pressLeft() {
+	STATE walkLeft() {
 		blackboard.actions[MarioActions.LEFT.getValue()] = true;
-		return SUCCESS;
-	}
-
-	STATE releaseRight() {
 		blackboard.actions[MarioActions.RIGHT.getValue()] = false;
 		return SUCCESS;
 	}
 
-	STATE pressRight() {
+	STATE walkRight() {
+		blackboard.actions[MarioActions.LEFT.getValue()] = false;
 		blackboard.actions[MarioActions.RIGHT.getValue()] = true;
 		return SUCCESS;
 	}
-	
-	STATE pressSpeed() {
+
+	STATE speed() {
 		blackboard.actions[MarioActions.SPEED.getValue()] = true;
 		return SUCCESS;
 	}
-	
-	STATE releaseSpeed() {
-		blackboard.actions[MarioActions.SPEED.getValue()] = false;
+
+	STATE noOperation() {
+		for (int i = 0; i < 5; i++)
+			blackboard.actions[i] = false;
 		return SUCCESS;
 	}
-	
+
 	STATE highJump() {
 		return jumpTowardLimit(7);
 	}
 
 	STATE mediumJump() {
-		return jumpTowardLimit(4);
+		return jumpTowardLimit(3);
 	}
 
 	STATE smallJump() {
