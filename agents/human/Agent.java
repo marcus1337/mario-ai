@@ -21,6 +21,7 @@ public class Agent extends KeyAdapter implements MarioAgent {
 
 	ReceptiveField recField = new ReceptiveField();
 	int[][] field = null;
+	int[][] enemyField = null;
 	public MarioForwardModel model = null;
 
 	ArrayList<Integer> getObstacleValues() {
@@ -36,23 +37,29 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		result.add(MarioForwardModel.OBS_PYRAMID_SOLID);
 		return result;
 	}
-
 	ArrayList<Integer> obstacleValues = getObstacleValues();
 
 	STATE isObstacleAhead() {
 		for (int i = 0; i < obstacleValues.size(); i++)
 			if (recField.tunneledFieldContains(field, obstacleValues.get(i)))
 				return STATE.SUCCESS;
+		return STATE.FAILURE;
+	}
 
+	STATE isEnemyAhead() {
+		if (recField.fieldContainsAnything(enemyField))
+			return STATE.SUCCESS;
 		return STATE.FAILURE;
 	}
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		this.model = model;
+
 		field = recField.getReceptiveField(model);
-		recField.printReceptiveField(field);
-		System.out.println("OBSTACLE: " + isObstacleAhead());
+		enemyField = recField.getEnemyReceptiveField(model);
+		// recField.printReceptiveField(field);
+		System.out.println("ENEMY: " + isEnemyAhead());
 		return actions;
 	}
 

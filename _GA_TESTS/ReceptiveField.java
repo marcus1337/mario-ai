@@ -3,13 +3,13 @@ package _GA_TESTS;
 import engine.core.MarioForwardModel;
 
 public class ReceptiveField {
-	private int[][] observations = null;
+
 	public final int lenX = 5;
 	public final int lenY = 6;
 	private final int midX = 16;
 	private final int midY = 8;
 	
-	private int[][] getRightReceptiveField(){
+	private int[][] getRightReceptiveField(int[][] observations){
 		int[][] field = new int[lenX][lenY];
 		int xBegin = midX;
 		int yBegin = midY - (int) Math.ceil((float) lenY / 2);
@@ -20,7 +20,7 @@ public class ReceptiveField {
 		}
 		return field;
 	}
-	private int[][] getLefttReceptiveField(){
+	private int[][] getLefttReceptiveField(int[][] observations){
 		int[][] field = new int[lenX][lenY];
 		int xBegin = midX;
 		int yBegin = midY - (int) Math.ceil((float) lenY / 2);
@@ -48,15 +48,24 @@ public class ReceptiveField {
 			}
 		}
 	}
-
-	public int[][] getReceptiveField(MarioForwardModel model) {					
-		observations = model.getMarioCompleteObservation(0, 0);
+	
+	private int[][] getField(MarioForwardModel model, int[][] observations){
 		int[][] field = null;
 		if(model.isFacingRight())
-			field = getRightReceptiveField();
+			field = getRightReceptiveField(observations);
 		else
-			field = getLefttReceptiveField();
+			field = getLefttReceptiveField(observations);
 		return field;
+	}
+
+	public int[][] getReceptiveField(MarioForwardModel model) {					
+		int[][] observations = model.getMarioCompleteObservation(0, 0);
+		return getField(model, observations);
+	}
+	
+	public int[][] getEnemyReceptiveField(MarioForwardModel model) {					
+		int[][] observations = model.getMarioEnemiesObservation();
+		return getField(model, observations);
 	}
 	
 	public boolean tunneledFieldContains(int[][] field, int itemValue){
@@ -83,6 +92,16 @@ public class ReceptiveField {
 		for(int x = 0; x < lenX; x++){
 			for(int y = 0; y < lenY; y++){
 				if(field[x][y] == itemValue)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean fieldContainsAnything(int[][] field){
+		for(int x = 0; x < lenX; x++){
+			for(int y = 0; y < lenY; y++){
+				if(field[x][y] != 0)
 					return true;
 			}
 		}
