@@ -11,6 +11,10 @@ public class MarioResult {
     private ArrayList<MarioEvent> gameEvents;
     private ArrayList<MarioAgentEvent> agentEvents;
     public int fitness = 0;
+    
+    public int gameCompletion = 0;
+    public int jumpFrequency = 0;
+    public int numKills = 0;
 
     /**
      * Create a mario result object

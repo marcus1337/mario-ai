@@ -40,9 +40,11 @@ public class GATester {
 	}
 	
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex){
-		MarioResult marioResult = levelHandler.simulateAndCheckFitness(agent);
+		MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
 		int fitness = marioResult.fitness;
 		evolver.setFitness(aiIndex, fitness);
+		IntVec behvaior = new IntVec(new int[]{marioResult.gameCompletion, marioResult.jumpFrequency, marioResult.numKills});
+		evolver.setBehavior(aiIndex, behvaior);
 		
 		System.out.println("fitness: " + fitness);
 	}
@@ -80,9 +82,6 @@ public class GATester {
 	
 	public void evolveBTsFromScratch(int numGenerations){
 		JavaPorts evolver = getAndInitBTEvolver();
-		
-		IntVec behaviors = new IntVec(new int[3]);
-		evolver.setBehavior(0, behaviors);
 		
 		evolveBTs(evolver, numGenerations);
 	}

@@ -11,6 +11,7 @@ public class PlayLevel {
     	GATester gaTester = new GATester(100);
     	
     	gaTester.evolveBTsFromScratch(20);
+    	
     	//gaTester.continueEvolveBTs(17, 10);
     	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 19, 99);
     	

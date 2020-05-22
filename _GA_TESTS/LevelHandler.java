@@ -1,6 +1,7 @@
 package _GA_TESTS;
 
 import engine.core.MarioAgentEvent;
+import engine.core.MarioEvent;
 import engine.core.MarioGame;
 import engine.core.MarioResult;
 import engine.helper.GameStatus;
@@ -24,16 +25,20 @@ public class LevelHandler {
 
 	public MarioResult runEasyGame(agents.BT.BTAgent agent){
 		MarioGame game = new MarioGame();
+		
 		return game.runGame(agent, level, 50, marioStartState, false);
 	}
 	
-	public MarioResult simulateAndCheckFitness(agents.BT.BTAgent agent){
-		MarioResult result = runEasyGame(agent);
+	private int addGameEndFitness(MarioResult result){
 		if(result.getGameStatus() == GameStatus.LOSE)
-			result.fitness -= 10;
+			return -10;
 		if(result.getGameStatus() == GameStatus.WIN)
-			result.fitness += (5000 + result.getRemainingTime());
-		
+			return (1000 + result.getRemainingTime());
+		return 0;
+	}
+	
+	public int addCompletionRateFitness(MarioResult result){
+		int fitness = 0;
 		float maxX = 0;
 		for(MarioAgentEvent ev : result.getAgentEvents()){
 			if(ev.getMarioX() > maxX)
@@ -41,10 +46,41 @@ public class LevelHandler {
 				maxX = ev.getMarioX();
 			}
 		}
-		result.fitness += (int)(result.getCompletionPercentage()*5000.0f);
-		result.fitness += maxX/10;
-		result.fitness  = Math.max(0, result.fitness);
+		fitness += (int)(result.getCompletionPercentage()*1000.0f);
+		fitness += maxX/10;
+		return fitness;
+	}
+	
+	private int getNumAirTimeFrames(MarioResult result){
+		int numAirTimeFrames = 0;
+		for(MarioAgentEvent ev : result.getAgentEvents())
+			if(!ev.getMarioOnGround())
+				numAirTimeFrames++;
+		return numAirTimeFrames;
+	}
+	
+	private int getJumpFrequency(MarioResult result){
+		float numAirTimeFrames = (float) getNumAirTimeFrames(result);
+		float totalFrames = (float) result.getAgentEvents().size();
+		if(totalFrames == 0)
+			return 0;
+		return (int)((numAirTimeFrames / totalFrames)*100.f);
+	}
+	
+	public void setBehaviors(MarioResult result){
+		result.gameCompletion = (int) (result.getCompletionPercentage()*100.0f);
+		result.jumpFrequency = getJumpFrequency(result);
+		result.numKills = Math.min(100, result.getKillsTotal());
+	}
+	
+	public MarioResult simulateAndEvaluate(agents.BT.BTAgent agent){
+		MarioResult result = runEasyGame(agent);
 		
+		result.fitness += addGameEndFitness(result);
+		result.fitness += addCompletionRateFitness(result);
+		result.fitness = Math.max(0, result.fitness);
+		
+		setBehaviors(result);
 		return result;
 	}
 	
