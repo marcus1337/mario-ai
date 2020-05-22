@@ -8,6 +8,21 @@
 
 
 public class exampleJNI {
+  public final static native long new_IntVec__SWIG_0();
+  public final static native long new_IntVec__SWIG_1(long jarg1, IntVec jarg1_);
+  public final static native long IntVec_capacity(long jarg1, IntVec jarg1_);
+  public final static native void IntVec_reserve(long jarg1, IntVec jarg1_, long jarg2);
+  public final static native boolean IntVec_isEmpty(long jarg1, IntVec jarg1_);
+  public final static native void IntVec_clear(long jarg1, IntVec jarg1_);
+  public final static native long new_IntVec__SWIG_2(int jarg1, int jarg2);
+  public final static native int IntVec_doSize(long jarg1, IntVec jarg1_);
+  public final static native void IntVec_doAdd__SWIG_0(long jarg1, IntVec jarg1_, int jarg2);
+  public final static native void IntVec_doAdd__SWIG_1(long jarg1, IntVec jarg1_, int jarg2, int jarg3);
+  public final static native int IntVec_doRemove(long jarg1, IntVec jarg1_, int jarg2);
+  public final static native int IntVec_doGet(long jarg1, IntVec jarg1_, int jarg2);
+  public final static native int IntVec_doSet(long jarg1, IntVec jarg1_, int jarg2, int jarg3);
+  public final static native void IntVec_doRemoveRange(long jarg1, IntVec jarg1_, int jarg2, int jarg3);
+  public final static native void delete_IntVec(long jarg1);
   public final static native long new_JavaPorts(int jarg1);
   public final static native void JavaPorts_init__SWIG_0(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3, int jarg4, int jarg5, int jarg6, int jarg7);
   public final static native void JavaPorts_init__SWIG_1(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3, int jarg4);
@@ -17,5 +32,7 @@ public class exampleJNI {
   public final static native void JavaPorts_loadGeneration(long jarg1, JavaPorts jarg1_, String jarg2, int jarg3);
   public final static native void JavaPorts_evolve(long jarg1, JavaPorts jarg1_);
   public final static native void JavaPorts_setFitness(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3);
+  public final static native void JavaPorts_setBehavior(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, IntVec jarg3_);
+  public final static native void JavaPorts_setTargetSpecies(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native void delete_JavaPorts(long jarg1);
 }

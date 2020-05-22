@@ -10,9 +10,9 @@ public class PlayLevel {
     public static void main(String[] args) {    	
     	GATester gaTester = new GATester(100);
     	
-    	//gaTester.evolveBTsFromScratch(20);
+    	gaTester.evolveBTsFromScratch(20);
     	//gaTester.continueEvolveBTs(17, 10);
-    	gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 19, 99);
+    	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 19, 99);
     	
     	gaTester.cleanUp();
     }

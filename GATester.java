@@ -80,6 +80,10 @@ public class GATester {
 	
 	public void evolveBTsFromScratch(int numGenerations){
 		JavaPorts evolver = getAndInitBTEvolver();
+		
+		IntVec behaviors = new IntVec(new int[3]);
+		evolver.setBehavior(0, behaviors);
+		
 		evolveBTs(evolver, numGenerations);
 	}
 

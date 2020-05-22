@@ -70,6 +70,18 @@ void JavaPorts::setFitness(int index, int fitness) {
     }
 }
 
+void JavaPorts::setBehavior(int index, std::vector<int> behaviors) {
+    if (aiType == BT) {
+        BTInterface.setBehavior(index, behaviors);
+    }
+}
+
+void JavaPorts::setTargetSpecies(int numTargetSpecies) {
+    if (aiType == BT) {
+        BTInterface.setTargetSpecies(numTargetSpecies);
+    }
+}
+
 JavaPorts::JavaPorts(AIType _aitype) : aiType(_aitype) {
 
 }

@@ -71,4 +71,12 @@ public class JavaPorts {
     exampleJNI.JavaPorts_setFitness(swigCPtr, this, index, fitness);
   }
 
+  public void setBehavior(int index, IntVec behaviors) {
+    exampleJNI.JavaPorts_setBehavior(swigCPtr, this, index, IntVec.getCPtr(behaviors), behaviors);
+  }
+
+  public void setTargetSpecies(int numTargetSpecies) {
+    exampleJNI.JavaPorts_setTargetSpecies(swigCPtr, this, numTargetSpecies);
+  }
+
 }
