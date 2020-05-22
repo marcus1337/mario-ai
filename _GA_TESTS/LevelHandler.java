@@ -46,8 +46,8 @@ public class LevelHandler {
 				maxX = ev.getMarioX();
 			}
 		}
-		fitness += (int)(result.getCompletionPercentage()*1000.0f);
-		fitness += maxX/10;
+		//fitness += (int)(result.getCompletionPercentage()*1000.0f);
+		fitness += (int) (maxX);
 		return fitness;
 	}
 	
