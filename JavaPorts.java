@@ -79,4 +79,36 @@ public class JavaPorts {
     exampleJNI.JavaPorts_setTargetSpecies(swigCPtr, this, numTargetSpecies);
   }
 
+  public void setSurpriseEffect(float effect) {
+    exampleJNI.JavaPorts_setSurpriseEffect(swigCPtr, this, effect);
+  }
+
+  public void mapElites() {
+    exampleJNI.JavaPorts_mapElites(swigCPtr, this);
+  }
+
+  public void randomizeBTPopulation(int minNodes, int maxNodes) {
+    exampleJNI.JavaPorts_randomizeBTPopulation(swigCPtr, this, minNodes, maxNodes);
+  }
+
+  public void randomizePopulationFromElites() {
+    exampleJNI.JavaPorts_randomizePopulationFromElites(swigCPtr, this);
+  }
+
+  public void saveElites(String foldername) {
+    exampleJNI.JavaPorts_saveElites__SWIG_0(swigCPtr, this, foldername);
+  }
+
+  public void saveElites() {
+    exampleJNI.JavaPorts_saveElites__SWIG_1(swigCPtr, this);
+  }
+
+  public void loadElites(String foldername) {
+    exampleJNI.JavaPorts_loadElites__SWIG_0(swigCPtr, this, foldername);
+  }
+
+  public void loadElites() {
+    exampleJNI.JavaPorts_loadElites__SWIG_1(swigCPtr, this);
+  }
+
 }

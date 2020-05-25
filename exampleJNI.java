@@ -34,5 +34,13 @@ public class exampleJNI {
   public final static native void JavaPorts_setFitness(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3);
   public final static native void JavaPorts_setBehavior(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, IntVec jarg3_);
   public final static native void JavaPorts_setTargetSpecies(long jarg1, JavaPorts jarg1_, int jarg2);
+  public final static native void JavaPorts_setSurpriseEffect(long jarg1, JavaPorts jarg1_, float jarg2);
+  public final static native void JavaPorts_mapElites(long jarg1, JavaPorts jarg1_);
+  public final static native void JavaPorts_randomizeBTPopulation(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3);
+  public final static native void JavaPorts_randomizePopulationFromElites(long jarg1, JavaPorts jarg1_);
+  public final static native void JavaPorts_saveElites__SWIG_0(long jarg1, JavaPorts jarg1_, String jarg2);
+  public final static native void JavaPorts_saveElites__SWIG_1(long jarg1, JavaPorts jarg1_);
+  public final static native void JavaPorts_loadElites__SWIG_0(long jarg1, JavaPorts jarg1_, String jarg2);
+  public final static native void JavaPorts_loadElites__SWIG_1(long jarg1, JavaPorts jarg1_);
   public final static native void delete_JavaPorts(long jarg1);
 }

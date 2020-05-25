@@ -18,9 +18,9 @@ public class LevelHandler {
 		level = Utils.getLevel("levels/original/lvl-1.txt");
 	}
 	
-	public void runGameWithVisuals(agents.BT.BTAgent agent){
+	public void runGameWithVisuals(agents.BT.BTAgent agent, int fps){
 		MarioGame game = new MarioGame(); //21 fps is normal
-		game.runGame(agent, level, 50, marioStartState, true, 300);
+		game.runGame(agent, level, 50, marioStartState, true, fps);
 	}
 
 	public MarioResult runEasyGame(agents.BT.BTAgent agent){
@@ -46,7 +46,6 @@ public class LevelHandler {
 				maxX = ev.getMarioX();
 			}
 		}
-		//fitness += (int)(result.getCompletionPercentage()*1000.0f);
 		fitness += (int) (maxX);
 		return fitness;
 	}
