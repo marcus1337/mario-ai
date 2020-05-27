@@ -89,6 +89,12 @@ public class ReceptiveField {
 	
 	public int[][] getBlockReceptiveField(MarioForwardModel model) {
 		int[][] observations = model.getMarioSceneObservation();
+		for(int i = 0 ; i < observations[0].length; i++){
+			for(int j = 0 ; j < observations.length; j++){
+				if(observations[j][i] == MarioForwardModel.OBS_COIN)
+					observations[j][i] = 0;
+			}
+		}
 		return getField(model, observations);
 	}
 

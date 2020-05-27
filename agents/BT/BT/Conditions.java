@@ -39,7 +39,7 @@ public class Conditions {
 	public void updateConditionParameters(MarioForwardModel model) {
 		this.model = model;
 		updateIdleChecker();
-		field = recField.getReceptiveField(model);
+		field = recField.getBlockReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
 	}
 
