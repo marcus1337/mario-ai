@@ -32,9 +32,9 @@ public class MarioRender extends JComponent implements FocusListener {
 		this.setEnabled(true);
 		this.scale = scale;
 
-		// Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT *
-		// 2.7f));
-		Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.f));
+
+		//Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.f));
+		Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.7f));
 
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -70,9 +70,12 @@ public class MarioRender extends JComponent implements FocusListener {
 			}
 			drawStringDropShadow(og, "Buttons: " + pressedButtons, 0, 4, 4);
 		}
-
+		
+		int imgLenX = (int) (ORIGIN_WIDTH * scale);
+		int imgLenY = (int) (ORIGIN_HEIGHT * scale);
 		if (scale > 1) {
-			g.drawImage(image, 0, 0, (int) (ORIGIN_WIDTH * scale), (int) (ORIGIN_HEIGHT * scale), null);
+			g.drawImage(image, 0,(int) (imgLenY/4.5f), imgLenX, imgLenY, null);
+			//g.drawImage(image, 0, 0, imgLenX, imgLenY, null);
 		} else {
 			g.drawImage(image, 0, 0, null);
 		}
@@ -151,8 +154,11 @@ public class MarioRender extends JComponent implements FocusListener {
 		g2.setStroke(oldStroke);
 	}
 
+	boolean doneOnce = false;
 	public void renderBackGround(Graphics g, Graphics og) {
-		g.fillRect(0, 0, WIDTH * 100, HEIGHT * 100);
+		if(!doneOnce)
+			g.fillRect(0, 0, WIDTH * 100, HEIGHT * 100);
+		doneOnce = true;
 	}
 
 	public void drawStringDropShadow(Graphics g, String text, int x, int y, int c) {
