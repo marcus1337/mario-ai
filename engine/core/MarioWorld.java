@@ -531,6 +531,8 @@ public class MarioWorld {
         for (MarioSprite sprite : sprites) {
             if (sprite.type != SpriteType.MUSHROOM && sprite.type != SpriteType.LIFE_MUSHROOM &&
                     sprite.type != SpriteType.FIRE_FLOWER && sprite.type != SpriteType.ENEMY_FLOWER) {
+            	
+            	
                 sprite.render(og);
             }
         }

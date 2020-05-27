@@ -20,6 +20,7 @@ public class MarioRender extends JComponent implements FocusListener {
     int frame;
     Thread animator;
     boolean focused;
+	public MarioForwardModel model = null;
     
     private static final int ORIGIN_WIDTH = 400; //256
     private static final int ORIGIN_HEIGHT = 256; //240
@@ -68,6 +69,31 @@ public class MarioRender extends JComponent implements FocusListener {
             g.drawImage(image, 0, 0, null);
         }
         
+        renderRectangles(g, og);
+    }
+    
+    void renderRectangles(Graphics g, Graphics og){
+    	
+    	Graphics2D g2 = (Graphics2D) g;
+    	float thickness = 2;
+    	Stroke oldStroke = g2.getStroke();
+    	g2.setStroke(new BasicStroke(thickness));
+    	
+    	float brLen = MarioGame.tileWidth;
+    	float[] marioPos = model.getMarioFloatPos();
+    	
+    	marioPos[0] -= model.world.cameraX;
+    	marioPos[1] -= model.world.cameraY;
+    	
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+    	int x = (int) (marioPos[0]);
+    	int y = (int) (marioPos[1]);
+    	x *= 2;
+    	y *= 2;
+        
+    	g2.drawRect(x, y, (int) brLen,(int) brLen);
+    	g2.setStroke(oldStroke);
     }
     
     public void renderBackGround(Graphics g, Graphics og){

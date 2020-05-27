@@ -205,7 +205,7 @@ public class MarioForwardModel {
      */
     public final int obsGridHeight = MarioGame.tileHeight;
 
-    private MarioWorld world;
+    public MarioWorld world;
 
     // stats
     private int fallKill;

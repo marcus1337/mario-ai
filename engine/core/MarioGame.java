@@ -227,8 +227,9 @@ public class MarioGame {
         this.agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
     }
     
-    void renderWorld(){
+    void renderWorld(MarioForwardModel model){
         if (this.world.visuals) {
+        	render.model = model;
             render.renderWorld(this.world, renderTarget, backBuffer, currentBuffer);
         }
     }
@@ -250,9 +251,9 @@ public class MarioGame {
         }
     }
     
-    boolean[] getAIActions(){
+    boolean[] getAIActions(MarioForwardModel model){
         agentTimer = new MarioTimer(MarioGame.maxTime);
-        boolean[] actions = this.agent.getActions(new MarioForwardModel(this.world.clone()), agentTimer);
+        boolean[] actions = this.agent.getActions(model, agentTimer);
         warnAITimeout();
         return actions;
     }
@@ -262,12 +263,13 @@ public class MarioGame {
     	initGame(level, timer, marioState, visual, fps);
 
         while (this.world.gameStatus == GameStatus.RUNNING) {
+        	MarioForwardModel model = new MarioForwardModel(this.world.clone());
             if (!this.pause) {
-                boolean[] actions = getAIActions();
+                boolean[] actions = getAIActions(model);
                 updateWorld(actions);
             }
 
-            renderWorld();
+            renderWorld(model);
             delay(fps);
         }
         return new MarioResult(this.world, gameEvents, agentEvents);
