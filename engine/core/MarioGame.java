@@ -48,7 +48,8 @@ public class MarioGame {
     private void setAgent(MarioAgent agent) {
         this.agent = agent;
         if (agent instanceof KeyAdapter) {
-            this.render.addKeyListener((KeyAdapter) this.agent);
+        	if(render != null)
+        		this.render.addKeyListener((KeyAdapter) this.agent);
         }
     }
 

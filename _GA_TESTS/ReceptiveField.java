@@ -100,6 +100,12 @@ public class ReceptiveField {
 
 	public int[][] getEnemyReceptiveField(MarioForwardModel model) {
 		int[][] observations = model.getMarioEnemiesObservation();
+		for(int i = 0 ; i < observations[0].length; i++){
+			for(int j = 0 ; j < observations.length; j++){
+				if(observations[j][i] == MarioForwardModel.OBS_FIREBALL)
+					observations[j][i] = 0;
+			}
+		}
 		return getField(model, observations);
 	}
 	

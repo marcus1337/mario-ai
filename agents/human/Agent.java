@@ -77,15 +77,17 @@ public class Agent extends KeyAdapter implements MarioAgent {
 	public void updateConditionParameters(MarioForwardModel model){
 		this.model = model;
 		updateIdleChecker();
-		field = recField.getReceptiveField(model);
+		field = recField.getBlockReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
+		recField.printReceptiveField(field);
 	}
 	
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		updateConditionParameters(model);
-
+		//actions[MarioActions.RIGHT.getValue()] = true;
+		
 		return actions;
 	}
 

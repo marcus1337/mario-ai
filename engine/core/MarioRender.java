@@ -104,6 +104,17 @@ public class MarioRender extends JComponent implements FocusListener {
 				}
 			}
 		}
+		
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 5; j++) {
+				float tmpX = topX + brickLen * j;
+				float tmpY = topY + brickLen * i;
+				if (enemyField[j][i] != 0) {
+					g.setColor(Color.RED);
+					g.drawRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
+				}
+			}
+		}
 
 	}
 
