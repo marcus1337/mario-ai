@@ -85,6 +85,12 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	void renderReceptiveField(Graphics2D g, float topX, float topY, float brickLen) {
 
+		if (!model.isFacingRight()){
+			topX -= 4 * brickLen;
+			receptiveField.mirrorReceptiveField(blockField);
+			receptiveField.mirrorReceptiveField(enemyField);
+		}
+
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
 				float tmpX = topX + brickLen * j;
@@ -95,7 +101,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		}
 
 		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 5; j++) {
+			for (int j = 0; j < 5; j++){
 				float tmpX = topX + brickLen * j;
 				float tmpY = topY + brickLen * i;
 				if (blockField[j][i] != 0) {
@@ -104,7 +110,7 @@ public class MarioRender extends JComponent implements FocusListener {
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
 				float tmpX = topX + brickLen * j;

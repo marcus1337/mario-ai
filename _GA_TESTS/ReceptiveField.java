@@ -63,7 +63,7 @@ public class ReceptiveField {
 		arr[j][y] = tmp;
 	}
 
-	private void mirrorReceptiveField(int[][] field) {
+	public void mirrorReceptiveField(int[][] field) {
 		for (int y = 0; y < lenY; y++) {
 			int swapDist = lenX - 1;
 			for (int x = 0; x < lenX / 2; x++) {

@@ -79,7 +79,7 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		updateIdleChecker();
 		field = recField.getBlockReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
-		recField.printReceptiveField(field);
+		//recField.printReceptiveField(field);
 	}
 	
 
