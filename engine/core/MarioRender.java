@@ -72,6 +72,10 @@ public class MarioRender extends JComponent implements FocusListener {
         renderRectangles(g, og);
     }
     
+    void renderReceptiveField(Graphics g, Graphics og){
+    	
+    }
+    
     void renderRectangles(Graphics g, Graphics og){
     	
     	Graphics2D g2 = (Graphics2D) g;
@@ -79,14 +83,14 @@ public class MarioRender extends JComponent implements FocusListener {
     	Stroke oldStroke = g2.getStroke();
     	g2.setStroke(new BasicStroke(thickness));
     	
-    	float brLen = MarioGame.tileWidth;
+    	float brLen = (int) ((ORIGIN_WIDTH*scale)/25.f);
+    	float brickStep = brLen/2;
+
     	float[] marioPos = model.getMarioFloatPos();
     	
-    	marioPos[0] -= model.world.cameraX;
-    	marioPos[1] -= model.world.cameraY;
+    	marioPos[0] -= model.world.cameraX + brLen/4;
+    	marioPos[1] -= model.world.cameraY -1.0f + brickStep*4;
     	
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
     	int x = (int) (marioPos[0]);
     	int y = (int) (marioPos[1]);
     	x *= 2;
