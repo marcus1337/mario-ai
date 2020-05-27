@@ -55,6 +55,10 @@ public class JavaPorts {
     return exampleJNI.JavaPorts_getTreeString(swigCPtr, this, index);
   }
 
+  public String getEliteTreeString(int index) {
+    return exampleJNI.JavaPorts_getEliteTreeString(swigCPtr, this, index);
+  }
+
   public void saveGeneration(String filename) {
     exampleJNI.JavaPorts_saveGeneration(swigCPtr, this, filename);
   }

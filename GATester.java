@@ -13,17 +13,20 @@ public class GATester {
 	public String fileNameBT;
 	public String eliteFolderName;
 
-	public GATester(int numAI) {
+	public GATester(int numAI, String fileName) {
 		this.numAI = numAI;
 		gaLoader = new GALoader();
 		levelHandler = new LevelHandler();
-		
-		fileNameBT = "TREE_FIRST";
+		fileNameBT = fileName; // "TREE_FIRST";
 		eliteFolderName = fileNameBT + "_Elite";
 	}
 
 	agents.BT.BTAgent getBTAgent(JavaPorts evolver, int index) {
 		return new agents.BT.BTAgent(evolver.getTreeString(index));
+	}
+	
+	agents.BT.BTAgent getEliteBTAgent(JavaPorts evolver, int index) {
+		return new agents.BT.BTAgent(evolver.getEliteTreeString(index));
 	}
 
 	ArrayList<agents.BT.BTAgent> getBTAgents(JavaPorts evolver, int numAI) {
@@ -37,6 +40,12 @@ public class GATester {
 		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
 		evolver.loadGeneration(filename, generation);
 		levelHandler.runGameWithVisuals(getBTAgent(evolver, aiIndex), fps);
+	}
+	
+	public void loadAndShowEliteBTAgent(String filename, int aiIndex, int fps) {
+		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
+		evolver.loadElites(filename);
+		levelHandler.runGameWithVisuals(getEliteBTAgent(evolver, aiIndex), fps);
 	}
 
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex) {
@@ -68,6 +77,7 @@ public class GATester {
 			evaluateBTAgent(evolver, agents.get(aiIndex), aiIndex);
 		evolver.saveGeneration(fileNameBT);
 		evolver.saveElites(eliteFolderName);
+		
 		evolver.evolve();
 	}
 
