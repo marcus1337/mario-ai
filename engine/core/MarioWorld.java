@@ -104,6 +104,8 @@ public class MarioWorld {
         }
         return enemies;
     }
+    
+    public MarioSprite marioSprite = null;
 
     public MarioWorld clone() {
         MarioWorld world = new MarioWorld(this.killEvents);
@@ -118,6 +120,7 @@ public class MarioWorld {
         world.level = this.level.clone();
         for (MarioSprite sprite : this.sprites) {
             MarioSprite cloneSprite = sprite.clone();
+            
             cloneSprite.world = world;
             if (cloneSprite.type == SpriteType.MARIO) {
                 world.mario = (Mario) cloneSprite;
@@ -521,6 +524,9 @@ public class MarioWorld {
         for (int i = 0; i < backgrounds.length; i++) {
             this.backgrounds[i].render(og, (int) cameraX, (int) cameraY);
         }
+        
+        
+        
         for (MarioSprite sprite : sprites) {
             if (sprite.type == SpriteType.MUSHROOM || sprite.type == SpriteType.LIFE_MUSHROOM ||
                     sprite.type == SpriteType.FIRE_FLOWER || sprite.type == SpriteType.ENEMY_FLOWER) {
@@ -532,6 +538,9 @@ public class MarioWorld {
             if (sprite.type != SpriteType.MUSHROOM && sprite.type != SpriteType.LIFE_MUSHROOM &&
                     sprite.type != SpriteType.FIRE_FLOWER && sprite.type != SpriteType.ENEMY_FLOWER) {
             	
+            	if(sprite.type == SpriteType.MARIO){
+            		marioSprite = sprite;
+            	}
             	
                 sprite.render(og);
             }

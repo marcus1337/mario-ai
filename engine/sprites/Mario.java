@@ -19,9 +19,9 @@ public class Mario extends MarioSprite {
     private float xJumpSpeed, yJumpSpeed = 0;
     private int invulnerableTime = 0;
 
-    private float marioFrameSpeed = 0;
+    public float marioFrameSpeed = 0;
     private boolean oldLarge, oldFire = false;
-    private MarioImage graphics = null;
+    public MarioImage graphics = null;
 
     // stats
     private float xJumpStart = -100;
@@ -171,12 +171,14 @@ public class Mario extends MarioSprite {
         }
         return blocking;
     }
+    
 
     public void updateGraphics() {
         if (!this.alive) {
             return;
         }
-
+        
+    
         boolean currentLarge, currentFire;
         if (this.world.pauseTimer > 0) {
             currentLarge = (this.world.pauseTimer / 2) % 2 == 0 ? this.oldLarge : this.isLarge;

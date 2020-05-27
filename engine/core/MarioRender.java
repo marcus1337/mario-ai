@@ -46,12 +46,17 @@ public class MarioRender extends JComponent implements FocusListener {
         graphicsConfiguration = getGraphicsConfiguration();
         Assets.init(graphicsConfiguration);
     }
+    
+    MarioWorld world = null;
 
     public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
+    	this.world = world;
         og.fillRect(0, 0, WIDTH, HEIGHT);
         renderBackGround(g, og);
         
         world.render(og);
+        renderRectangles(g, og);
+        
         drawStringDropShadow(og, "Coins: " + world.coins, 0, 2, 4);
         drawStringDropShadow(og, "Time: " + (world.currentTimer == -1 ? "Inf" : (int) Math.ceil(world.currentTimer / 1000f)), 0, 0, 4);
         if (MarioGame.verbose) {
@@ -63,38 +68,45 @@ public class MarioRender extends JComponent implements FocusListener {
             }
             drawStringDropShadow(og, "Buttons: " + pressedButtons, 0, 4, 4);
         }
+        
         if (scale > 1) {
             g.drawImage(image, 0, 0, (int) (ORIGIN_WIDTH*scale), (int) (ORIGIN_HEIGHT*scale), null);
         } else {
             g.drawImage(image, 0, 0, null);
         }
         
-        renderRectangles(g, og);
     }
     
     void renderReceptiveField(Graphics g, Graphics og){
     	
     }
     
-    void renderRectangles(Graphics g, Graphics og){
+    void renderRectangles(Graphics gi, Graphics g){
     	
     	Graphics2D g2 = (Graphics2D) g;
     	float thickness = 2;
     	Stroke oldStroke = g2.getStroke();
     	g2.setStroke(new BasicStroke(thickness));
     	
-    	float brLen = (int) ((ORIGIN_WIDTH*scale)/25.f);
+    	float brLen = WIDTH/30.0f;
     	float brickStep = brLen/2;
 
+
     	float[] marioPos = model.getMarioFloatPos();
+    	marioPos[0] = world.marioSprite.x;
+    	marioPos[1] = world.marioSprite.y;
     	
-    	marioPos[0] -= model.world.cameraX + brLen/4;
-    	marioPos[1] -= model.world.cameraY -1.0f + brickStep*4;
+    	//System.out.println("Y: " + marioPos[1] + " _ Y2: " + model.world.cameraY);
+    
     	
-    	int x = (int) (marioPos[0]);
-    	int y = (int) (marioPos[1]);
-    	x *= 2;
-    	y *= 2;
+    	marioPos[0] -= model.world.cameraX;
+    	marioPos[1] -= model.world.cameraY;
+    	
+    	int x = (int) (marioPos[0] - brickStep);
+    	int y = (int) (marioPos[1] - brickStep*3);
+
+    	//x *= 2;
+    	//y *= 2;
         
     	g2.drawRect(x, y, (int) brLen,(int) brLen);
     	g2.setStroke(oldStroke);
