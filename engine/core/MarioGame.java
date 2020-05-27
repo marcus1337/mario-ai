@@ -23,10 +23,12 @@ public class MarioGame {
     /**
      * Screen width
      */
-    public static final int width = 256*2;
+   // public static final int width = 256*2;
+    public static final int width = 400;
     /**
      * Screen height
      */
+    //public static final int height = 256;
     public static final int height = 256;
     /**
      * Screen width in tiles
@@ -206,6 +208,7 @@ public class MarioGame {
     public MarioResult runGame(MarioAgent agent, String level, int timer, int marioState, boolean visuals, int fps, float scale) {
         if (visuals) {
             window = new JFrame("Mario AI Framework");
+            window.setUndecorated(true);
             render = new MarioRender(scale);
             window.setContentPane(render);
             window.pack();

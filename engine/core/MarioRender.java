@@ -21,15 +21,17 @@ public class MarioRender extends JComponent implements FocusListener {
     Thread animator;
     boolean focused;
     
-    private static final int WIDTH = 256*2; //256
-    private static final int HEIGHT = 240; //240
+    private static final int ORIGIN_WIDTH = 400; //256
+    private static final int ORIGIN_HEIGHT = 256; //240
+    private static final int WIDTH = 480; //256
+    private static final int HEIGHT = 270; //240
 
     public MarioRender(float scale) {
         this.setFocusable(true);
         this.setEnabled(true);
         this.scale = scale;
 
-        Dimension size = new Dimension((int) (WIDTH * scale), (int) (HEIGHT * scale));
+        Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.7f)-10);
 
         setPreferredSize(size);
         setMinimumSize(size);
@@ -45,6 +47,8 @@ public class MarioRender extends JComponent implements FocusListener {
 
     public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
         og.fillRect(0, 0, WIDTH, HEIGHT);
+        renderBackGround(g, og);
+        
         world.render(og);
         drawStringDropShadow(og, "Coins: " + world.coins, 0, 2, 4);
         drawStringDropShadow(og, "Time: " + (world.currentTimer == -1 ? "Inf" : (int) Math.ceil(world.currentTimer / 1000f)), 0, 0, 4);
@@ -58,10 +62,15 @@ public class MarioRender extends JComponent implements FocusListener {
             drawStringDropShadow(og, "Buttons: " + pressedButtons, 0, 4, 4);
         }
         if (scale > 1) {
-            g.drawImage(image, 0, 0, (int) (WIDTH * scale), (int) (HEIGHT * scale), null);
+            g.drawImage(image, 0, 0, (int) (ORIGIN_WIDTH*scale), (int) (ORIGIN_HEIGHT*scale), null);
         } else {
             g.drawImage(image, 0, 0, null);
         }
+        
+    }
+    
+    public void renderBackGround(Graphics g, Graphics og){
+    	g.fillRect(0, 0, WIDTH*100, HEIGHT*100);
     }
 
     public void drawStringDropShadow(Graphics g, String text, int x, int y, int c) {
