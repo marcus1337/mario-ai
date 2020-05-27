@@ -17,8 +17,12 @@ public class KeyController implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_P){
-			System.out.println("PAUSING");
+			System.out.println("PAUSE");
 			marioGame.pause = !marioGame.pause;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			System.out.println("EXIT");
+			System.exit(0); 
 		}
 	}
 
