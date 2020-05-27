@@ -85,6 +85,11 @@ public class ReceptiveField {
 		int[][] observations = model.getMarioCompleteObservation(0, 0);
 		return getField(model, observations);
 	}
+	
+	public int[][] getBlockReceptiveField(MarioForwardModel model) {
+		int[][] observations = model.getMarioSceneObservation();
+		return getField(model, observations);
+	}
 
 	public int[][] getEnemyReceptiveField(MarioForwardModel model) {
 		int[][] observations = model.getMarioEnemiesObservation();

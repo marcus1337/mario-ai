@@ -2,6 +2,7 @@ package engine.core;
 
 import javax.swing.*;
 
+import _GA_TESTS.ReceptiveField;
 import engine.helper.Assets;
 import engine.helper.MarioActions;
 
@@ -77,7 +78,19 @@ public class MarioRender extends JComponent implements FocusListener {
         
     }
     
-    void renderReceptiveField(Graphics g, Graphics og){
+    ReceptiveField receptiveField = null;
+    int[][] enemyField = null;
+    int[][] blockField = null;
+    
+    void renderReceptiveField(Graphics2D g, float topX, float topY, float brickLen){
+    	
+    	for(int i = 0; i < 6; i++){
+    		for(int j = 0 ; j < 5; j++){
+    			float tmpX = topX + brickLen*j;
+    			float tmpY = topY + brickLen*i;
+    			g.drawRect((int)tmpX, (int)tmpY+1, (int) brickLen,(int) brickLen);
+    		}
+    	}
     	
     }
     
@@ -90,25 +103,19 @@ public class MarioRender extends JComponent implements FocusListener {
     	
     	float brLen = WIDTH/30.0f;
     	float brickStep = brLen/2;
-
-
     	float[] marioPos = model.getMarioFloatPos();
     	marioPos[0] = world.marioSprite.x;
     	marioPos[1] = world.marioSprite.y;
-    	
-    	//System.out.println("Y: " + marioPos[1] + " _ Y2: " + model.world.cameraY);
-    
-    	
     	marioPos[0] -= world.marioSprite.world.cameraX;
     	marioPos[1] -= world.marioSprite.world.cameraY;
+    	float topX = marioPos[0] - brickStep;
+    	float topY = marioPos[1] - brLen*4;
+    	receptiveField = new ReceptiveField();
+    	enemyField = receptiveField.getEnemyReceptiveField(model);
+    	blockField = receptiveField.getBlockReceptiveField(model);
     	
-    	int x = (int) (marioPos[0] - brickStep);
-    	int y = (int) (marioPos[1] - brickStep*3);
-
-    	//x *= 2;
-    	//y *= 2;
-        
-    	g2.drawRect(x, y, (int) brLen,(int) brLen);
+    	renderReceptiveField(g2, topX, topY, brLen);
+    	
     	g2.setStroke(oldStroke);
     }
     
