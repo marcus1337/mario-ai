@@ -8,7 +8,8 @@ public class ReceptiveField {
 
 	public final int lenX = 5;
 	public final int lenY = 6;
-	private final int midX = 16;
+	//private final int midX = 16;
+	private final int midX = 12;
 	private final int midY = 8;
 
 	ArrayList<Integer> getObstacleValues() {

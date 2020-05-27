@@ -88,6 +88,11 @@ public class MarioRender extends JComponent implements FocusListener {
     		for(int j = 0 ; j < 5; j++){
     			float tmpX = topX + brickLen*j;
     			float tmpY = topY + brickLen*i;
+    			if(blockField[j][i] != 0){
+    				g.setColor(Color.GREEN);
+    			}else{
+    				g.setColor(Color.gray);
+    			}
     			g.drawRect((int)tmpX, (int)tmpY+1, (int) brickLen,(int) brickLen);
     		}
     	}
@@ -95,7 +100,7 @@ public class MarioRender extends JComponent implements FocusListener {
     }
     
     void renderRectangles(Graphics gi, Graphics g){
-    	
+
     	Graphics2D g2 = (Graphics2D) g;
     	float thickness = 2;
     	Stroke oldStroke = g2.getStroke();
@@ -111,8 +116,10 @@ public class MarioRender extends JComponent implements FocusListener {
     	float topX = marioPos[0] - brickStep;
     	float topY = marioPos[1] - brLen*4;
     	receptiveField = new ReceptiveField();
+    	
     	enemyField = receptiveField.getEnemyReceptiveField(model);
     	blockField = receptiveField.getBlockReceptiveField(model);
+    	//receptiveField.printReceptiveField(blockField);
     	
     	renderReceptiveField(g2, topX, topY, brLen);
     	
