@@ -31,7 +31,8 @@ public class MarioRender extends JComponent implements FocusListener {
         this.setEnabled(true);
         this.scale = scale;
 
-        Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.7f)-10);
+       // Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.7f));
+        Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.f));
 
         setPreferredSize(size);
         setMinimumSize(size);

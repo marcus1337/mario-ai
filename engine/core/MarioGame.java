@@ -12,17 +12,8 @@ import engine.helper.GameStatus;
 import engine.helper.MarioActions;
 
 public class MarioGame {
-    /**
-     * the maximum time that agent takes for each step
-     */
     public static final long maxTime = 40;
-    /**
-     * extra time before reporting that the agent is taking more time that it should
-     */
     public static final long graceTime = 10;
-    /**
-     * Screen width
-     */
    // public static final int width = 256*2;
     public static final int width = 400;
     /**
@@ -30,47 +21,19 @@ public class MarioGame {
      */
     //public static final int height = 256;
     public static final int height = 256;
-    /**
-     * Screen width in tiles
-     */
     public static final int tileWidth = (width / 16);
-    /**
-     * Screen height in tiles
-     */
     public static final int tileHeight = height / 16;
-    /**
-     * print debug details
-     */
     public static final boolean verbose = false;
-
-    /**
-     * pauses the whole game at any moment
-     */
     public boolean pause = false;
-
-    /**
-     * events that kills the player when it happens only care about type and param
-     */
     private MarioEvent[] killEvents;
 
-    //visualization
-    private JFrame window = null;
+    public JFrame window = null;
     private MarioRender render = null;
     private MarioAgent agent = null;
     private MarioWorld world = null;
 
-    /**
-     * Create a mario game to be played
-     */
-    public MarioGame() {
+    public MarioGame() {}
 
-    }
-
-    /**
-     * Create a mario game with a different forward model where the player on certain event
-     *
-     * @param killPlayer events that will kill the player
-     */
     public MarioGame(MarioEvent[] killEvents) {
         this.killEvents = killEvents;
     }
@@ -193,23 +156,20 @@ public class MarioGame {
         return this.runGame(agent, level, timer, marioState, visuals, fps, 2);
     }
 
-    /**
-     * Run a certain mario level with a certain agent
-     *
-     * @param agent      the current AI agent used to play the game
-     * @param level      a string that constitutes the mario level, it uses the same representation as the VGLC but with more details. for more details about each symbol check the json file in the levels folder.
-     * @param timer      number of ticks for that level to be played. Setting timer to anything <=0 will make the time infinite
-     * @param marioState the initial state that mario appears in. 0 small mario, 1 large mario, and 2 fire mario.
-     * @param visuals    show the game visuals if it is true and false otherwise
-     * @param fps        the number of frames per second that the update function is following
-     * @param scale      the screen scale, that scale value is multiplied by the actual width and height
-     * @return statistics about the current game
-     */
+
+    KeyController keyController = null;
+    
     public MarioResult runGame(MarioAgent agent, String level, int timer, int marioState, boolean visuals, int fps, float scale) {
         if (visuals) {
             window = new JFrame("Mario AI Framework");
+            keyController = new KeyController();
+            keyController.marioGame = this;
+           // window.addKeyListener(keyController);
+            
             window.setUndecorated(true);
             render = new MarioRender(scale);
+            render.addKeyListener(keyController);
+            
             window.setContentPane(render);
             window.pack();
             window.setResizable(false);
