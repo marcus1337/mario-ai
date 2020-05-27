@@ -99,8 +99,8 @@ public class MarioRender extends JComponent implements FocusListener {
     	//System.out.println("Y: " + marioPos[1] + " _ Y2: " + model.world.cameraY);
     
     	
-    	marioPos[0] -= model.world.cameraX;
-    	marioPos[1] -= model.world.cameraY;
+    	marioPos[0] -= world.marioSprite.world.cameraX;
+    	marioPos[1] -= world.marioSprite.world.cameraY;
     	
     	int x = (int) (marioPos[0] - brickStep);
     	int y = (int) (marioPos[1] - brickStep*3);
