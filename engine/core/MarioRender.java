@@ -108,6 +108,10 @@ public class MarioRender extends JComponent implements FocusListener {
 				float tmpX = topX + brickLen * j;
 				float tmpY = topY + brickLen * i;
 				if (blockField[j][i] != 0) {
+					int alpha = 90; 
+					Color myColour = new Color(Color.GREEN.getRed(), Color.GREEN.getGreen(), Color.GREEN.getBlue(), alpha);
+					g.setColor(myColour);
+					g.fillRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
 					g.setColor(Color.GREEN);
 					g.drawRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
 				}
@@ -119,6 +123,10 @@ public class MarioRender extends JComponent implements FocusListener {
 				float tmpX = topX + brickLen * j;
 				float tmpY = topY + brickLen * i;
 				if (enemyField[j][i] != 0) {
+					int alpha = 90; 
+					Color myColour = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);
+					g.setColor(myColour);
+					g.fillRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
 					g.setColor(Color.RED);
 					g.drawRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
 				}
