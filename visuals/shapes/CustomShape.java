@@ -18,10 +18,10 @@ public abstract class CustomShape extends BTShape {
 	protected abstract void customPaint(Graphics2D g, TextInBox box);
 
 	@Override
-	public void paint(Graphics2D g, TextInBox box, Font font) {
+	public void paint(Graphics2D g, TextInBox box) {
 		setPath((double) box.width, (double) box.height);
 		customPaint(g, box);
-		paintText(g, box, font);
+		paintText(g, box);
 	}
 
 }

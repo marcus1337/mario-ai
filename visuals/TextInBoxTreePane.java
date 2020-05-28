@@ -65,25 +65,67 @@ public class TextInBoxTreePane extends JComponent {
 		}
 	}
 
+	public BTShape makeInteriorShape(TextInBox textInBox){
+		BTShape shape = null;
+		Rectangle2D.Double bounds = getBoundsOfNode(textInBox);
+		
+		if(textInBox.text.equals("?")){
+			shape = new Square((int)bounds.x,(int)bounds.y);
+			shape.text = "?";
+			shape.trig = symbolAttribFallback;
+			shape.font = symbolFontFallback;
+		}
+		
+		if(textInBox.text.equals("?*")){
+			shape = new Square((int)bounds.x,(int)bounds.y);
+			shape.text = "?*";
+			shape.trig = symbolAttribFallback;
+			shape.font = symbolFontFallback;
+		}
+		
+		if(textInBox.text.equals("→")){
+			shape = new Square((int)bounds.x,(int)bounds.y);
+			shape.text = "→";
+			shape.trig = symbolAttribSequence;
+			shape.font = symbolFontSequence;
+		}
+		
+		if(textInBox.text.equals("→*")){
+			shape = new Square((int)bounds.x,(int)bounds.y);
+			shape.text = "→*";
+			shape.trig = symbolAttribSequence;
+			shape.font = symbolFontSequence;
+		}
+		
+		if(textInBox.text.equals("⇉")){
+			shape = new Square((int)bounds.x,(int)bounds.y);
+			shape.text = "⇉";
+			shape.font = symbolFontParallel;
+		}
+		
+		if(textInBox.text.equals("δ")){
+			shape = new Diamond((int)bounds.x,(int)bounds.y);
+			shape.text = "δ";
+			shape.font = symbolFontDecorator;
+		}
+		
+		return shape;
+	}
 	
 	static boolean doOnce = false;
 	private void paintBox(Graphics2D g, TextInBox textInBox) {
 
 		Rectangle2D.Double box = getBoundsOfNode(textInBox);
+		
+		if(!doOnce){
+			textInBox.text = "?*";
+			makeInteriorShape(textInBox).paint(g, textInBox);
+			doOnce = true;
+			textInBox.text = "hello";
+		}
 
 		paintBoxBackground(g, box);
 		paintBoxMargin(g, box);
-		
-		
-		if(!doOnce){
-			textInBox.width*=2;
-			textInBox.height *= 2;
-			BTShape diamond = new Square(10,10);
-			diamond.text = "?*";
-			diamond.trig = symbolAttribFallback;
-			diamond.paint(g, textInBox, symbolFontSequence);
-			doOnce = true;
-		}
 
 		paintBoxText(g, textInBox, box);
 	}

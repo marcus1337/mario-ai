@@ -54,6 +54,7 @@ public abstract class BTShape extends Path2D.Double {
 	public String text = "Hello world!";
 	public AttributedString trig = null;
 	public static int ARC_SIZE = 10;
+	public Font font = null;
 	
 	protected void paintBoxBackground(Graphics2D g, TextInBox box) {
 		g.setColor(BOX_COLOR);
@@ -65,7 +66,7 @@ public abstract class BTShape extends Path2D.Double {
 		g.drawRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
 	}
 
-	protected void paintText(Graphics2D g, TextInBox box, Font font) {
+	protected void paintText(Graphics2D g, TextInBox box) {
 		if(box.text.isEmpty())
 			return;
 
@@ -74,6 +75,7 @@ public abstract class BTShape extends Path2D.Double {
 	    int txtY =  y + ((box.height - metrics.getHeight()) / 2) + metrics.getAscent();
 	    Font oldFont = g.getFont();
 	    g.setFont(font); 
+	    g.setColor(TEXT_COLOR);
 	    
 	    if(text.length() == 1)
 	    	g.drawString(text, txtX, txtY);
@@ -86,5 +88,5 @@ public abstract class BTShape extends Path2D.Double {
 	    g.setFont(oldFont);
 	}
 	
-	public abstract void paint(Graphics2D g, TextInBox box, Font font);
+	public abstract void paint(Graphics2D g, TextInBox box);
 }
