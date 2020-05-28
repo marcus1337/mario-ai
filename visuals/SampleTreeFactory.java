@@ -16,7 +16,7 @@ public class SampleTreeFactory {
 
 	public static int interiorWidth = 20;
 
-	public static TreeForTreeLayout<TextInBox> createSampleTree(Tree tree) {
+	public static TreeForTreeLayout<Node> createSampleTree(Tree tree) {
 
 		Stack<Node> nodeStack = new Stack<Node>();
 		Queue<TextInBox> textBoxStack = new LinkedList<TextInBox>();
@@ -24,35 +24,39 @@ public class SampleTreeFactory {
 		int numParents = 0;
 		
 		nodeStack.push(tree.root);
+		//textBoxStack.add(new TextInBox(tree.root));
 		while (!nodeStack.empty()) {
 			Node node = nodeStack.pop();
 			counter++;
 			if (node.isParent()) {
 				numParents++;
+				System.out.println("A1 " + node.getDetailedType());
+				 //intermediate nodes are added twice == error
 				textBoxStack.add(new TextInBox(node));
 				ArrayList<Node> children = node.getChildren();
 				for (Node n : children) {
 					nodeStack.add(n);
 					textBoxStack.add(new TextInBox(n));
+					System.out.println("B1 " + n.isParent() + " _ " + n.isParent() + " _ " + n.getDetailedType());
 				}
 			}
 		}
 		System.out.println("TOTAL: " + counter + " parents: " + numParents);
-		
+		System.out.println("\n");
 		
 		TextInBox rootBox = textBoxStack.peek();
-		DefaultTreeForTreeLayout<TextInBox> treeLayout = new DefaultTreeForTreeLayout<TextInBox>(rootBox);
+		DefaultTreeForTreeLayout<Node> treeLayout = new DefaultTreeForTreeLayout<Node>(rootBox.node);
 		
 		
 		while (!textBoxStack.isEmpty()) {
 			TextInBox txtBox1 = textBoxStack.poll();
-			System.out.println("BEFORE A");
 			if (txtBox1.node.isParent()) {
-				System.out.println("TEST A");
+				System.out.println("A " + txtBox1.node.getDetailedType());
 				ArrayList<Node> children = txtBox1.node.getChildren();
 				for (Node n : children) {
 					TextInBox txtBox2 = textBoxStack.poll();
-					treeLayout.addChild(txtBox1, txtBox2);
+					System.out.println("B " + n.isParent() + " _ " + txtBox2.node.isParent() + " _ " + n.getDetailedType());
+					treeLayout.addChild(txtBox1.node, txtBox2.node);
 				}
 			}
 		}

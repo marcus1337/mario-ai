@@ -7,8 +7,8 @@ public class Task extends Node {
 	Supplier<STATE> action = null;
 	Supplier<STATE> condition = null;
 
-	public Task(Supplier<STATE> action,
-			Supplier<STATE> condition) {
+	public Task(Supplier<STATE> condition,
+			Supplier<STATE> action) {
 		this.action = action;
 		this.condition = condition;
 	}
