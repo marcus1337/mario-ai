@@ -7,6 +7,11 @@ public abstract class Interior extends Node {
 	protected ArrayList<Node> children;
 	public boolean isMemoryNode = false;
 	
+	@Override
+	public ArrayList<Node> getChildren(){
+		return new ArrayList<Node>(children);
+	}
+	
 	public void addChild(Node node){
 		children.add(node);
 	}

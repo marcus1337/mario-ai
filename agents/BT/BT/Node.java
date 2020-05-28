@@ -1,5 +1,7 @@
 package agents.BT.BT;
 
+import java.util.ArrayList;
+
 public abstract class Node {
 	
 	protected static STATE FRESH = STATE.FRESH;
@@ -13,6 +15,9 @@ public abstract class Node {
 	public abstract NodeTypeDetailed getDetailedType();
 	
 	public abstract STATE run();
+	public ArrayList<Node> getChildren(){
+		return null;
+	}
 	
 	protected STATE runAndUpdate(){
 		status = run();

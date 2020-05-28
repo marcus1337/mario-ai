@@ -111,6 +111,18 @@ public class TextInBoxTreePane extends JComponent {
 			shape.font = symbolFontDecorator;
 		}
 		
+		if(textInBox.text.equals("Action")){
+			shape = new BTRectangle((int)bounds.x,(int)bounds.y);
+			shape.text = "Action";
+			shape.font = symbolFontDecorator;
+		}
+		
+		if(textInBox.text.equals("Condition")){
+			shape = new Oval((int)bounds.x,(int)bounds.y);
+			shape.text = "Condition";
+			shape.font = symbolFontDecorator;
+		}
+		
 		return shape;
 	}
 	

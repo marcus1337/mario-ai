@@ -1,19 +1,57 @@
 package visuals;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.util.DefaultTreeForTreeLayout;
 
+import agents.BT.BT.Interior;
+import agents.BT.BT.Node;
 import agents.BT.BT.Tree;
 
-
 public class SampleTreeFactory {
-	
+
 	public static int interiorWidth = 20;
-	
-	public static TreeForTreeLayout<TextInBox> createSampleTree(Tree tree){
+
+	public static TreeForTreeLayout<TextInBox> createSampleTree(Tree tree) {
+
+		Stack<Node> nodeStack = new Stack<Node>();
+		Stack<TextInBox> textBoxStack = new Stack<TextInBox>();
+		
+		nodeStack.push(tree.root);
+		while (!nodeStack.empty()) {
+			Node node = nodeStack.pop();
+			textBoxStack.add(new TextInBox(node));
+			if (node.isParent()) {
+				ArrayList<Node> children = node.getChildren();
+				for (Node n : children) {
+					nodeStack.add(n);
+					textBoxStack.add(new TextInBox(n));
+				}
+			}
+		}
 		
 		
-		return null;
+		DefaultTreeForTreeLayout<TextInBox> treeLayout = new DefaultTreeForTreeLayout<TextInBox>(new TextInBox(tree.root));
+		nodeStack.push(tree.root);
+		
+		while (!nodeStack.empty()) {
+			Node node = nodeStack.pop();
+			TextInBox txtBox1 = textBoxStack.pop();
+
+			if (node.isParent()) {
+				ArrayList<Node> children = node.getChildren();
+				for (Node n : children) {
+					nodeStack.add(n);
+					TextInBox txtBox2 = textBoxStack.pop();
+					treeLayout.addChild(txtBox1, txtBox2);
+				}
+			}
+		}
+		
+
+		return treeLayout;
 	}
 
 	public static TreeForTreeLayout<TextInBox> createSampleTree() {
@@ -34,5 +72,5 @@ public class SampleTreeFactory {
 		tree.addChild(n2, n2_1);
 		return tree;
 	}
-	
+
 }
