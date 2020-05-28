@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.font.TextAttribute;
 import java.awt.geom.Path2D;
+import java.text.AttributedString;
 
 import visuals.TextInBox;
 
 public abstract class Shape extends Path2D.Double {
 	
-	protected static int ARC_SIZE = 10;
 	protected Color BOX_COLOR = Color.orange;
 	protected Color BORDER_COLOR = Color.darkGray;
 	protected Color TEXT_COLOR = Color.black;
@@ -49,21 +50,29 @@ public abstract class Shape extends Path2D.Double {
 		this.y = y;
 	}
 	
-	//public String symbol = "⇉";
 	public String text = "Hello world!";
+	public AttributedString trig = null;
 
-	protected void paintText(Graphics2D g, TextInBox box) {
+	protected void paintText(Graphics2D g, TextInBox box, Font font) {
 		if(box.text.isEmpty())
 			return;
 
-		String[] lines = box.text.split("\n");
-		Font font = g.getFont();
 		FontMetrics metrics = g.getFontMetrics(font);
 	    int txtX =  x + (box.width - metrics.stringWidth(text)) / 2;
 	    int txtY =  y + ((box.height - metrics.getHeight()) / 2) + metrics.getAscent();
-	    g.drawString(text, txtX, txtY);
-		
+	    Font oldFont = g.getFont();
+	    g.setFont(font); 
+	    
+	    if(text.length() == 1)
+	    	g.drawString(text, txtX, txtY);
+	    else if(text.length() == 2){
+            g.drawString(trig.getIterator(), txtX + font.getSize()/3, txtY);
+	    }else{
+	    	g.drawString(text, txtX , txtY);
+	    }
+	    
+	    g.setFont(oldFont);
 	}
 	
-	public abstract void paint(Graphics2D g, TextInBox box);
+	public abstract void paint(Graphics2D g, TextInBox box, Font font);
 }

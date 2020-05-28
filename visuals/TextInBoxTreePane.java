@@ -3,15 +3,18 @@ package visuals;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
+import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
+import java.text.AttributedString;
 
 import javax.swing.JComponent;
 
@@ -69,10 +72,14 @@ public class TextInBoxTreePane extends JComponent {
 		paintBoxBackground(g, box);
 		paintBoxMargin(g, box);
 		
+		
 		if(!doOnce){
 			textInBox.width*=2;
 			textInBox.height *= 2;
-			new Diamond(10,10).paint(g, textInBox);
+			Diamond diamond = new Diamond(10,10);
+			diamond.text = "?*";
+			diamond.trig = symbolAttribFallback;
+			diamond.paint(g, textInBox, symbolFontSequence);
 			doOnce = true;
 		}
 
@@ -92,7 +99,7 @@ public class TextInBoxTreePane extends JComponent {
 	private void paintBoxText(Graphics2D g, TextInBox textInBox, Rectangle2D.Double box) {
 		g.setColor(TEXT_COLOR);
 		String[] lines = textInBox.text.split("\n");
-		FontMetrics m = getFontMetrics(getFont());
+		FontMetrics m = g.getFontMetrics(g.getFont());
 		int x = (int) box.x + ARC_SIZE / 2;
 		int y = (int) box.y + m.getAscent() + m.getLeading() + 1;
 		for (int i = 0; i < lines.length; i++) {
@@ -108,16 +115,49 @@ public class TextInBoxTreePane extends JComponent {
 		paintEdges(g2, getTree().getRoot());
 		g2.setStroke(oldStroke);
 	}
+	
+	public static Font symbolFontDecorator = null;
+	public static Font symbolFontParallel = null;
+	public static Font symbolFontSequence = null;
+	public static Font symbolFontFallback = null;
+	
+	public static AttributedString symbolAttribParallel = null;
+	public static AttributedString symbolAttribSequence = null;
+	public static AttributedString symbolAttribFallback = null;
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-
+		
+		init(g);
+		
 		Graphics2D g2 = (Graphics2D) g;
 
 		paintSpecializedEdges(g2);
 		for (TextInBox textInBox : treeLayout.getNodeBounds().keySet())
 			paintBox(g2, textInBox);
 
+	}
+
+	public void init(Graphics g) {
+		int symbolTextSize = ARC_SIZE + ARC_SIZE/2;
+		symbolFontDecorator = new Font("δ", Font.BOLD, symbolTextSize);
+		symbolFontParallel = new Font("⇉", Font.BOLD, symbolTextSize);
+		symbolFontSequence = new Font("→", Font.BOLD, symbolTextSize);
+		symbolFontFallback = new Font("?", Font.BOLD, symbolTextSize);
+		g.setFont(new Font("default", Font.ROMAN_BASELINE, ARC_SIZE+ARC_SIZE/5));
+		
+        symbolAttribParallel = getAttributedString("⇉*");
+        symbolAttribSequence = getAttributedString("→*");
+        symbolAttribFallback = getAttributedString("?*");
+		
+	}
+
+	public AttributedString getAttributedString(String txt) {
+		AttributedString trig = new AttributedString(txt);
+        trig.addAttribute(TextAttribute.FAMILY, symbolFontParallel.getFamily());
+        trig.addAttribute(TextAttribute.SIZE, symbolFontParallel.getSize());
+        trig.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUPER, 1, 2);
+		return trig;
 	}
 }
