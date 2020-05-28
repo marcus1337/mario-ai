@@ -38,30 +38,16 @@ public class TreeVisualizer {
 		return tree;
 	}
 
-	/**
-	 * Shows a dialog with a tree in a layout created by {@link TreeLayout},
-	 * using the Swing component {@link TextInBoxTreePane}.
-	 * 
-	 * @param args args[0]: treeName (default="")
-	 */
 	public static void main(String[] args) {
 		
-		String treeName = (args.length > 0) ? args[0] : "";
+		String treeName = "2";
 		TreeForTreeLayout<TextInBox> tree = getSampleTree(treeName);
 				
-		// setup the tree layout configuration
 		double gapBetweenLevels = 50;
 		double gapBetweenNodes = 10;
-		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(
-				gapBetweenLevels, gapBetweenNodes);
-		
-
-		// create the NodeExtentProvider for TextInBox nodes
+		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(gapBetweenLevels, gapBetweenNodes);
 		TextInBoxNodeExtentProvider nodeExtentProvider = new TextInBoxNodeExtentProvider();
-
-		// create the layout
-		TreeLayout<TextInBox> treeLayout = new TreeLayout<TextInBox>(tree,
-				nodeExtentProvider, configuration);
+		TreeLayout<TextInBox> treeLayout = new TreeLayout<TextInBox>(tree,nodeExtentProvider, configuration);
 
 
 		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
