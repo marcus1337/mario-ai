@@ -60,15 +60,21 @@ public class TextInBoxTreePane extends JComponent {
 		}
 	}
 
-
+	
+	static boolean doOnce = false;
 	private void paintBox(Graphics2D g, TextInBox textInBox) {
 
 		Rectangle2D.Double box = getBoundsOfNode(textInBox);
 
 		paintBoxBackground(g, box);
 		paintBoxMargin(g, box);
-
-		new Diamond((int)box.x,(int)box.y).paint(g, textInBox);
+		
+		if(!doOnce){
+			textInBox.width*=2;
+			textInBox.height *= 2;
+			new Diamond(10,10).paint(g, textInBox);
+			doOnce = true;
+		}
 
 		paintBoxText(g, textInBox, box);
 	}

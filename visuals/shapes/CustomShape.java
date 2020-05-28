@@ -20,6 +20,7 @@ public abstract class CustomShape extends Shape {
 	public void paint(Graphics2D g, TextInBox box) {
 		setPath((double) box.width, (double) box.height);
 		customPaint(g, box);
+		paintText(g,box);
 	}
 
 

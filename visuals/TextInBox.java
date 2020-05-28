@@ -2,9 +2,9 @@ package visuals;
 
 public class TextInBox {
 
-	public final String text;
-	public final int height;
-	public final int width;
+	public String text;
+	public int height;
+	public int width;
 
 	public TextInBox(String text, int width, int height) {
 		this.text = text;

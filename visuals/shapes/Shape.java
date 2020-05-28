@@ -1,6 +1,8 @@
 package visuals.shapes;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
@@ -8,7 +10,7 @@ import visuals.TextInBox;
 
 public abstract class Shape extends Path2D.Double {
 	
-	protected int ARC_SIZE = 10;
+	protected static int ARC_SIZE = 10;
 	protected Color BOX_COLOR = Color.orange;
 	protected Color BORDER_COLOR = Color.darkGray;
 	protected Color TEXT_COLOR = Color.black;
@@ -45,6 +47,22 @@ public abstract class Shape extends Path2D.Double {
 	public void setXY(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	//public String symbol = "⇉";
+	public String text = "Hello world!";
+
+	protected void paintText(Graphics2D g, TextInBox box) {
+		if(box.text.isEmpty())
+			return;
+
+		String[] lines = box.text.split("\n");
+		Font font = g.getFont();
+		FontMetrics metrics = g.getFontMetrics(font);
+	    int txtX =  x + (box.width - metrics.stringWidth(text)) / 2;
+	    int txtY =  y + ((box.height - metrics.getHeight()) / 2) + metrics.getAscent();
+	    g.drawString(text, txtX, txtY);
+		
 	}
 	
 	public abstract void paint(Graphics2D g, TextInBox box);
