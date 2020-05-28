@@ -2,7 +2,6 @@ package visuals;
 
 import agents.BT.BT.Node;
 import agents.BT.BT.NodeTypeDetailed;
-import agents.BT.BT.NodeTypes;
 
 public class TextInBox {
 
@@ -23,8 +22,8 @@ public class TextInBox {
 		if(node.isParent()){
 			this.width = this.height = 35;
 		}else{
-			this.width = 70;
-			this.height = 50;
+			this.width = 90;
+			this.height = 60;
 		}
 		if(node.getDetailedType() == NodeTypeDetailed.SEQUENCE){
 			text = "→";

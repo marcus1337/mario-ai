@@ -89,20 +89,34 @@ public class Conditions {
 	public Task makeCondition(int ID) {
 		Task task = null;
 
-		if (ID == 0)
+		if (ID == 0){
 			task = new Task(this::isBigMario, null);
-		if (ID == 1)
+			task.description = "Big Mario";
+		}
+		if (ID == 1){
 			task = new Task(this::isFireMario, null);
-		if (ID == 2)
+			task.description = "Fire Mario";
+		}
+		if (ID == 2){
 			task = new Task(this::isObstacleAhead, null);
-		if (ID == 3)
+			task.description = "Barrier";
+		}
+		if (ID == 3){
 			task = new Task(this::isEnemyAhead, null);
-		if (ID == 4)
+			task.description = "Enemy";
+		}
+		if (ID == 4){
 			task = new Task(this::isGapAhead, null);
-		if (ID == 5)
+			task.description = "Gap";
+		}
+		if (ID == 5){
 			task = new Task(this::isStuck, null);
-		if (ID == 6)
+			task.description = "Stuck";
+		}
+		if (ID == 6){
 			task = new Task(this::upIsPushable, null);
+			task.description = "Poke up";
+		}
 
 		return task;
 	}

@@ -63,59 +63,59 @@ public class TextInBoxTreePane extends JComponent {
 		}
 	}
 
-	public BTShape makeInteriorShape(Node textInBox){
+	public BTShape makeInteriorShape(Node node){
 		BTShape shape = null;
-		Rectangle2D.Double bounds = getBoundsOfNode(textInBox);
+		Rectangle2D.Double bounds = getBoundsOfNode(node);
 		
-		if(textInBox.text.equals("?")){
+		if(node.text.equals("?")){
 			shape = new Square((int)bounds.x,(int)bounds.y);
 			shape.text = "?";
 			shape.trig = symbolAttribFallback;
 			shape.font = symbolFontFallback;
 		}
 		
-		if(textInBox.text.equals("?*")){
+		if(node.text.equals("?*")){
 			shape = new Square((int)bounds.x,(int)bounds.y);
 			shape.text = "?*";
 			shape.trig = symbolAttribFallback;
 			shape.font = symbolFontFallback;
 		}
 		
-		if(textInBox.text.equals("→")){
+		if(node.text.equals("→")){
 			shape = new Square((int)bounds.x,(int)bounds.y);
 			shape.text = "→";
 			shape.trig = symbolAttribSequence;
 			shape.font = symbolFontSequence;
 		}
 		
-		if(textInBox.text.equals("→*")){
+		if(node.text.equals("→*")){
 			shape = new Square((int)bounds.x,(int)bounds.y);
 			shape.text = "→*";
 			shape.trig = symbolAttribSequence;
 			shape.font = symbolFontSequence;
 		}
 		
-		if(textInBox.text.equals("⇉")){
+		if(node.text.equals("⇉")){
 			shape = new Square((int)bounds.x,(int)bounds.y);
 			shape.text = "⇉";
 			shape.font = symbolFontParallel;
 		}
 		
-		if(textInBox.text.equals("δ")){
+		if(node.text.equals("δ")){
 			shape = new Diamond((int)bounds.x,(int)bounds.y);
 			shape.text = "δ";
 			shape.font = symbolFontDecorator;
 		}
 		
-		if(textInBox.text.equals("Action")){
+		if(node.text.equals("Action")){
 			shape = new BTRectangle((int)bounds.x,(int)bounds.y);
-			shape.text = "Action";
+			shape.text = node.description;
 			shape.font = symbolFontDecorator;
 		}
 		
-		if(textInBox.text.equals("Condition")){
+		if(node.text.equals("Condition")){
 			shape = new Oval((int)bounds.x,(int)bounds.y);
-			shape.text = "Condition";
+			shape.text = node.description;
 			shape.font = symbolFontDecorator;
 		}
 		

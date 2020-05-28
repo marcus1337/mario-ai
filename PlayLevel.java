@@ -24,7 +24,7 @@ public class PlayLevel {
     	
     	JavaPorts evolver = gaTester.getEvolver();
     	evolver.loadElites(gaTester.eliteFolderName);
-    	agents.BT.BTAgent agent = gaTester.getEliteBTAgent(evolver, 411);
+    	agents.BT.BTAgent agent = gaTester.getEliteBTAgent(evolver, 414);
     	agent.partiallyInitialize();
     	TreeVisualizer.visualizeBT(agent.tree);
     	

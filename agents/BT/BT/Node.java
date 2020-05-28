@@ -14,6 +14,7 @@ public abstract class Node {
 	public int width;
 	public int height;
 	public String text = "";
+	public String description = "";
 	
 	public abstract NodeTypes getType();
 	public abstract NodeTypeDetailed getDetailedType();

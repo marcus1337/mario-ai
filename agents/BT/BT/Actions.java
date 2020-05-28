@@ -16,24 +16,42 @@ public class Actions {
 
 	public Task makeAction(int ID) {
 		Task task = null;
-		if (ID == 0)
+		if (ID == 0){
 			task = new Task(null, this::shoot);
-		if (ID == 1)
+			task.description = "Fire";
+		}
+		if (ID == 1){
 			task = new Task(null, this::duck);
-		if (ID == 2)
+			task.description = "Duck";
+		}
+		if (ID == 2){
 			task = new Task(null, this::walkLeft);
-		if (ID == 3)
+			task.description = "Left";
+		}
+		if (ID == 3){
 			task = new Task(null, this::walkRight);
-		if (ID == 4)
+			task.description = "Right";
+		}
+		if (ID == 4){
 			task = new Task(null, this::highJump);
-		if (ID == 5)
+			task.description = "Jump 3";
+		}
+		if (ID == 5){
 			task = new Task(null, this::mediumJump);
-		if (ID == 6)
+			task.description = "Jump 2";
+		}
+		if (ID == 6){
 			task = new Task(null, this::smallJump);
-		if (ID == 7)
+			task.description = "Jump 1";
+		}
+		if (ID == 7){
 			task = new Task(null, this::speed);
-		if (ID == 8)
+			task.description = "Speed";
+		}
+		if (ID == 8){
 			task = new Task(null, this::noOperation);
+			task.description = "NOP";
+		}
 
 		return task;
 	}
