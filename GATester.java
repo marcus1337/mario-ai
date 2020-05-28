@@ -21,11 +21,11 @@ public class GATester {
 		eliteFolderName = fileNameBT + "_Elite";
 	}
 
-	agents.BT.BTAgent getBTAgent(JavaPorts evolver, int index) {
+	public agents.BT.BTAgent getBTAgent(JavaPorts evolver, int index) {
 		return new agents.BT.BTAgent(evolver.getTreeString(index));
 	}
 	
-	agents.BT.BTAgent getEliteBTAgent(JavaPorts evolver, int index) {
+	public agents.BT.BTAgent getEliteBTAgent(JavaPorts evolver, int index) {
 		return new agents.BT.BTAgent(evolver.getEliteTreeString(index));
 	}
 
@@ -34,6 +34,10 @@ public class GATester {
 		for (int i = 0; i < numAI; i++)
 			agents.add(getBTAgent(evolver, i));
 		return agents;
+	}
+	
+	public JavaPorts getEvolver(){
+		return gaLoader.getJavaPort(AIType.BT);
 	}
 
 	public void loadAndShowBTAgent(String filename, int generation, int aiIndex, int fps) {

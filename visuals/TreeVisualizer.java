@@ -10,6 +10,8 @@ import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.TreeLayout;
 import org.abego.treelayout.util.DefaultConfiguration;
 
+import agents.BT.BT.Tree;
+
 public class TreeVisualizer {
 
 	private static void showInDialog(JComponent panel) {
@@ -27,6 +29,26 @@ public class TreeVisualizer {
 		TreeForTreeLayout<TextInBox> tree;
 		tree = SampleTreeFactory.createSampleTree();
 		return tree;
+	}
+	
+	private static TreeForTreeLayout<TextInBox> getRealGraphicsTree(Tree tree) {
+		TreeForTreeLayout<TextInBox> treeLay;
+		treeLay = SampleTreeFactory.createSampleTree(tree);
+		return treeLay;
+	}
+	
+	public static void visualizeBT(Tree tree){
+		TreeForTreeLayout<TextInBox> treeForTreeLayout = getRealGraphicsTree(tree);
+
+		double gapBetweenLevels = 50;
+		double gapBetweenNodes = 10;
+		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(gapBetweenLevels,
+				gapBetweenNodes);
+		TextInBoxNodeExtentProvider nodeExtentProvider = new TextInBoxNodeExtentProvider();
+		TreeLayout<TextInBox> treeLayout = new TreeLayout<TextInBox>(treeForTreeLayout, nodeExtentProvider, configuration);
+
+		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
+		showInDialog(panel);
 	}
 
 	public static void main(String[] args) {

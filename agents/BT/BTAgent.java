@@ -12,8 +12,8 @@ import engine.core.MarioTimer;
 
 public class BTAgent implements MarioAgent {
 	
-	Tree tree;
-	String treeStr;
+	public Tree tree;
+	public String treeStr;
 	
 	public BTAgent(String treeStr){
 		this.treeStr = treeStr;
@@ -43,6 +43,10 @@ public class BTAgent implements MarioAgent {
 	@Override
 	public String getAgentName() {
 		return "BTAgent";
+	}
+	
+	public void partiallyInitialize() {
+		tree = new Tree(treeStr);
 	}
 
 	@Override

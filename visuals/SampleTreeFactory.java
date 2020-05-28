@@ -1,6 +1,8 @@
 package visuals;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 import org.abego.treelayout.TreeForTreeLayout;
@@ -17,13 +19,17 @@ public class SampleTreeFactory {
 	public static TreeForTreeLayout<TextInBox> createSampleTree(Tree tree) {
 
 		Stack<Node> nodeStack = new Stack<Node>();
-		Stack<TextInBox> textBoxStack = new Stack<TextInBox>();
+		Queue<TextInBox> textBoxStack = new LinkedList<TextInBox>();
+		int counter = 0;
+		int numParents = 0;
 		
 		nodeStack.push(tree.root);
 		while (!nodeStack.empty()) {
 			Node node = nodeStack.pop();
-			textBoxStack.add(new TextInBox(node));
+			counter++;
 			if (node.isParent()) {
+				numParents++;
+				textBoxStack.add(new TextInBox(node));
 				ArrayList<Node> children = node.getChildren();
 				for (Node n : children) {
 					nodeStack.add(n);
@@ -31,20 +37,21 @@ public class SampleTreeFactory {
 				}
 			}
 		}
+		System.out.println("TOTAL: " + counter + " parents: " + numParents);
 		
 		
-		DefaultTreeForTreeLayout<TextInBox> treeLayout = new DefaultTreeForTreeLayout<TextInBox>(new TextInBox(tree.root));
-		nodeStack.push(tree.root);
+		TextInBox rootBox = textBoxStack.peek();
+		DefaultTreeForTreeLayout<TextInBox> treeLayout = new DefaultTreeForTreeLayout<TextInBox>(rootBox);
 		
-		while (!nodeStack.empty()) {
-			Node node = nodeStack.pop();
-			TextInBox txtBox1 = textBoxStack.pop();
-
-			if (node.isParent()) {
-				ArrayList<Node> children = node.getChildren();
+		
+		while (!textBoxStack.isEmpty()) {
+			TextInBox txtBox1 = textBoxStack.poll();
+			System.out.println("BEFORE A");
+			if (txtBox1.node.isParent()) {
+				System.out.println("TEST A");
+				ArrayList<Node> children = txtBox1.node.getChildren();
 				for (Node n : children) {
-					nodeStack.add(n);
-					TextInBox txtBox2 = textBoxStack.pop();
+					TextInBox txtBox2 = textBoxStack.poll();
 					treeLayout.addChild(txtBox1, txtBox2);
 				}
 			}
