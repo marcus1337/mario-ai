@@ -43,27 +43,27 @@ public class TreeVisualizer {
 		System.out.println("working...");
 		double gapBetweenLevels = 50;
 		double gapBetweenNodes = 10;
-		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(gapBetweenLevels,
+		DefaultConfiguration<Node> configuration = new DefaultConfiguration<Node>(gapBetweenLevels,
 				gapBetweenNodes);
-		TextInBoxNodeExtentProvider nodeExtentProvider = new TextInBoxNodeExtentProvider();
-		//TreeLayout<TextInBox> treeLayout = new TreeLayout<TextInBox>(treeForTreeLayout, nodeExtentProvider, configuration);
-		//TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
-		//showInDialog(panel);
+		NodeNodeExtentProvider nodeExtentProvider = new NodeNodeExtentProvider();
+		TreeLayout<Node> treeLayout = new TreeLayout<Node>(treeForTreeLayout, nodeExtentProvider, configuration);
+		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
+		showInDialog(panel);
 	}
 
 	public static void main(String[] args) {
 
-		TreeForTreeLayout<TextInBox> tree = getGraphicsTree();
+		/*TreeForTreeLayout<TextInBox> tree = getGraphicsTree();
 
 		double gapBetweenLevels = 50;
 		double gapBetweenNodes = 10;
 		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(gapBetweenLevels,
 				gapBetweenNodes);
 		TextInBoxNodeExtentProvider nodeExtentProvider = new TextInBoxNodeExtentProvider();
-		TreeLayout<TextInBox> treeLayout = new TreeLayout<TextInBox>(tree, nodeExtentProvider, configuration);
+		TreeLayout<Node> treeLayout = new TreeLayout<Node>(tree, nodeExtentProvider, configuration);
 
 		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
-		showInDialog(panel);
+		showInDialog(panel);*/
 	}
 
 }

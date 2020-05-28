@@ -2,6 +2,7 @@ package visuals.shapes;
 
 import java.awt.Graphics2D;
 
+import agents.BT.BT.Node;
 import visuals.TextInBox;
 
 public class BTRectangle extends BTShape {
@@ -11,7 +12,7 @@ public class BTRectangle extends BTShape {
 	}
 
 	@Override
-	public void paint(Graphics2D g, TextInBox box) {
+	public void paint(Graphics2D g, Node box) {
 	    paintBoxBackground(g, box);
 		paintBoxMargin(g, box);
 		paintText(g, box);

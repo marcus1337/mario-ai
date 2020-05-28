@@ -9,6 +9,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 
+import agents.BT.BT.Node;
 import visuals.TextInBox;
 
 public abstract class BTShape extends Path2D.Double {
@@ -56,17 +57,17 @@ public abstract class BTShape extends Path2D.Double {
 		this.y = y;
 	}
 	
-	protected void paintBoxBackground(Graphics2D g, TextInBox box) {
+	protected void paintBoxBackground(Graphics2D g, Node box) {
 		g.setColor(BOX_COLOR);
 		g.fillRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
 	}
 
-	protected void paintBoxMargin(Graphics2D g, TextInBox box) {
+	protected void paintBoxMargin(Graphics2D g, Node box) {
 		g.setColor(BORDER_COLOR);
 		g.drawRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
 	}
 
-	protected void paintText(Graphics2D g, TextInBox box) {
+	protected void paintText(Graphics2D g, Node box) {
 		if(box.text.isEmpty())
 			return;
 
@@ -88,5 +89,5 @@ public abstract class BTShape extends Path2D.Double {
 	    g.setFont(oldFont);
 	}
 	
-	public abstract void paint(Graphics2D g, TextInBox box);
+	public abstract void paint(Graphics2D g, Node box);
 }

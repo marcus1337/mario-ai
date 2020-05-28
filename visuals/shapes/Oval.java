@@ -2,6 +2,7 @@ package visuals.shapes;
 
 import java.awt.Graphics2D;
 
+import agents.BT.BT.Node;
 import visuals.TextInBox;
 
 public class Oval extends BTShape {
@@ -11,7 +12,7 @@ public class Oval extends BTShape {
 	}
 
 	@Override
-	public void paint(Graphics2D g, TextInBox box) {
+	public void paint(Graphics2D g, Node box) {
 		
 		g.setColor(BOX_COLOR);
 		g.fillOval(x, y, (int) box.width - 1, (int) box.height - 1);

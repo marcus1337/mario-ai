@@ -3,6 +3,7 @@ package visuals.shapes;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import agents.BT.BT.Node;
 import visuals.TextInBox;
 
 public class Diamond extends CustomShape {
@@ -21,7 +22,7 @@ public class Diamond extends CustomShape {
 	}
 
 	@Override
-	protected void customPaint(Graphics2D g, TextInBox box) {
+	protected void customPaint(Graphics2D g, Node box) {
 		g.setColor(BOX_COLOR);
 		g.fill(this);
 		g.setColor(BORDER_COLOR);

@@ -21,6 +21,7 @@ import javax.swing.JComponent;
 import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.TreeLayout;
 
+import agents.BT.BT.Node;
 import visuals.shapes.BTRectangle;
 import visuals.shapes.BTShape;
 import visuals.shapes.Diamond;
@@ -28,21 +29,21 @@ import visuals.shapes.Oval;
 import visuals.shapes.Square;
 
 public class TextInBoxTreePane extends JComponent {
-	private final TreeLayout<TextInBox> treeLayout;
+	private final TreeLayout<Node> treeLayout;
 
-	private TreeForTreeLayout<TextInBox> getTree() {
+	private TreeForTreeLayout<Node> getTree() {
 		return treeLayout.getTree();
 	}
 
-	private Iterable<TextInBox> getChildren(TextInBox parent) {
+	private Iterable<Node> getChildren(Node parent) {
 		return getTree().getChildren(parent);
 	}
 
-	private Rectangle2D.Double getBoundsOfNode(TextInBox node) {
+	private Rectangle2D.Double getBoundsOfNode(Node node) {
 		return treeLayout.getNodeBounds().get(node);
 	}
 
-	public TextInBoxTreePane(TreeLayout<TextInBox> treeLayout) {
+	public TextInBoxTreePane(TreeLayout<Node> treeLayout) {
 		this.treeLayout = treeLayout;
 		Dimension size = treeLayout.getBounds().getBounds().getSize();
 		setPreferredSize(size);
@@ -53,12 +54,12 @@ public class TextInBoxTreePane extends JComponent {
 	private final Color BORDER_COLOR = Color.darkGray;
 	private final Color TEXT_COLOR = Color.black;
 
-	private void paintEdges(Graphics2D g, TextInBox parent) {
+	private void paintEdges(Graphics2D g, Node parent) {
 		if (!getTree().isLeaf(parent)) {
 			Rectangle2D.Double b1 = getBoundsOfNode(parent);
 			double x1 = b1.getCenterX();
 			double y1 = b1.getCenterY();
-			for (TextInBox child : getChildren(parent)) {
+			for (Node child : getChildren(parent)) {
 				Rectangle2D.Double b2 = getBoundsOfNode(child);
 				g.drawLine((int) x1, (int) y1, (int) b2.getCenterX(), (int) b2.getCenterY() - (int) (b2.height/2));
 
@@ -67,7 +68,7 @@ public class TextInBoxTreePane extends JComponent {
 		}
 	}
 
-	public BTShape makeInteriorShape(TextInBox textInBox){
+	public BTShape makeInteriorShape(Node textInBox){
 		BTShape shape = null;
 		Rectangle2D.Double bounds = getBoundsOfNode(textInBox);
 		
@@ -126,8 +127,7 @@ public class TextInBoxTreePane extends JComponent {
 		return shape;
 	}
 	
-	static boolean doOnce = false;
-	private void paintBox(Graphics2D g, TextInBox textInBox) {
+	private void paintBox(Graphics2D g, Node textInBox) {
 
 		Rectangle2D.Double box = getBoundsOfNode(textInBox);
 
@@ -135,12 +135,6 @@ public class TextInBoxTreePane extends JComponent {
 		paintBoxMargin(g, box);
 		paintBoxText(g, textInBox, box);
 		
-		if(!doOnce){
-			textInBox.text = "?*";
-			makeInteriorShape(textInBox).paint(g, textInBox);
-			doOnce = true;
-			textInBox.text = "hello";
-		}
 	}
 
 	private void paintBoxBackground(Graphics2D g, Rectangle2D.Double box) {
@@ -153,7 +147,7 @@ public class TextInBoxTreePane extends JComponent {
 		g.drawRoundRect((int) box.x, (int) box.y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
 	}
 
-	private void paintBoxText(Graphics2D g, TextInBox textInBox, Rectangle2D.Double box) {
+	private void paintBoxText(Graphics2D g, Node textInBox, Rectangle2D.Double box) {
 		g.setColor(TEXT_COLOR);
 		String[] lines = textInBox.text.split("\n");
 		FontMetrics m = g.getFontMetrics(g.getFont());
@@ -191,7 +185,7 @@ public class TextInBoxTreePane extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 
 		paintSpecializedEdges(g2);
-		for (TextInBox textInBox : treeLayout.getNodeBounds().keySet())
+		for (Node textInBox : treeLayout.getNodeBounds().keySet())
 			paintBox(g2, textInBox);
 
 	}

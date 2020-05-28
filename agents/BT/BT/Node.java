@@ -11,6 +11,10 @@ public abstract class Node {
 	
 	public STATE status = FRESH;
 	public Node parent;
+	public int width;
+	public int height;
+	public String text = "";
+	
 	public abstract NodeTypes getType();
 	public abstract NodeTypeDetailed getDetailedType();
 	
