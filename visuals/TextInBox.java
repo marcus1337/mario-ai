@@ -21,7 +21,7 @@ public class TextInBox {
 		this.node = node;
 		
 		if(node.isParent()){
-			this.width = this.height = 20;
+			this.width = this.height = 35;
 		}else{
 			this.width = 70;
 			this.height = 50;

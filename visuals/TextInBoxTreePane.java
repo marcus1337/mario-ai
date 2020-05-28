@@ -49,11 +49,6 @@ public class TextInBoxTreePane extends JComponent {
 		setPreferredSize(size);
 	}
 
-	private final int ARC_SIZE = 10;
-	private final Color BOX_COLOR = Color.orange;
-	private final Color BORDER_COLOR = Color.darkGray;
-	private final Color TEXT_COLOR = Color.black;
-
 	private void paintEdges(Graphics2D g, Node parent) {
 		if (!getTree().isLeaf(parent)) {
 			Rectangle2D.Double b1 = getBoundsOfNode(parent);
@@ -134,28 +129,6 @@ public class TextInBoxTreePane extends JComponent {
 		
 	}
 
-	private void paintBoxBackground(Graphics2D g, Rectangle2D.Double box) {
-		g.setColor(BOX_COLOR);
-		g.fillRoundRect((int) box.x, (int) box.y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
-	}
-
-	private void paintBoxMargin(Graphics2D g, Rectangle2D.Double box) {
-		g.setColor(BORDER_COLOR);
-		g.drawRoundRect((int) box.x, (int) box.y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
-	}
-
-	private void paintBoxText(Graphics2D g, Node textInBox, Rectangle2D.Double box) {
-		g.setColor(TEXT_COLOR);
-		String[] lines = textInBox.text.split("\n");
-		FontMetrics m = g.getFontMetrics(g.getFont());
-		int x = (int) box.x + ARC_SIZE / 2;
-		int y = (int) box.y + m.getAscent() + m.getLeading() + 1;
-		for (int i = 0; i < lines.length; i++) {
-			g.drawString(lines[i], x, y);
-			y += m.getHeight();
-		}
-	}
-
 	void paintSpecializedEdges(Graphics2D g2) {
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke(3));
@@ -188,12 +161,12 @@ public class TextInBoxTreePane extends JComponent {
 	}
 
 	public void init(Graphics g) {
-		int symbolTextSize = ARC_SIZE + ARC_SIZE/2;
-		symbolFontDecorator = new Font("δ", Font.BOLD, symbolTextSize);
+		int symbolTextSize = 20;
+		symbolFontDecorator = new Font("δ", Font.PLAIN, symbolTextSize);
 		symbolFontParallel = new Font("⇉", Font.BOLD, symbolTextSize);
 		symbolFontSequence = new Font("→", Font.BOLD, symbolTextSize);
-		symbolFontFallback = new Font("?", Font.BOLD, symbolTextSize);
-		g.setFont(new Font("default", Font.ROMAN_BASELINE, ARC_SIZE+ARC_SIZE/5));
+		symbolFontFallback = new Font("?", Font.ROMAN_BASELINE, symbolTextSize);
+		g.setFont(new Font("default", Font.ROMAN_BASELINE, symbolTextSize));
 		
         symbolAttribParallel = getAttributedString("⇉*");
         symbolAttribSequence = getAttributedString("→*");

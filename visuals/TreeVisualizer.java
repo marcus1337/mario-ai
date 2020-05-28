@@ -34,7 +34,6 @@ public class TreeVisualizer {
 	
 	public static void visualizeBT(Tree tree){
 		TreeForTreeLayout<Node> treeForTreeLayout = getRealGraphicsTree(tree);
-		System.out.println("working...");
 		double gapBetweenLevels = 50;
 		double gapBetweenNodes = 10;
 		DefaultConfiguration<Node> configuration = new DefaultConfiguration<Node>(gapBetweenLevels,
