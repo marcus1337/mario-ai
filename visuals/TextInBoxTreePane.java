@@ -21,7 +21,9 @@ import javax.swing.JComponent;
 import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.TreeLayout;
 
+import visuals.shapes.BTShape;
 import visuals.shapes.Diamond;
+import visuals.shapes.Square;
 
 public class TextInBoxTreePane extends JComponent {
 	private final TreeLayout<TextInBox> treeLayout;
@@ -76,7 +78,7 @@ public class TextInBoxTreePane extends JComponent {
 		if(!doOnce){
 			textInBox.width*=2;
 			textInBox.height *= 2;
-			Diamond diamond = new Diamond(10,10);
+			BTShape diamond = new Square(10,10);
 			diamond.text = "?*";
 			diamond.trig = symbolAttribFallback;
 			diamond.paint(g, textInBox, symbolFontSequence);
@@ -150,7 +152,6 @@ public class TextInBoxTreePane extends JComponent {
         symbolAttribParallel = getAttributedString("⇉*");
         symbolAttribSequence = getAttributedString("→*");
         symbolAttribFallback = getAttributedString("?*");
-		
 	}
 
 	public AttributedString getAttributedString(String txt) {

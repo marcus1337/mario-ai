@@ -6,23 +6,24 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.font.TextAttribute;
 import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 
 import visuals.TextInBox;
 
-public abstract class Shape extends Path2D.Double {
+public abstract class BTShape extends Path2D.Double {
 	
-	protected Color BOX_COLOR = Color.orange;
-	protected Color BORDER_COLOR = Color.darkGray;
+	protected Color BOX_COLOR = Color.LIGHT_GRAY;
+	protected Color BORDER_COLOR = Color.DARK_GRAY;
 	protected Color TEXT_COLOR = Color.black;
 	
 	protected void setPath(double width, double height){
 		throw new UnsupportedOperationException();
 	}
 	
-	public Shape() {
+	public BTShape() {
 	}
-	public Shape(int x, int y) {
+	public BTShape(int x, int y) {
 		setXY(x,y);
 	}
 
@@ -52,6 +53,17 @@ public abstract class Shape extends Path2D.Double {
 	
 	public String text = "Hello world!";
 	public AttributedString trig = null;
+	public static int ARC_SIZE = 10;
+	
+	protected void paintBoxBackground(Graphics2D g, TextInBox box) {
+		g.setColor(BOX_COLOR);
+		g.fillRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
+	}
+
+	protected void paintBoxMargin(Graphics2D g, TextInBox box) {
+		g.setColor(BORDER_COLOR);
+		g.drawRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
+	}
 
 	protected void paintText(Graphics2D g, TextInBox box, Font font) {
 		if(box.text.isEmpty())

@@ -1,5 +1,6 @@
 package visuals.shapes;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import visuals.TextInBox;

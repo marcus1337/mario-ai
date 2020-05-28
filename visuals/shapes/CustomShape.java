@@ -6,7 +6,7 @@ import java.awt.geom.Path2D;
 
 import visuals.TextInBox;
 
-public abstract class CustomShape extends Shape {
+public abstract class CustomShape extends BTShape {
 
 	public CustomShape(int x, int y) {
 		super(x, y);
