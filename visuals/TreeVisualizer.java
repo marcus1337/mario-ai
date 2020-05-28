@@ -40,8 +40,8 @@ public class TreeVisualizer {
 
 	public static void main(String[] args) {
 		
-		String treeName = "2";
-		TreeForTreeLayout<TextInBox> tree = getSampleTree(treeName);
+
+		TreeForTreeLayout<TextInBox> tree = getSampleTree("2");
 				
 		double gapBetweenLevels = 50;
 		double gapBetweenNodes = 10;
@@ -51,7 +51,6 @@ public class TreeVisualizer {
 
 
 		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
-	
 		showInDialog(panel);
 	}
 

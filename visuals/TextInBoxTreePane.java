@@ -18,6 +18,8 @@ import javax.swing.JComponent;
 import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.TreeLayout;
 
+import visuals.shapes.Diamond;
+
 public class TextInBoxTreePane extends JComponent {
 	private final TreeLayout<TextInBox> treeLayout;
 
@@ -58,54 +60,6 @@ public class TextInBoxTreePane extends JComponent {
 		}
 	}
 
-	private class Diamond extends Path2D.Double {
-
-		public Diamond() {
-		}
-		public Diamond(int x, int y) {
-			setXY(x,y);
-		}
-
-		private int x, y;
-
-		public int getX() {
-			return x;
-		}
-
-		public void setX(int x) {
-			this.x = x;
-		}
-
-		public int getY() {
-			return y;
-		}
-
-		public void setY(int y) {
-			this.y = y;
-		}
-
-		public void setXY(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-
-		private void setPath(double width, double height) {
-			moveTo(x, y + height / 2);
-			lineTo(x + width / 2, y);
-			lineTo(x + width, y + height / 2);
-			lineTo(x + width / 2, y + height);
-			closePath();
-		}
-
-		public void paint(Graphics2D g, TextInBox box) {
-			setPath((double) box.width, (double) box.height);
-			g.setColor(BOX_COLOR);
-			g.fill(this);
-			g.setColor(BORDER_COLOR);
-			g.draw(this);
-		}
-
-	}
 
 	private void paintBox(Graphics2D g, TextInBox textInBox) {
 

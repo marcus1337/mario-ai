@@ -10,9 +10,6 @@ import org.abego.treelayout.util.DefaultTreeForTreeLayout;
  */
 public class SampleTreeFactory {
 
-	/**
-	 * @return a "Sample" tree with {@link TextInBox} items as nodes.
-	 */
 	public static TreeForTreeLayout<TextInBox> createSampleTree() {
 		TextInBox root = new TextInBox("root", 40, 20);
 		TextInBox n1 = new TextInBox("n1", 30, 20);
@@ -33,9 +30,6 @@ public class SampleTreeFactory {
 		return tree;
 	}
 	
-	/**
-	 * @return a "Sample" tree with {@link TextInBox} items as nodes.
-	 */
 	public static TreeForTreeLayout<TextInBox> createSampleTree2() {
 		TextInBox root = new TextInBox("prog", 40, 20);
 		TextInBox n1 = new TextInBox("classDef", 65, 20);
@@ -52,8 +46,7 @@ public class SampleTreeFactory {
 		TextInBox n1_7 = new TextInBox("}", 20, 20);
 		         
 		         
-		DefaultTreeForTreeLayout<TextInBox> tree = new DefaultTreeForTreeLayout<TextInBox>(
-				root);
+		DefaultTreeForTreeLayout<TextInBox> tree = new DefaultTreeForTreeLayout<TextInBox>(root);
 		tree.addChild(root, n1);
 		tree.addChild(n1, n1_1);
 		tree.addChild(n1, n1_2);
