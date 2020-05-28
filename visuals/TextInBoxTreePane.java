@@ -21,8 +21,10 @@ import javax.swing.JComponent;
 import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.TreeLayout;
 
+import visuals.shapes.BTRectangle;
 import visuals.shapes.BTShape;
 import visuals.shapes.Diamond;
+import visuals.shapes.Oval;
 import visuals.shapes.Square;
 
 public class TextInBoxTreePane extends JComponent {
@@ -116,6 +118,10 @@ public class TextInBoxTreePane extends JComponent {
 	private void paintBox(Graphics2D g, TextInBox textInBox) {
 
 		Rectangle2D.Double box = getBoundsOfNode(textInBox);
+
+		paintBoxBackground(g, box);
+		paintBoxMargin(g, box);
+		paintBoxText(g, textInBox, box);
 		
 		if(!doOnce){
 			textInBox.text = "?*";
@@ -123,11 +129,6 @@ public class TextInBoxTreePane extends JComponent {
 			doOnce = true;
 			textInBox.text = "hello";
 		}
-
-		paintBoxBackground(g, box);
-		paintBoxMargin(g, box);
-
-		paintBoxText(g, textInBox, box);
 	}
 
 	private void paintBoxBackground(Graphics2D g, Rectangle2D.Double box) {

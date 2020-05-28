@@ -17,6 +17,11 @@ public abstract class BTShape extends Path2D.Double {
 	protected Color BORDER_COLOR = Color.DARK_GRAY;
 	protected Color TEXT_COLOR = Color.black;
 	
+	public String text = "Hello world!";
+	public AttributedString trig = null;
+	public static int ARC_SIZE = 5;
+	public Font font = null;
+	
 	protected void setPath(double width, double height){
 		throw new UnsupportedOperationException();
 	}
@@ -50,11 +55,6 @@ public abstract class BTShape extends Path2D.Double {
 		this.x = x;
 		this.y = y;
 	}
-	
-	public String text = "Hello world!";
-	public AttributedString trig = null;
-	public static int ARC_SIZE = 10;
-	public Font font = null;
 	
 	protected void paintBoxBackground(Graphics2D g, TextInBox box) {
 		g.setColor(BOX_COLOR);
