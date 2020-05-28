@@ -3,8 +3,11 @@ package engine.core;
 import javax.swing.*;
 
 import _GA_TESTS.ReceptiveField;
+import agents.BT.BTAgent;
 import engine.helper.Assets;
 import engine.helper.MarioActions;
+import visuals.TextInBoxTreePane;
+import visuals.TreeVisualizer;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -49,6 +52,7 @@ public class MarioRender extends JComponent implements FocusListener {
 	}
 
 	MarioWorld world = null;
+	public BTAgent btAgent = null;
 
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
@@ -164,8 +168,18 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	boolean doneOnce = false;
 	public void renderBackGround(Graphics g, Graphics og) {
-		if(!doneOnce)
+		if(!doneOnce){
 			g.fillRect(0, 0, WIDTH * 100, HEIGHT * 100);
+			
+			if(btAgent != null){
+				TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
+				
+				g.translate(WIDTH*2, HEIGHT/2);
+				treePanel.paint(g);
+				g.translate(-WIDTH*2, -HEIGHT/2);
+				
+			}
+		}
 		doneOnce = true;
 	}
 

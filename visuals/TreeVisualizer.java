@@ -32,6 +32,17 @@ public class TreeVisualizer {
 		return treeLay;
 	}
 	
+	public static TextInBoxTreePane getBTPanel(Tree tree){
+		TreeForTreeLayout<Node> treeForTreeLayout = getRealGraphicsTree(tree);
+		double gapBetweenLevels = 50;
+		double gapBetweenNodes = 10;
+		DefaultConfiguration<Node> configuration = new DefaultConfiguration<Node>(gapBetweenLevels,
+				gapBetweenNodes);
+		NodeNodeExtentProvider nodeExtentProvider = new NodeNodeExtentProvider();
+		TreeLayout<Node> treeLayout = new TreeLayout<Node>(treeForTreeLayout, nodeExtentProvider, configuration);
+		return new TextInBoxTreePane(treeLayout);
+	}
+	
 	public static void visualizeBT(Tree tree){
 		TreeForTreeLayout<Node> treeForTreeLayout = getRealGraphicsTree(tree);
 		double gapBetweenLevels = 50;

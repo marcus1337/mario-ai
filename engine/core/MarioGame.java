@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 
 import javax.swing.JFrame;
 
+import agents.BT.BTAgent;
 import agents.human.Agent;
 import engine.helper.GameStatus;
 import engine.helper.MarioActions;
@@ -177,6 +178,10 @@ public class MarioGame {
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             render.init();
             window.setVisible(true);
+            
+        	if(agent instanceof BTAgent){
+        		render.btAgent = (BTAgent) agent;
+        	}
         }
         this.setAgent(agent);
         return this.gameLoop(level, timer, marioState, visuals, fps);
@@ -230,6 +235,7 @@ public class MarioGame {
     
     void renderWorld(MarioForwardModel model){
         if (this.world.visuals) {
+        	
         	render.model = model;
             render.renderWorld(this.world, renderTarget, backBuffer, currentBuffer);
         }

@@ -131,8 +131,9 @@ public class TextInBoxTreePane extends JComponent {
 
 	void paintSpecializedEdges(Graphics2D g2) {
 		Stroke oldStroke = g2.getStroke();
-		g2.setStroke(new BasicStroke(3));
+		g2.setStroke(new BasicStroke(2));
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(Color.LIGHT_GRAY);
 		paintEdges(g2, getTree().getRoot());
 		g2.setStroke(oldStroke);
 	}
