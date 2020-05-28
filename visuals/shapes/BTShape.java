@@ -83,7 +83,7 @@ public abstract class BTShape extends Path2D.Double {
 	    else if(text.length() == 2){
             g.drawString(trig.getIterator(), txtX + font.getSize()/3, txtY);
 	    }else{
-	    	g.drawString(text, txtX , txtY);
+	    	g.drawString(text, txtX, txtY);
 	    }
 	    
 	    g.setFont(oldFont);

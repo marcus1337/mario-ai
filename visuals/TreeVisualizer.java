@@ -25,12 +25,6 @@ public class TreeVisualizer {
 		dialog.setLocationRelativeTo(null);
 		dialog.setVisible(true);
 	}
-
-	private static TreeForTreeLayout<TextInBox> getGraphicsTree() {
-		TreeForTreeLayout<TextInBox> tree;
-		tree = SampleTreeFactory.createSampleTree();
-		return tree;
-	}
 	
 	private static TreeForTreeLayout<Node> getRealGraphicsTree(Tree tree) {
 		TreeForTreeLayout<Node> treeLay;
@@ -49,21 +43,6 @@ public class TreeVisualizer {
 		TreeLayout<Node> treeLayout = new TreeLayout<Node>(treeForTreeLayout, nodeExtentProvider, configuration);
 		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
 		showInDialog(panel);
-	}
-
-	public static void main(String[] args) {
-
-		/*TreeForTreeLayout<TextInBox> tree = getGraphicsTree();
-
-		double gapBetweenLevels = 50;
-		double gapBetweenNodes = 10;
-		DefaultConfiguration<TextInBox> configuration = new DefaultConfiguration<TextInBox>(gapBetweenLevels,
-				gapBetweenNodes);
-		TextInBoxNodeExtentProvider nodeExtentProvider = new TextInBoxNodeExtentProvider();
-		TreeLayout<Node> treeLayout = new TreeLayout<Node>(tree, nodeExtentProvider, configuration);
-
-		TextInBoxTreePane panel = new TextInBoxTreePane(treeLayout);
-		showInDialog(panel);*/
 	}
 
 }

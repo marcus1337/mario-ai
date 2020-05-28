@@ -127,13 +127,10 @@ public class TextInBoxTreePane extends JComponent {
 		return shape;
 	}
 	
-	private void paintBox(Graphics2D g, Node textInBox) {
+	private void paintBox(Graphics2D g, Node node) {
 
-		Rectangle2D.Double box = getBoundsOfNode(textInBox);
-
-		paintBoxBackground(g, box);
-		paintBoxMargin(g, box);
-		paintBoxText(g, textInBox, box);
+		BTShape btShape = makeInteriorShape(node);
+		btShape.paint(g, node);
 		
 	}
 

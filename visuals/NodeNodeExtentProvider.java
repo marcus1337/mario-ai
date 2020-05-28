@@ -7,12 +7,12 @@ public class NodeNodeExtentProvider implements NodeExtentProvider<Node> {
 
 	@Override
 	public double getHeight(Node nod) {
-		return nod.width;
+		return nod.height;
 	}
 
 	@Override
 	public double getWidth(Node nod) {
-		return nod.height;
+		return nod.width;
 	}
 
 }
