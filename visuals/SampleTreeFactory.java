@@ -3,14 +3,18 @@ package visuals;
 import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.util.DefaultTreeForTreeLayout;
 
-/**
- * Creates "Sample" trees, e.g. to be used in demonstrations.
- * 
- * @author Udo Borkowski (ub@abego.org)
- */
+import agents.BT.BT.Tree;
+
+
 public class SampleTreeFactory {
 	
 	public static int interiorWidth = 20;
+	
+	public static TreeForTreeLayout<TextInBox> createSampleTree(Tree tree){
+		
+		
+		return null;
+	}
 
 	public static TreeForTreeLayout<TextInBox> createSampleTree() {
 		TextInBox root = new TextInBox("root", 40, 20);

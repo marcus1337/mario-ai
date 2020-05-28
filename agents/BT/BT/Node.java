@@ -10,6 +10,7 @@ public abstract class Node {
 	public STATE status = FRESH;
 	public Node parent;
 	public abstract NodeTypes getType();
+	public abstract NodeTypeDetailed getDetailedType();
 	
 	public abstract STATE run();
 	

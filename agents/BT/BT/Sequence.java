@@ -3,6 +3,13 @@ package agents.BT.BT;
 public class Sequence extends Interior {
 	
 	@Override
+	public NodeTypeDetailed getDetailedType() {
+		if(this.isMemoryNode)
+			return NodeTypeDetailed.SEQUENCE_MEMORY;
+		return NodeTypeDetailed.SEQUENCE;
+	}
+	
+	@Override
 	public NodeTypes getType(){
 		return NodeTypes.OTHER_INTERIOR;
 	}

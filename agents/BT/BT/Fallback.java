@@ -6,6 +6,13 @@ public class Fallback extends Interior {
 	public NodeTypes getType(){
 		return NodeTypes.OTHER_INTERIOR;
 	}
+	
+	@Override
+	public NodeTypeDetailed getDetailedType() {
+		if(this.isMemoryNode)
+			return NodeTypeDetailed.FALLBACK_MEMORY;
+		return NodeTypeDetailed.FALLBACK;
+	}
 
 	@Override
 	protected STATE runNormal(){

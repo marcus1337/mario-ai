@@ -55,4 +55,9 @@ public class Parallel extends Interior {
 		return runNormal();
 	}
 
+	@Override
+	public NodeTypeDetailed getDetailedType() {
+		return NodeTypeDetailed.PARALLEL;
+	}
+
 }

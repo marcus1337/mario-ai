@@ -1,6 +1,7 @@
 package visuals;
 
 import agents.BT.BT.Node;
+import agents.BT.BT.NodeTypes;
 
 public class TextInBox {
 
@@ -14,4 +15,14 @@ public class TextInBox {
 		this.width = width;
 		this.height = height;
 	}
+	
+	public TextInBox(Node node) {
+		this.node = node;
+		
+		if(node.isParent()){
+			this.width = this.height = 20;
+		}
+		
+	}
+	
 }

@@ -36,6 +36,13 @@ public class Task extends Node {
 	}
 	
 	@Override
+	public NodeTypeDetailed getDetailedType() {
+		if(isCondition())
+			return NodeTypeDetailed.CONDITION;
+		return NodeTypeDetailed.ACTION;
+	}
+	
+	@Override
 	public NodeTypes getType(){
 		if(isCondition())
 			return NodeTypes.CONDITION;

@@ -6,6 +6,11 @@ public class Decorator extends Interior{
 	public NodeTypes getType(){
 		return NodeTypes.DECORATOR;
 	}
+	
+	@Override
+	public NodeTypeDetailed getDetailedType() {
+		return NodeTypeDetailed.DECORATOR;
+	}
 
 	@Override
 	protected STATE runMemory() {
