@@ -23,7 +23,8 @@ public class Diamond extends CustomShape {
 
 	@Override
 	protected void customPaint(Graphics2D g, Node box) {
-		g.setColor(BOX_COLOR);
+		Color myBlue = new Color(50, 180, 180);
+		g.setColor(myBlue);
 		g.fill(this);
 		decideEdgeColor(g, box);
 		g.draw(this);

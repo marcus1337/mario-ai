@@ -58,8 +58,14 @@ public abstract class BTShape extends Path2D.Double {
 		this.y = y;
 	}
 	
+	protected void paintBoxBackground(Graphics2D g, Node box, Color customColor) {
+		g.setColor(customColor);
+		g.fillRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
+	}
+	
 	protected void paintBoxBackground(Graphics2D g, Node box) {
-		g.setColor(BOX_COLOR);
+		Color myYellow = new Color(200, 200, 0);
+		g.setColor(myYellow);
 		g.fillRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
 	}
 
