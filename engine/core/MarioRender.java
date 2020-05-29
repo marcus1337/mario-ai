@@ -53,16 +53,6 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	MarioWorld world = null;
 	public BTAgent btAgent = null;
-	
-	public void renderExtras(Image image, Graphics g){
-		
-		Graphics2D og = (Graphics2D) g;
-		
-		g.setColor(Color.MAGENTA);
-		g.fillRect(0, 0, 110, 100);
-		g.drawImage(image, 0,0, 300,300, null);
-
-	}
 
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
@@ -70,7 +60,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		
 		renderMarioWorld(world, og);
 		renderSeparatorBar(og);
-		
+		renderBT(og);
 		renderMarioImage(image, g);
 	}
 
@@ -208,11 +198,13 @@ public class MarioRender extends JComponent implements FocusListener {
 	}
 
 	public void renderBT(Graphics g) {
+		Graphics2D g2 = (Graphics2D) g;
 		if(btAgent != null){
+			AffineTransform oldAT = g2.getTransform();
 			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-			g.translate(WIDTH*2, HEIGHT/2);
-			treePanel.paint(g);
-			g.translate(-WIDTH*2, -HEIGHT/2);
+			g2.translate(950, 50);
+			treePanel.paint(g2);
+			g2.setTransform(oldAT);
 		}
 	}
 
