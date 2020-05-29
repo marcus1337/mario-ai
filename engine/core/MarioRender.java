@@ -36,8 +36,9 @@ public class MarioRender extends JComponent implements FocusListener {
 		this.scale = scale;
 
 
+		Dimension size = new Dimension(1280, 720);
 		//Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.f));
-		Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.7f));
+		//Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.7f));
 
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -53,15 +54,32 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	MarioWorld world = null;
 	public BTAgent btAgent = null;
+	
+	public void renderExtras(Image image, Graphics g){
+		
+		Graphics2D og = (Graphics2D) g;
+		
+		g.setColor(Color.MAGENTA);
+		g.fillRect(0, 0, 110, 100);
+		g.drawImage(image, 0,0, 300,300, null);
+
+	}
 
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
-		og.fillRect(0, 0, WIDTH, HEIGHT);
 		renderBackGround(g, og);
-
 		world.render(og);
 		renderRectangles(g, og);
+		renderTextInfo(world, og);
+		
+		
+        TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
+        treePanel.paint(og);
+		
+		renderMarioImage(image, g);
+	}
 
+	public void renderTextInfo(MarioWorld world, Graphics og) {
 		drawStringDropShadow(og, "Coins: " + world.coins, 0, 2, 4);
 		drawStringDropShadow(og,
 				"Time: " + (world.currentTimer == -1 ? "Inf" : (int) Math.ceil(world.currentTimer / 1000f)), 0, 0, 4);
@@ -74,16 +92,17 @@ public class MarioRender extends JComponent implements FocusListener {
 			}
 			drawStringDropShadow(og, "Buttons: " + pressedButtons, 0, 4, 4);
 		}
-		
-		int imgLenX = (int) (ORIGIN_WIDTH * scale);
-		int imgLenY = (int) (ORIGIN_HEIGHT * scale);
+	}
+
+	public void renderMarioImage(Image image, Graphics g) {
+		int imgLenX = (int) (ORIGIN_WIDTH * scale*2);
+		int imgLenY = (int) (ORIGIN_HEIGHT * scale*2);
 		if (scale > 1) {
-			g.drawImage(image, 0,(int) (imgLenY/4.5f), imgLenX, imgLenY, null);
+			g.drawImage(image, 0, 0, 1280, 720, null);
 			//g.drawImage(image, 0, 0, imgLenX, imgLenY, null);
 		} else {
 			g.drawImage(image, 0, 0, null);
 		}
-
 	}
 
 	ReceptiveField receptiveField = null;
@@ -168,19 +187,22 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	boolean doneOnce = false;
 	public void renderBackGround(Graphics g, Graphics og) {
+		og.setColor(Color.DARK_GRAY);
+		og.fillRect(0, 0, 1280, 720);
 		if(!doneOnce){
+			g.setColor(Color.MAGENTA);
 			g.fillRect(0, 0, WIDTH * 100, HEIGHT * 100);
-			
-			if(btAgent != null){
-				TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-				
-				g.translate(WIDTH*2, HEIGHT/2);
-				treePanel.paint(g);
-				g.translate(-WIDTH*2, -HEIGHT/2);
-				
-			}
 		}
 		doneOnce = true;
+	}
+
+	public void renderBT(Graphics g) {
+		if(btAgent != null){
+			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
+			g.translate(WIDTH*2, HEIGHT/2);
+			treePanel.paint(g);
+			g.translate(-WIDTH*2, -HEIGHT/2);
+		}
 	}
 
 	public void drawStringDropShadow(Graphics g, String text, int x, int y, int c) {
