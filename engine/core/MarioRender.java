@@ -38,8 +38,6 @@ public class MarioRender extends JComponent implements FocusListener {
 
 
 		Dimension size = new Dimension(1280, 720);
-		//Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.f));
-		//Dimension size = new Dimension((int) (WIDTH * 2.7f), (int) (HEIGHT * 2.7f));
 
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -70,22 +68,26 @@ public class MarioRender extends JComponent implements FocusListener {
 		this.world = world;
 		renderBackGround(g, og);
 		
-		Graphics2D g2 = (Graphics2D) og;
-		//og.translate(50, 50);
-		AffineTransform oldAT = g2.getTransform();
-		g2.scale(2, 2);
-		
-		world.render(og);
-		renderRectangles(g, og);
-		renderTextInfo(world, og);
-		
-		g2.setTransform(oldAT);
-		//og.translate(-50, -50);
-
-       // TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-       // treePanel.paint(og);
+		renderMarioWorld(world, og);
+		renderSeparatorBar(og);
 		
 		renderMarioImage(image, g);
+	}
+
+	public void renderSeparatorBar(Graphics og) {
+		og.setColor(Color.black);
+		og.fillRect(801, 0, 80, 900);
+	}
+
+	public void renderMarioWorld(MarioWorld world, Graphics og) {
+		Graphics2D g2 = (Graphics2D) og;
+		AffineTransform oldAT = g2.getTransform();
+		g2.translate(0, 70);
+		g2.scale(2, 2);
+		world.render(og);
+		renderRectangles(og);
+		renderTextInfo(world, og);
+		g2.setTransform(oldAT);
 	}
 
 	public void renderTextInfo(MarioWorld world, Graphics og) {
@@ -167,7 +169,7 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	}
 
-	void renderRectangles(Graphics gi, Graphics g) {
+	void renderRectangles(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
 		float thickness = 2;
@@ -187,10 +189,8 @@ public class MarioRender extends JComponent implements FocusListener {
 
 		enemyField = receptiveField.getEnemyReceptiveField(model);
 		blockField = receptiveField.getBlockReceptiveField(model);
-		// receptiveField.printReceptiveField(blockField);
 
 		renderReceptiveField(g2, topX, topY, brLen);
-
 		g2.setStroke(oldStroke);
 	}
 
