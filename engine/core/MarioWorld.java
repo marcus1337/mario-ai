@@ -522,10 +522,8 @@ public class MarioWorld {
 
     public void render(Graphics og) {
         for (int i = 0; i < backgrounds.length; i++) {
-            this.backgrounds[i].render(og, (int) cameraX, (int) cameraY);
-        }
-        
-        
+            backgrounds[i].render(og, (int) cameraX, (int) cameraY);
+        }        
         
         for (MarioSprite sprite : sprites) {
             if (sprite.type == SpriteType.MUSHROOM || sprite.type == SpriteType.LIFE_MUSHROOM ||
@@ -541,7 +539,6 @@ public class MarioWorld {
             	if(sprite.type == SpriteType.MARIO){
             		marioSprite = sprite;
             	}
-            	
                 sprite.render(og);
             }
         }
@@ -551,7 +548,7 @@ public class MarioWorld {
                 i--;
                 continue;
             }
-            this.effects.get(i).render(og, cameraX, cameraY);
+            effects.get(i).render(og, cameraX, cameraY);
         }
     }
 }

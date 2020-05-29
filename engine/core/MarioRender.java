@@ -12,6 +12,7 @@ import visuals.TreeVisualizer;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.geom.AffineTransform;
 
 public class MarioRender extends JComponent implements FocusListener {
 	private static final long serialVersionUID = 790878775993203817L;
@@ -68,13 +69,21 @@ public class MarioRender extends JComponent implements FocusListener {
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
 		renderBackGround(g, og);
+		
+		Graphics2D g2 = (Graphics2D) og;
+		//og.translate(50, 50);
+		AffineTransform oldAT = g2.getTransform();
+		g2.scale(2, 2);
+		
 		world.render(og);
 		renderRectangles(g, og);
 		renderTextInfo(world, og);
 		
-		
-        TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-        treePanel.paint(og);
+		g2.setTransform(oldAT);
+		//og.translate(-50, -50);
+
+       // TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
+       // treePanel.paint(og);
 		
 		renderMarioImage(image, g);
 	}

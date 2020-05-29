@@ -27,13 +27,10 @@ public class MarioGame {
     public static final long graceTime = 10;
    // public static final int width = 256*2;
     public static final int width = 400;
-    /**
-     * Screen height
-     */
-    //public static final int height = 256;
     public static final int height = 256;
+    
     public static final int tileWidth = (width / 16);
-    public static final int tileHeight = height / 16;
+    public static final int tileHeight = (height / 16);
     public static final boolean verbose = false;
     public boolean pause = false;
     private MarioEvent[] killEvents;
