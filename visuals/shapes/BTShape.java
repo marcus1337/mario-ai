@@ -69,6 +69,7 @@ public abstract class BTShape extends Path2D.Double {
 	}
 	
 	public void decideEdgeColor(Graphics2D g, Node child) {
+		
 		g.setColor(Color.black);
 		if(child.lastReturnedStatus == STATE.FAILURE)
 			g.setColor(Color.RED);

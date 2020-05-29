@@ -165,9 +165,14 @@ public class TextInBoxTreePane extends JComponent {
 		Graphics2D g2 = (Graphics2D) g;
 
 		paintSpecializedEdges(g2);
+		
+		Stroke oldStroke = g2.getStroke();
+		g2.setStroke(new BasicStroke(3));
+		
 		for (Node textInBox : treeLayout.getNodeBounds().keySet())
 			paintBox(g2, textInBox);
-
+		
+		g2.setStroke(oldStroke);
 	}
 
 	public void init(Graphics g) {
