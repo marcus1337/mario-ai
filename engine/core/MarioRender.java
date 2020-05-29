@@ -173,6 +173,9 @@ public class MarioRender extends JComponent implements FocusListener {
 		float[] marioPos = model.getMarioFloatPos();
 		marioPos[0] = world.marioSprite.x;
 		marioPos[1] = world.marioSprite.y;
+		if(world.marioSprite == null || world.marioSprite.world == null)
+			return;
+		
 		marioPos[0] -= world.marioSprite.world.cameraX;
 		marioPos[1] -= world.marioSprite.world.cameraY;
 		float topX = marioPos[0] - brickStep;

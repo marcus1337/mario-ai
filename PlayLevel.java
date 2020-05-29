@@ -21,7 +21,7 @@ public class PlayLevel {
     	
     	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 35, 5, 21);
     	
-    	gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 411, 17);
+    	gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 406, 17);
     	
     	/*JavaPorts evolver = gaTester.getEvolver();
     	evolver.loadElites(gaTester.eliteFolderName);
