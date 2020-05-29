@@ -28,6 +28,13 @@ public abstract class Interior extends Node {
 		}
 	}
 	
+	@Override
+	public void resetLastReturnedStatuses(){
+		lastReturnedStatus = FRESH;
+		for(Node child : children)
+			child.resetLastReturnedStatuses();
+	}
+	
 	public void copy(Interior other){
 		children = other.children;
 		status = other.status;

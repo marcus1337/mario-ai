@@ -12,7 +12,6 @@ public abstract class Node {
 	public STATE status = FRESH;
 	public STATE lastReturnedStatus = FRESH;
 	
-	
 	public Node parent;
 	public int width;
 	public int height;
@@ -34,6 +33,7 @@ public abstract class Node {
 	}
 	
 	public abstract void reset();
+	public abstract void resetLastReturnedStatuses();
 	
 	protected boolean shouldRun(){
 		return status != SUCCESS && status != FAILURE;

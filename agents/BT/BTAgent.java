@@ -36,6 +36,7 @@ public class BTAgent implements MarioAgent {
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		prepareData(model);
+		tree.root.resetLastReturnedStatuses();
 		tree.root.run();
 		return processReturnedActions(model);
 	}

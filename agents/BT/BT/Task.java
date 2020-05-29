@@ -37,6 +37,11 @@ public class Task extends Node {
 	}
 	
 	@Override
+	public void resetLastReturnedStatuses(){
+		lastReturnedStatus = FRESH;
+	}
+	
+	@Override
 	public NodeTypeDetailed getDetailedType() {
 		if(isCondition())
 			return NodeTypeDetailed.CONDITION;
