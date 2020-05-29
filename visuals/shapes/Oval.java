@@ -15,7 +15,7 @@ public class Oval extends BTShape {
 	@Override
 	public void paint(Graphics2D g, Node box) {
 
-		Color myYellow = new Color(255, 153, 255);
+		Color myYellow = new Color(255,228,181);
 		g.setColor(myYellow);
 		g.fillOval(x, y, (int) box.width - 1, (int) box.height - 1);
 

@@ -19,15 +19,9 @@ public class PlayLevel {
   
     	//gaTester.continueEvolveBTs(19, 19);
     	
-    	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 35, 5, 21);
+    	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 1, 5, 21);
     	
-    	gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 406, 17);
-    	
-    	/*JavaPorts evolver = gaTester.getEvolver();
-    	evolver.loadElites(gaTester.eliteFolderName);
-    	agents.BT.BTAgent agent = gaTester.getEliteBTAgent(evolver, 414);
-    	agent.partiallyInitialize();
-    	TreeVisualizer.visualizeBT(agent.tree);*/
+    	gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 119, 17);
     	
     	gaTester.cleanUp();
     }
