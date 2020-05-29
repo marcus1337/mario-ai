@@ -4,15 +4,11 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.font.TextAttribute;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 
@@ -22,6 +18,7 @@ import org.abego.treelayout.TreeForTreeLayout;
 import org.abego.treelayout.TreeLayout;
 
 import agents.BT.BT.Node;
+import agents.BT.BT.STATE;
 import visuals.shapes.BTRectangle;
 import visuals.shapes.BTShape;
 import visuals.shapes.Diamond;
@@ -29,6 +26,8 @@ import visuals.shapes.Oval;
 import visuals.shapes.Square;
 
 public class TextInBoxTreePane extends JComponent {
+	
+	private static final long serialVersionUID = 136443252L;
 	private final TreeLayout<Node> treeLayout;
 
 	private TreeForTreeLayout<Node> getTree() {
@@ -56,11 +55,21 @@ public class TextInBoxTreePane extends JComponent {
 			double y1 = b1.getCenterY();
 			for (Node child : getChildren(parent)) {
 				Rectangle2D.Double b2 = getBoundsOfNode(child);
+				decideEdgeColor(g, child);
 				g.drawLine((int) x1, (int) y1, (int) b2.getCenterX(), (int) b2.getCenterY() - (int) (b2.height/2));
-
 				paintEdges(g, child);
 			}
 		}
+	}
+
+	public void decideEdgeColor(Graphics2D g, Node child) {
+		g.setColor(Color.LIGHT_GRAY);
+		if(child.lastReturnedStatus == STATE.FAILURE)
+			g.setColor(Color.RED);
+		if(child.lastReturnedStatus == STATE.SUCCESS)
+			g.setColor(Color.GREEN);
+		if(child.lastReturnedStatus == STATE.RUNNING)
+			g.setColor(Color.YELLOW);
 	}
 
 	public BTShape makeInteriorShape(Node node){

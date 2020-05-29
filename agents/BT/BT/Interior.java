@@ -36,8 +36,10 @@ public abstract class Interior extends Node {
 	@Override
 	public STATE run() {
 		if(isMemoryNode)
-			return runMemory();
-		return runNormal();
+			lastReturnedStatus = runMemory();
+		else
+			lastReturnedStatus = runNormal();
+		return lastReturnedStatus;
 	}
 
 	protected abstract STATE runNormal();

@@ -17,7 +17,7 @@ public class Oval extends BTShape {
 		g.setColor(BOX_COLOR);
 		g.fillOval(x, y, (int) box.width - 1, (int) box.height - 1);
 		
-		g.setColor(BORDER_COLOR);
+		decideEdgeColor(g, box);
 		g.drawOval(x, y, (int) box.width - 1, (int) box.height - 1);
 		
 		paintText(g, box);

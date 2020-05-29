@@ -10,6 +10,7 @@ import java.awt.geom.Rectangle2D;
 import java.text.AttributedString;
 
 import agents.BT.BT.Node;
+import agents.BT.BT.STATE;
 import visuals.TextInBox;
 
 public abstract class BTShape extends Path2D.Double {
@@ -63,8 +64,18 @@ public abstract class BTShape extends Path2D.Double {
 	}
 
 	protected void paintBoxMargin(Graphics2D g, Node box) {
-		g.setColor(BORDER_COLOR);
+		decideEdgeColor(g, box);
 		g.drawRoundRect(x, y, (int) box.width - 1, (int) box.height - 1, ARC_SIZE, ARC_SIZE);
+	}
+	
+	public void decideEdgeColor(Graphics2D g, Node child) {
+		g.setColor(Color.black);
+		if(child.lastReturnedStatus == STATE.FAILURE)
+			g.setColor(Color.RED);
+		if(child.lastReturnedStatus == STATE.SUCCESS)
+			g.setColor(Color.GREEN);
+		if(child.lastReturnedStatus == STATE.RUNNING)
+			g.setColor(Color.YELLOW);
 	}
 
 	protected void paintText(Graphics2D g, Node box) {

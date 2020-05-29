@@ -10,6 +10,9 @@ public abstract class Node {
 	protected static STATE FAILURE = STATE.FAILURE;
 	
 	public STATE status = FRESH;
+	public STATE lastReturnedStatus = FRESH;
+	
+	
 	public Node parent;
 	public int width;
 	public int height;
@@ -26,6 +29,7 @@ public abstract class Node {
 	
 	protected STATE runAndUpdate(){
 		status = run();
+		lastReturnedStatus = status;
 		return status;
 	}
 	
