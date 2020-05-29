@@ -24,10 +24,11 @@ public class Task extends Node {
 	@Override
 	public STATE run() {
 		if (isCondition())
-			return condition.get();
-		if(conditionFail())
-			return FAILURE;
-		return action.get();
+			lastReturnedStatus = condition.get();
+		else if(conditionFail())
+			lastReturnedStatus = FAILURE;
+		else lastReturnedStatus = action.get();
+		return lastReturnedStatus;
 	}
 
 	@Override
