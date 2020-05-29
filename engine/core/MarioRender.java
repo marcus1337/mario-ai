@@ -86,6 +86,8 @@ public class MarioRender extends JComponent implements FocusListener {
 		g2.scale(2, 2);
 		world.render(og);
 		renderRectangles(og);
+		
+		g2.translate(0, -35);
 		renderTextInfo(world, og);
 		g2.setTransform(oldAT);
 	}
