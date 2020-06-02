@@ -15,6 +15,21 @@ public class MarioResult {
     public int gameCompletion = 0;
     public int jumpFrequency = 0;
     public int numKills = 0;
+    
+    
+    public void add(MarioResult other){
+    	gameCompletion += other.gameCompletion;
+    	jumpFrequency += other.jumpFrequency;
+    	numKills += other.numKills;
+    	fitness += other.fitness;
+    }
+    
+    public void divide(int div){
+    	fitness /= div;
+    	jumpFrequency /= div;
+    	numKills /= div;
+    	fitness /= div;
+    }
 
     /**
      * Create a mario result object

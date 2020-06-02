@@ -62,10 +62,25 @@ public class GATester {
 		evolver.loadElites(filename);
 		levelHandler.runGameWithVisuals(getEliteBTAgent(evolver, aiIndex), fps);
 	}
+	
+	private MarioResult getMeanMarioResult(ArrayList<MarioResult> results){
+		MarioResult result = results.get(0);
+		for(int i = 1; i < results.size(); i++)
+			result.add(results.get(i));
+		result.divide(results.size());
+		return result;
+	}
 
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex) {
-		MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
-		setAIResults(evolver, aiIndex, marioResult);
+		
+		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
+		for(int i = 0; i < 5; i++){
+			MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
+			results.add(marioResult);
+		}
+		MarioResult result = getMeanMarioResult(results);
+		
+		setAIResults(evolver, aiIndex, result);
 	}
 
 	public void setAIResults(JavaPorts evolver, int aiIndex, MarioResult marioResult) {
@@ -147,7 +162,7 @@ public class GATester {
 		clearOldElites();
 		
 		// evolver.loadElites(eliteFolderName);
-		//randomizeMapElites(evolver, 10);
+		randomizeMapElites(evolver, 10);
 		System.out.println("Randomization step done.----------------");
 
 		evolver.setSurpriseEffect(0.2f);
