@@ -1,13 +1,19 @@
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import _GA_TESTS.LevelHandler;
 import agents.BT.BT.NodeTypes;
 import engine.core.MarioResult;
+
+
 
 public class GATester {
 
@@ -79,6 +85,12 @@ public class GATester {
 	public void cleanUp() {
 		gaLoader.cleanup();
 	}
+	
+	public void clearOldElites(){
+		String path = FileSystems.getDefault().getPath(".").toAbsolutePath().toString();
+		path = path.substring(0, path.length() - 1) + "BT_EVO\\"+eliteFolderName;
+		Arrays.stream(new File(path).listFiles()).forEach(File::delete);
+	}
 
 	public void continueEvolveBTs(int numGenerations, int generationStart) {
 		JavaPorts evolver = getAndInitBTEvolver();
@@ -105,8 +117,9 @@ public class GATester {
 	private void evolveBTs(JavaPorts evolver, int numIterations) {
 		for (int gen = 0; gen < numIterations; gen++) {
 			evolveBTGeneration(evolver);
-			if (gen % 25 == 0)
+			if (gen > 0 && gen % 20 == 0){
 				evolver.randomizePopulationFromElites();
+			}
 			System.out.println("Generations complete: " + (gen + 1));
 		}
 	}
@@ -131,8 +144,10 @@ public class GATester {
 	public void evolveBTsFromScratch(int numGenerations) {
 		JavaPorts evolver = getAndInitBTEvolver();
 
+		clearOldElites();
+		
 		// evolver.loadElites(eliteFolderName);
-		randomizeMapElites(evolver, 10);
+		//randomizeMapElites(evolver, 10);
 		System.out.println("Randomization step done.----------------");
 
 		evolver.setSurpriseEffect(0.2f);
