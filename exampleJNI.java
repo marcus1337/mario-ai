@@ -43,5 +43,6 @@ public class exampleJNI {
   public final static native void JavaPorts_saveElites__SWIG_1(long jarg1, JavaPorts jarg1_);
   public final static native void JavaPorts_loadElites__SWIG_0(long jarg1, JavaPorts jarg1_, String jarg2);
   public final static native void JavaPorts_loadElites__SWIG_1(long jarg1, JavaPorts jarg1_);
+  public final static native void JavaPorts_storeElites(long jarg1, JavaPorts jarg1_);
   public final static native void delete_JavaPorts(long jarg1);
 }

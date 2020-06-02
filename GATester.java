@@ -74,7 +74,7 @@ public class GATester {
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex) {
 		
 		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
-		for(int i = 0; i < 5; i++){
+		for(int i = 0; i < 3; i++){
 			MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
 			results.add(marioResult);
 		}
@@ -151,6 +151,8 @@ public class GATester {
 			for (int i = 2; i <= 10; i++) {
 				evolver.randomizeBTPopulation(i, i);
 				simulateGeneration(evolver);
+				evolver.storeElites();
+				evolver.saveElites(eliteFolderName);
 				System.out.println("Randomizations done: " + totalCounter++);
 			}
 		}

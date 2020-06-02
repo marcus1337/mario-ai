@@ -115,4 +115,8 @@ public class JavaPorts {
     exampleJNI.JavaPorts_loadElites__SWIG_1(swigCPtr, this);
   }
 
+  public void storeElites() {
+    exampleJNI.JavaPorts_storeElites(swigCPtr, this);
+  }
+
 }
