@@ -38,13 +38,11 @@ public class LevelHandler {
 	}
 	
 	public int addCompletionRateFitness(MarioResult result){
-		int fitness = 0;
 		float maxX = 0;
 		for(MarioAgentEvent ev : result.getAgentEvents())
 			if(ev.getMarioX() > maxX)
 				maxX = ev.getMarioX();
-		fitness += (int) (maxX/result.getMaxXTile());
-		return fitness;
+		return (int) ((maxX/result.getMaxXTile())*1000.0f );
 	}
 	
 	private int getNumAirTimeFrames(MarioResult result){
