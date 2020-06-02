@@ -28,7 +28,7 @@ public class MarioResult {
     	fitness /= div;
     	jumpFrequency /= div;
     	numKills /= div;
-    	fitness /= div;
+    	gameCompletion /= div;
     }
 
     /**
