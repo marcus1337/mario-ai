@@ -33,20 +33,17 @@ public class LevelHandler {
 		if(result.getGameStatus() == GameStatus.LOSE)
 			return -10;
 		if(result.getGameStatus() == GameStatus.WIN)
-			return (1000 + result.getRemainingTime());
+			return 10 + result.getRemainingTime();
 		return 0;
 	}
 	
 	public int addCompletionRateFitness(MarioResult result){
 		int fitness = 0;
 		float maxX = 0;
-		for(MarioAgentEvent ev : result.getAgentEvents()){
+		for(MarioAgentEvent ev : result.getAgentEvents())
 			if(ev.getMarioX() > maxX)
-			{
 				maxX = ev.getMarioX();
-			}
-		}
-		fitness += (int) (maxX);
+		fitness += (int) (maxX/result.getMaxXTile());
 		return fitness;
 	}
 	

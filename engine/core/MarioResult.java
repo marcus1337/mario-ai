@@ -7,7 +7,7 @@ import engine.helper.GameStatus;
 import engine.helper.SpriteType;
 
 public class MarioResult {
-    private MarioWorld world;
+    public MarioWorld world;
     private ArrayList<MarioEvent> gameEvents;
     private ArrayList<MarioAgentEvent> agentEvents;
     public int fitness = 0;
@@ -44,6 +44,10 @@ public class MarioResult {
      */
     public float getCompletionPercentage() {
         return this.world.mario.x / (this.world.level.exitTileX * 16);
+    }
+    
+    public int getMaxXTile(){
+    	return world.level.exitTileX*16;
     }
 
     /**

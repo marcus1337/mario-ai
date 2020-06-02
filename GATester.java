@@ -1,4 +1,9 @@
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import _GA_TESTS.LevelHandler;
 import agents.BT.BT.NodeTypes;
@@ -24,7 +29,7 @@ public class GATester {
 	public agents.BT.BTAgent getBTAgent(JavaPorts evolver, int index) {
 		return new agents.BT.BTAgent(evolver.getTreeString(index));
 	}
-	
+
 	public agents.BT.BTAgent getEliteBTAgent(JavaPorts evolver, int index) {
 		return new agents.BT.BTAgent(evolver.getEliteTreeString(index));
 	}
@@ -35,8 +40,8 @@ public class GATester {
 			agents.add(getBTAgent(evolver, i));
 		return agents;
 	}
-	
-	public JavaPorts getEvolver(){
+
+	public JavaPorts getEvolver() {
 		return gaLoader.getJavaPort(AIType.BT);
 	}
 
@@ -45,7 +50,7 @@ public class GATester {
 		evolver.loadGeneration(filename, generation);
 		levelHandler.runGameWithVisuals(getBTAgent(evolver, aiIndex), fps);
 	}
-	
+
 	public void loadAndShowEliteBTAgent(String filename, int aiIndex, int fps) {
 		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
 		evolver.loadElites(filename);
@@ -54,14 +59,21 @@ public class GATester {
 
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex) {
 		MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
+		setAIResults(evolver, aiIndex, marioResult);
+	}
+
+	public void setAIResults(JavaPorts evolver, int aiIndex, MarioResult marioResult) {
 		int fitness = marioResult.fitness;
 		evolver.setFitness(aiIndex, fitness);
 		IntVec behvaior = new IntVec(
 				new int[] { marioResult.gameCompletion, marioResult.jumpFrequency, marioResult.numKills });
 		evolver.setBehavior(aiIndex, behvaior);
+		// printAIResult(marioResult, fitness);
+	}
 
-		//System.out.println("fitness: " + fitness + " Finish: " + marioResult.gameCompletion + " Air-Time: "
-		//		+ marioResult.jumpFrequency + " Kills: " + marioResult.numKills);
+	public void printAIResult(MarioResult marioResult, int fitness) {
+		System.out.println("fitness: " + fitness + " Finish: " + marioResult.gameCompletion + " Air-Time: "
+				+ marioResult.jumpFrequency + " Kills: " + marioResult.numKills);
 	}
 
 	public void cleanUp() {
@@ -76,12 +88,10 @@ public class GATester {
 	}
 
 	private void evolveBTGeneration(JavaPorts evolver) {
-		ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
-		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
-			evaluateBTAgent(evolver, agents.get(aiIndex), aiIndex);
+		simulateGeneration(evolver);
+
 		evolver.saveGeneration(fileNameBT);
 		evolver.saveElites(eliteFolderName);
-		
 		evolver.evolve();
 	}
 
@@ -93,37 +103,44 @@ public class GATester {
 	}
 
 	private void evolveBTs(JavaPorts evolver, int numIterations) {
-		for (int gen = 0; gen < numIterations; gen++){
+		for (int gen = 0; gen < numIterations; gen++) {
 			evolveBTGeneration(evolver);
-			if(gen % 15 == 0){
+			if (gen % 25 == 0)
 				evolver.randomizePopulationFromElites();
-			}
-			System.out.println("Generations complete: " + (gen+1));
+			System.out.println("Generations complete: " + (gen + 1));
 		}
+	}
+
+	public void simulateGeneration(JavaPorts evolver) {
+		ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
+		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
+			evaluateBTAgent(evolver, agents.get(aiIndex), aiIndex);
 	}
 
 	public void randomizeMapElites(JavaPorts evolver, int numIterations) {
 		int totalCounter = 1;
-		for (int G = 0; G < numIterations; G++){
+		for (int G = 0; G < numIterations; G++) {
 			for (int i = 2; i <= 10; i++) {
 				evolver.randomizeBTPopulation(i, i);
-				ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
-				for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
-					evaluateBTAgent(evolver, agents.get(aiIndex), aiIndex);
+				simulateGeneration(evolver);
 				System.out.println("Randomizations done: " + totalCounter++);
 			}
 		}
 	}
 
 	public void evolveBTsFromScratch(int numGenerations) {
-		 JavaPorts evolver = getAndInitBTEvolver();
-		
-		 //evolver.loadElites(eliteFolderName);
-		 randomizeMapElites(evolver, 2);
-		 System.out.println("Randomization step done.----------------");
-		
-		 evolver.setSurpriseEffect(0.2f);
-		 evolveBTs(evolver, numGenerations);
+		JavaPorts evolver = getAndInitBTEvolver();
+
+		// evolver.loadElites(eliteFolderName);
+		randomizeMapElites(evolver, 10);
+		System.out.println("Randomization step done.----------------");
+
+		evolver.setSurpriseEffect(0.2f);
+		evolveBTs(evolver, numGenerations);
 	}
 
 }
+
+// Instant start = Instant.now();
+// Instant end = Instant.now();
+// System.out.println(Duration.between(start, end).toMillis());
