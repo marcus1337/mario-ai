@@ -74,7 +74,7 @@ public class GATester {
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex) {
 		
 		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < 5; i++){
 			MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
 			results.add(marioResult);
 		}
