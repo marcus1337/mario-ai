@@ -218,7 +218,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		if (btAgent != null) {
 			AffineTransform oldAT = g2.getTransform();
 			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-			// g2.translate(820, 50); //399 is limit normally
+			
 			int extraMargin = treeWidth - 399;
 			if (extraMargin < 0)
 				extraMargin = 0;
