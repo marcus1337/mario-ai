@@ -73,8 +73,8 @@ public class GATester {
 
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex) {
 		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
-		for(int i = 0; i < 2; i++){
-			MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
+		for(int i = 0; i < 4; i++){
+			MarioResult marioResult = levelHandler.simulateAndEvaluate(agent, i);
 			results.add(marioResult);
 		}
 		MarioResult result = getMeanMarioResult(results);
@@ -160,9 +160,7 @@ public class GATester {
 
 	public void evolveBTsFromScratch(int numGenerations) {
 		JavaPorts evolver = getAndInitBTEvolver();
-
 		clearOldElites();
-		
 		// evolver.loadElites(eliteFolderName);
 		randomizeMapElites(evolver, 5);
 		System.out.println("Randomization step done.----------------");
