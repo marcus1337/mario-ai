@@ -72,14 +72,12 @@ public class GATester {
 	}
 
 	private void evaluateBTAgent(JavaPorts evolver, agents.BT.BTAgent agent, int aiIndex) {
-		
 		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
-		for(int i = 0; i < 5; i++){
+		for(int i = 0; i < 2; i++){
 			MarioResult marioResult = levelHandler.simulateAndEvaluate(agent);
 			results.add(marioResult);
 		}
 		MarioResult result = getMeanMarioResult(results);
-		
 		setAIResults(evolver, aiIndex, result);
 	}
 
@@ -115,6 +113,7 @@ public class GATester {
 	}
 
 	private void evolveBTGeneration(JavaPorts evolver) {
+		
 		simulateGeneration(evolver);
 
 		evolver.saveGeneration(fileNameBT);
@@ -140,6 +139,7 @@ public class GATester {
 	}
 
 	public void simulateGeneration(JavaPorts evolver) {
+		levelHandler.prepareGenerationLevels();
 		ArrayList<agents.BT.BTAgent> agents = getBTAgents(evolver, numAI);
 		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
 			evaluateBTAgent(evolver, agents.get(aiIndex), aiIndex);

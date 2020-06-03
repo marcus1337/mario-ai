@@ -53,16 +53,10 @@ public class GenerateLevel {
     }
 
     public static void main(String[] args) {
-
-    	MarioLevelGenerator generator = new levelGenerators.notch.LevelGenerator(0, 10);
-    	//MarioLevelGenerator generator = new levelGenerators.notch.LevelGenerator(0, 0);
-
-        String level = generator.getGeneratedLevel(new MarioLevelModel(200, 20), new MarioTimer(5 * 60 * 60 * 1000));
         
-        generateAndSaveThousandLevels(generator, "notchMedium");
-        //String level = Utils.getLevel("levels/original/lvl-12.txt");
-    	//MarioGame game = new MarioGame();
-        //Agent agent = new agents.human.Agent();
-        //printResults(game.runGame(agent, level, 100, 2, true, 21));
+        String level = Utils.getLevel("levels/hopper/lvl-77.txt");
+    	MarioGame game = new MarioGame();
+        Agent agent = new agents.human.Agent();
+        printResults(game.runGame(agent, level, 100, 2, true, 21));
     }
 }

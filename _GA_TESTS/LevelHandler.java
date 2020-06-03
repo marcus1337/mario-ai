@@ -1,5 +1,6 @@
 package _GA_TESTS;
 
+import java.util.concurrent.ThreadLocalRandom;
 import engine.core.MarioAgentEvent;
 import engine.core.MarioEvent;
 import engine.core.MarioGame;
@@ -7,26 +8,28 @@ import engine.core.MarioResult;
 import engine.helper.GameStatus;
 
 public class LevelHandler {
-	private String level;
-	private int marioStartState = 0;
+	private int marioStartState = 2;
 	
-	public LevelHandler(){
-		prepareEasyLevel();
-	}
+	public LevelHandler(){}
 	
-	public void prepareEasyLevel(){
-		level = Utils.getLevel("levels/original/lvl-1.txt");
+	public String getRandomLevel(int difficulty){
+		if(difficulty == 0)
+			return Utils.getLevel("levels/notchEasy/" + getRandomLvl());
+		if(difficulty == 1)
+			return Utils.getLevel("levels/notchMedium/" + getRandomLvl());
+		if(difficulty == 2)
+			return Utils.getLevel("levels/notchParam/" + getRandomLvl());
+		return Utils.getLevel("levels/hopper/" + getRandomLvl());
 	}
 	
 	public void runGameWithVisuals(agents.BT.BTAgent agent, int fps){
 		MarioGame game = new MarioGame(); //21 fps is normal
-		game.runGame(agent, level, 50, marioStartState, true, fps);
+		game.runGame(agent, Utils.getLevel("levels/original/lvl-1.txt"), 50, marioStartState, true, fps);
 	}
-
-	public MarioResult runEasyGame(agents.BT.BTAgent agent){
-		MarioGame game = new MarioGame();
-		
-		return game.runGame(agent, level, 50, marioStartState, false);
+	
+	public String getRandomLvl(){
+		int randomNum = ThreadLocalRandom.current().nextInt(1, 999 + 1);
+		return "lvl-" + randomNum + ".txt";
 	}
 	
 	private int addGameEndFitness(MarioResult result){
@@ -67,8 +70,19 @@ public class LevelHandler {
 		result.numKills = Math.min(100, result.getKillsTotal());
 	}
 	
+	String level1, level2, level3, level4;
+	
+	public void prepareGenerationLevels(){
+		level1 = getRandomLevel(0);
+		level2 = getRandomLevel(1);
+		level3 = getRandomLevel(2);
+		level4 = getRandomLevel(3);
+	}
+	
 	public MarioResult simulateAndEvaluate(agents.BT.BTAgent agent){
-		MarioResult result = runEasyGame(agent);
+		
+		MarioGame game = new MarioGame();
+		MarioResult result = game.runGame(agent, level1, 50, marioStartState, false);
 		
 		result.fitness += addGameEndFitness(result);
 		result.fitness += addCompletionRateFitness(result);
