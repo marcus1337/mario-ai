@@ -36,7 +36,6 @@ public class MarioRender extends JComponent implements FocusListener {
 		this.setEnabled(true);
 		this.scale = scale;
 
-
 		Dimension size = new Dimension(1280, 720);
 
 		setPreferredSize(size);
@@ -45,23 +44,22 @@ public class MarioRender extends JComponent implements FocusListener {
 
 		setFocusable(true);
 	}
-	
+
 	private int treeWidth;
 	private int treeHeight;
 
 	public void init(MarioAgent agent) {
 		graphicsConfiguration = getGraphicsConfiguration();
 		Assets.init(graphicsConfiguration);
-		
-    	if(agent instanceof BTAgent){
-    		btAgent = (BTAgent) agent;
-    		btAgent.partiallyInitialize();
-    		TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);	
-        	treeWidth = treePanel.getWidth();
-        	treeHeight = treePanel.getHeight();
-    	}
-    	
-   
+
+		if (agent instanceof BTAgent) {
+			btAgent = (BTAgent) agent;
+			btAgent.partiallyInitialize();
+			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
+			treeWidth = treePanel.getWidth();
+			treeHeight = treePanel.getHeight();
+		}
+
 	}
 
 	MarioWorld world = null;
@@ -70,7 +68,7 @@ public class MarioRender extends JComponent implements FocusListener {
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
 		renderBackGround(g, og);
-		
+
 		renderMarioWorld(world, og);
 		renderSeparatorBar(og);
 		renderBT(og);
@@ -79,7 +77,7 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	public void renderSeparatorBar(Graphics og) {
 		og.setColor(Color.black);
-		og.fillRect(801, 0, 80, 900);
+		og.fillRect(801, 0, 80, 900); // 881
 	}
 
 	public void renderMarioWorld(MarioWorld world, Graphics og) {
@@ -89,7 +87,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		g2.scale(2, 2);
 		world.render(og);
 		renderRectangles(og);
-		
+
 		g2.translate(0, -35);
 		renderTextInfo(world, og);
 		g2.setTransform(oldAT);
@@ -111,11 +109,11 @@ public class MarioRender extends JComponent implements FocusListener {
 	}
 
 	public void renderMarioImage(Image image, Graphics g) {
-		int imgLenX = (int) (ORIGIN_WIDTH * scale*2);
-		int imgLenY = (int) (ORIGIN_HEIGHT * scale*2);
+		int imgLenX = (int) (ORIGIN_WIDTH * scale * 2);
+		int imgLenY = (int) (ORIGIN_HEIGHT * scale * 2);
 		if (scale > 1) {
 			g.drawImage(image, 0, 0, 1280, 720, null);
-			//g.drawImage(image, 0, 0, imgLenX, imgLenY, null);
+			// g.drawImage(image, 0, 0, imgLenX, imgLenY, null);
 		} else {
 			g.drawImage(image, 0, 0, null);
 		}
@@ -127,7 +125,7 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	void renderReceptiveField(Graphics2D g, float topX, float topY, float brickLen) {
 
-		if (!model.isFacingRight()){
+		if (!model.isFacingRight()) {
 			topX -= 4 * brickLen;
 			receptiveField.mirrorReceptiveField(blockField);
 			receptiveField.mirrorReceptiveField(enemyField);
@@ -143,12 +141,13 @@ public class MarioRender extends JComponent implements FocusListener {
 		}
 
 		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 5; j++){
+			for (int j = 0; j < 5; j++) {
 				float tmpX = topX + brickLen * j;
 				float tmpY = topY + brickLen * i;
 				if (blockField[j][i] != 0) {
-					int alpha = 90; 
-					Color myColour = new Color(Color.GREEN.getRed(), Color.GREEN.getGreen(), Color.GREEN.getBlue(), alpha);
+					int alpha = 90;
+					Color myColour = new Color(Color.GREEN.getRed(), Color.GREEN.getGreen(), Color.GREEN.getBlue(),
+							alpha);
 					g.setColor(myColour);
 					g.fillRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
 					g.setColor(Color.GREEN);
@@ -162,7 +161,7 @@ public class MarioRender extends JComponent implements FocusListener {
 				float tmpX = topX + brickLen * j;
 				float tmpY = topY + brickLen * i;
 				if (enemyField[j][i] != 0) {
-					int alpha = 90; 
+					int alpha = 90;
 					Color myColour = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);
 					g.setColor(myColour);
 					g.fillRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
@@ -186,9 +185,9 @@ public class MarioRender extends JComponent implements FocusListener {
 		float[] marioPos = model.getMarioFloatPos();
 		marioPos[0] = world.marioSprite.x;
 		marioPos[1] = world.marioSprite.y;
-		if(world.marioSprite == null || world.marioSprite.world == null)
+		if (world.marioSprite == null || world.marioSprite.world == null)
 			return;
-		
+
 		marioPos[0] -= world.marioSprite.world.cameraX;
 		marioPos[1] -= world.marioSprite.world.cameraY;
 		float topX = marioPos[0] - brickStep;
@@ -203,10 +202,11 @@ public class MarioRender extends JComponent implements FocusListener {
 	}
 
 	boolean doneOnce = false;
+
 	public void renderBackGround(Graphics g, Graphics og) {
 		og.setColor(Color.DARK_GRAY);
 		og.fillRect(0, 0, 1280, 720);
-		if(!doneOnce){
+		if (!doneOnce) {
 			g.setColor(Color.MAGENTA);
 			g.fillRect(0, 0, WIDTH * 100, HEIGHT * 100);
 		}
@@ -215,11 +215,16 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	public void renderBT(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
-		if(btAgent != null){
+		if (btAgent != null) {
 			AffineTransform oldAT = g2.getTransform();
-			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);			
-			//g2.translate(820, 50);
-			g2.translate(1280 - treeWidth - treeWidth/10, 50);
+			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
+			// g2.translate(820, 50); //399 is limit normally
+			int extraMargin = treeWidth - 399;
+			if (extraMargin < 0)
+				extraMargin = 0;
+
+			int transX = 1280 - treeWidth - 399 / 2 + treeWidth / 2 - extraMargin / 2;			
+			g2.translate(transX, 50);
 			treePanel.paint(g2);
 			g2.setTransform(oldAT);
 		}
