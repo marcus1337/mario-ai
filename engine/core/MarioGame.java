@@ -104,11 +104,9 @@ public class MarioGame {
             window.pack();
             window.setResizable(false);
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            render.init();
+            render.init(agent);
             window.setVisible(true);
             
-        	if(agent instanceof BTAgent)
-        		render.btAgent = (BTAgent) agent;
         }
         this.setAgent(agent);
         return this.gameLoop(level, timer, marioState, visuals, fps);

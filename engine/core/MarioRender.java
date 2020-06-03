@@ -45,10 +45,23 @@ public class MarioRender extends JComponent implements FocusListener {
 
 		setFocusable(true);
 	}
+	
+	private int treeWidth;
+	private int treeHeight;
 
-	public void init() {
+	public void init(MarioAgent agent) {
 		graphicsConfiguration = getGraphicsConfiguration();
 		Assets.init(graphicsConfiguration);
+		
+    	if(agent instanceof BTAgent){
+    		btAgent = (BTAgent) agent;
+    		btAgent.partiallyInitialize();
+    		TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);	
+        	treeWidth = treePanel.getWidth();
+        	treeHeight = treePanel.getHeight();
+    	}
+    	
+   
 	}
 
 	MarioWorld world = null;
@@ -204,11 +217,9 @@ public class MarioRender extends JComponent implements FocusListener {
 		Graphics2D g2 = (Graphics2D) g;
 		if(btAgent != null){
 			AffineTransform oldAT = g2.getTransform();
-			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-			
-			System.out.println("TEST W: " + treePanel.getWidth() + " H: " + treePanel.getHeight());
-			
-			g2.translate(820, 50);
+			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);			
+			//g2.translate(820, 50);
+			g2.translate(1280 - treeWidth - treeWidth/10, 50);
 			treePanel.paint(g2);
 			g2.setTransform(oldAT);
 		}
