@@ -87,7 +87,7 @@ public class ConditionsDetailed {
 					return isBlocked(tmpX, tmpY);
 				};
 				Task task = new Task(condition, null);
-				task.description = "B<" + tmpX + "," + tmpY + ">";
+				task.description = "B<" + (tmpX+1) + "," + (tmpY+1) + ">";
 				tasks.add(task);
 			}
 		}
@@ -104,7 +104,7 @@ public class ConditionsDetailed {
 					return isEnemy(tmpX, tmpY);
 				};
 				Task task = new Task(condition, null);
-				task.description = "E<" + tmpX + "," + tmpY + ">";
+				task.description = "E<" + (tmpX+1) + "," + (tmpY+1) + ">";
 				tasks.add(task);
 			}
 		}
