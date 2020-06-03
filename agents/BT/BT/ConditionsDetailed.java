@@ -22,6 +22,13 @@ public class ConditionsDetailed {
 		tasks.addAll(getEnemyConditions());
 		Task checkIfFacingRight = new Task(this::isFacingRight, null);
 		tasks.add(checkIfFacingRight);
+		
+		Task checkIfBigMario = new Task(this::isBigMario, null);
+		tasks.add(checkIfBigMario);
+		
+		Task checkIfFireMario = new Task(this::isFireMario, null);
+		tasks.add(checkIfFireMario);
+		
 		return tasks;
 	}
 
@@ -38,6 +45,18 @@ public class ConditionsDetailed {
 		this.model = model;
 		field = recField.getBlockReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
+	}
+	
+	STATE isBigMario() {
+		if (model.getMarioMode() > 0)
+			return Node.SUCCESS;
+		return Node.FAILURE;
+	}
+
+	STATE isFireMario() {
+		if (model.getMarioMode() == 2)
+			return Node.SUCCESS;
+		return Node.FAILURE;
 	}
 
 	STATE isBlocked(int x, int y) {
