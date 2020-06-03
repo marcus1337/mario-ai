@@ -205,6 +205,9 @@ public class MarioRender extends JComponent implements FocusListener {
 		if(btAgent != null){
 			AffineTransform oldAT = g2.getTransform();
 			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
+			
+			System.out.println("TEST W: " + treePanel.getWidth() + " H: " + treePanel.getHeight());
+			
 			g2.translate(820, 50);
 			treePanel.paint(g2);
 			g2.setTransform(oldAT);

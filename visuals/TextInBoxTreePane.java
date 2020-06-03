@@ -26,9 +26,43 @@ import visuals.shapes.Oval;
 import visuals.shapes.Square;
 
 public class TextInBoxTreePane extends JComponent {
-	
+
 	private static final long serialVersionUID = 136443252L;
 	private final TreeLayout<Node> treeLayout;
+
+	private int getMaxX(Node parent, int maxX) {
+		for (Node child : getChildren(parent)) {
+			Rectangle2D.Double bounds = getBoundsOfNode(child);
+			maxX = Math.max(maxX, (int) (bounds.x + bounds.width));
+			maxX = getMaxX(child, maxX);
+		}
+		return maxX;
+	}
+
+	private int getMaxY(Node parent, int maxY) {
+		for (Node child : getChildren(parent)) {
+			Rectangle2D.Double bounds = getBoundsOfNode(child);
+			maxY = Math.max(maxY, (int) (bounds.y + bounds.height));
+			maxY = getMaxY(child, maxY);
+		}
+		return maxY;
+	}
+
+	public int getWidth() {
+		Node parent = getTree().getRoot();
+		Rectangle2D.Double bounds = getBoundsOfNode(parent);
+		int maxX = (int) (bounds.x + bounds.width);
+		maxX = getMaxX(parent, maxX);
+		return maxX;
+	}
+
+	public int getHeight() {
+		Node parent = getTree().getRoot();
+		Rectangle2D.Double bounds = getBoundsOfNode(parent);
+		int maxY = (int) (bounds.y + bounds.height);
+		maxY = getMaxY(parent, maxY);
+		return maxY;
+	}
 
 	private TreeForTreeLayout<Node> getTree() {
 		return treeLayout.getTree();
@@ -56,7 +90,7 @@ public class TextInBoxTreePane extends JComponent {
 			for (Node child : getChildren(parent)) {
 				Rectangle2D.Double b2 = getBoundsOfNode(child);
 				decideEdgeColor(g, child);
-				g.drawLine((int) x1, (int) y1, (int) b2.getCenterX(), (int) b2.getCenterY() - (int) (b2.height/2));
+				g.drawLine((int) x1, (int) y1, (int) b2.getCenterX(), (int) b2.getCenterY() - (int) (b2.height / 2));
 				paintEdges(g, child);
 			}
 		}
@@ -64,78 +98,78 @@ public class TextInBoxTreePane extends JComponent {
 
 	public void decideEdgeColor(Graphics2D g, Node child) {
 		g.setColor(Color.LIGHT_GRAY);
-		if(child.lastReturnedStatus == STATE.FAILURE)
+		if (child.lastReturnedStatus == STATE.FAILURE)
 			g.setColor(Color.RED);
-		if(child.lastReturnedStatus == STATE.SUCCESS)
+		if (child.lastReturnedStatus == STATE.SUCCESS)
 			g.setColor(Color.GREEN);
-		if(child.lastReturnedStatus == STATE.RUNNING)
+		if (child.lastReturnedStatus == STATE.RUNNING)
 			g.setColor(Color.YELLOW);
 	}
 
-	public BTShape makeInteriorShape(Node node){
+	public BTShape makeInteriorShape(Node node) {
 		BTShape shape = null;
 		Rectangle2D.Double bounds = getBoundsOfNode(node);
-		
-		if(node.text.equals("?")){
-			shape = new Square((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("?")) {
+			shape = new Square((int) bounds.x, (int) bounds.y);
 			shape.text = "?";
 			shape.trig = symbolAttribFallback;
 			shape.font = symbolFontFallback;
 		}
-		
-		if(node.text.equals("?*")){
-			shape = new Square((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("?*")) {
+			shape = new Square((int) bounds.x, (int) bounds.y);
 			shape.text = "?*";
 			shape.trig = symbolAttribFallback;
 			shape.font = symbolFontFallback;
 		}
-		
-		if(node.text.equals("→")){
-			shape = new Square((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("→")) {
+			shape = new Square((int) bounds.x, (int) bounds.y);
 			shape.text = "→";
 			shape.trig = symbolAttribSequence;
 			shape.font = symbolFontSequence;
 		}
-		
-		if(node.text.equals("→*")){
-			shape = new Square((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("→*")) {
+			shape = new Square((int) bounds.x, (int) bounds.y);
 			shape.text = "→*";
 			shape.trig = symbolAttribSequence;
 			shape.font = symbolFontSequence;
 		}
-		
-		if(node.text.equals("⇉")){
-			shape = new Square((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("⇉")) {
+			shape = new Square((int) bounds.x, (int) bounds.y);
 			shape.text = "⇉";
 			shape.font = symbolFontParallel;
 		}
-		
-		if(node.text.equals("δ")){
-			shape = new Diamond((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("δ")) {
+			shape = new Diamond((int) bounds.x, (int) bounds.y);
 			shape.text = "δ";
 			shape.font = symbolFontDecorator;
 		}
-		
-		if(node.text.equals("Action")){
-			shape = new BTRectangle((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("Action")) {
+			shape = new BTRectangle((int) bounds.x, (int) bounds.y);
 			shape.text = node.description;
 			shape.font = symbolFontDecorator;
 		}
-		
-		if(node.text.equals("Condition")){
-			shape = new Oval((int)bounds.x,(int)bounds.y);
+
+		if (node.text.equals("Condition")) {
+			shape = new Oval((int) bounds.x, (int) bounds.y);
 			shape.text = node.description;
 			shape.font = symbolFontDecorator;
 		}
-		
+
 		return shape;
 	}
-	
+
 	private void paintBox(Graphics2D g, Node node) {
 
 		BTShape btShape = makeInteriorShape(node);
 		btShape.paint(g, node);
-		
+
 	}
 
 	void paintSpecializedEdges(Graphics2D g2) {
@@ -146,12 +180,12 @@ public class TextInBoxTreePane extends JComponent {
 		paintEdges(g2, getTree().getRoot());
 		g2.setStroke(oldStroke);
 	}
-	
+
 	public static Font symbolFontDecorator = null;
 	public static Font symbolFontParallel = null;
 	public static Font symbolFontSequence = null;
 	public static Font symbolFontFallback = null;
-	
+
 	public static AttributedString symbolAttribParallel = null;
 	public static AttributedString symbolAttribSequence = null;
 	public static AttributedString symbolAttribFallback = null;
@@ -159,19 +193,19 @@ public class TextInBoxTreePane extends JComponent {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		
+
 		init(g);
-		
+
 		Graphics2D g2 = (Graphics2D) g;
 
 		paintSpecializedEdges(g2);
-		
+
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(new BasicStroke(3));
-		
+
 		for (Node textInBox : treeLayout.getNodeBounds().keySet())
 			paintBox(g2, textInBox);
-		
+
 		g2.setStroke(oldStroke);
 	}
 
@@ -182,17 +216,17 @@ public class TextInBoxTreePane extends JComponent {
 		symbolFontSequence = new Font("→", Font.BOLD, symbolTextSize);
 		symbolFontFallback = new Font("?", Font.ROMAN_BASELINE, symbolTextSize);
 		g.setFont(new Font("default", Font.ROMAN_BASELINE, symbolTextSize));
-		
-        symbolAttribParallel = getAttributedString("⇉*");
-        symbolAttribSequence = getAttributedString("→*");
-        symbolAttribFallback = getAttributedString("?*");
+
+		symbolAttribParallel = getAttributedString("⇉*");
+		symbolAttribSequence = getAttributedString("→*");
+		symbolAttribFallback = getAttributedString("?*");
 	}
 
 	public AttributedString getAttributedString(String txt) {
 		AttributedString trig = new AttributedString(txt);
-        trig.addAttribute(TextAttribute.FAMILY, symbolFontParallel.getFamily());
-        trig.addAttribute(TextAttribute.SIZE, symbolFontParallel.getSize());
-        trig.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUPER, 1, 2);
+		trig.addAttribute(TextAttribute.FAMILY, symbolFontParallel.getFamily());
+		trig.addAttribute(TextAttribute.SIZE, symbolFontParallel.getSize());
+		trig.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUPER, 1, 2);
 		return trig;
 	}
 }
