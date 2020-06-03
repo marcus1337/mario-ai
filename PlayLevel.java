@@ -15,13 +15,14 @@ public class PlayLevel {
     public static void main(String[] args) {    	
     	GATester gaTester = new GATester(100, "TEST_DIST");
     	
-    	gaTester.evolveBTsFromScratch(100);
+    	int maxGens = 100;
+    	gaTester.evolveBTsFromScratch(maxGens);
   
-    	//gaTester.continueEvolveBTs(19, 19);
+    	//gaTester.continueEvolveBTs(maxGens-8, 8);
     	
     	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 30, 30, 21);
     	
-    	//gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 38, 17);
+    	//gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 388, 17);
     	
     	gaTester.cleanUp();
     }

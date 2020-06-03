@@ -29,7 +29,7 @@ public class LevelHandler {
 	}
 
 	public String getRandomLvl() {
-		int randomNum = ThreadLocalRandom.current().nextInt(1, 999 + 1);
+		int randomNum = ThreadLocalRandom.current().nextInt(1, 998 + 1);
 		return "lvl-" + randomNum + ".txt";
 	}
 

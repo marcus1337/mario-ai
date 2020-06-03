@@ -108,6 +108,7 @@ public class GATester {
 	public void continueEvolveBTs(int numGenerations, int generationStart) {
 		JavaPorts evolver = getAndInitBTEvolver();
 
+		evolver.loadElites(eliteFolderName);
 		evolver.loadGeneration(fileNameBT, generationStart);
 		evolveBTs(evolver, numGenerations);
 	}
@@ -161,6 +162,7 @@ public class GATester {
 	public void evolveBTsFromScratch(int numGenerations) {
 		JavaPorts evolver = getAndInitBTEvolver();
 		clearOldElites();
+		
 		// evolver.loadElites(eliteFolderName);
 		randomizeMapElites(evolver, 5);
 		System.out.println("Randomization step done.----------------");

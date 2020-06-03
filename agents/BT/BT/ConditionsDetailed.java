@@ -23,15 +23,6 @@ public class ConditionsDetailed {
 		Task checkIfFacingRight = new Task(this::isFacingRight, null);
 		checkIfFacingRight.description = "Facing R";
 		tasks.add(checkIfFacingRight);
-		
-		Task checkIfBigMario = new Task(this::isBigMario, null);
-		checkIfBigMario.description = "Big";
-		tasks.add(checkIfBigMario);
-		
-		Task checkIfFireMario = new Task(this::isFireMario, null);
-		checkIfFireMario.description = "Fire";
-		tasks.add(checkIfFireMario);
-		
 		return tasks;
 	}
 
