@@ -148,7 +148,7 @@ public class GATester {
 	public void randomizeMapElites(JavaPorts evolver, int numIterations) {
 		int totalCounter = 1;
 		for (int G = 0; G < numIterations; G++) {
-			for (int i = 2; i <= 10; i++) {
+			for (int i = 2; i <= 5; i++) {
 				evolver.randomizeBTPopulation(i, i);
 				simulateGeneration(evolver);
 				evolver.storeElites();
@@ -164,7 +164,7 @@ public class GATester {
 		clearOldElites();
 		
 		// evolver.loadElites(eliteFolderName);
-		randomizeMapElites(evolver, 10);
+		randomizeMapElites(evolver, 5);
 		System.out.println("Randomization step done.----------------");
 
 		evolver.setSurpriseEffect(0.2f);

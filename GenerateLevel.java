@@ -1,3 +1,12 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import _GA_TESTS.Utils;
+import agents.human.Agent;
 import engine.core.MarioGame;
 import engine.core.MarioLevelGenerator;
 import engine.core.MarioLevelModel;
@@ -20,14 +29,40 @@ public class GenerateLevel {
                 " Max X Jump: " + result.getMaxXJump() + " Max Air Time: " + result.getMaxJumpAirTime());
         System.out.println("****************************************************************");
     }
+    
+    public static void generateAndSaveThousandLevels(MarioLevelGenerator generator, String fileName){
+    	String path = "levels/" + fileName;
+    	try {
+			Files.createDirectories(Paths.get(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	
+    	
+    	for(int i = 1 ; i  <= 1000; i++){
+        	String filePath = path + "/lvl-" + i + ".txt";
+        	String levelString = generator.getGeneratedLevel(new MarioLevelModel(200, 20), new MarioTimer(5 * 60 * 60 * 1000));
+        	try {
+    			PrintWriter out = new PrintWriter(filePath);
+    			out.println(levelString);
+    			out.close();
+    		} catch (FileNotFoundException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    }
 
     public static void main(String[] args) {
 
-    	MarioLevelGenerator generator = new levelGenerators.notch.LevelGenerator(1, 0);
-        //MarioLevelGenerator generator = new levelGenerators.notch.LevelGenerator();
-        String level = generator.getGeneratedLevel(new MarioLevelModel(100, 20), new MarioTimer(5 * 60 * 60 * 1000));
-        MarioGame game = new MarioGame();
-        // printResults(game.playGame(level, 200, 0));
-        printResults(game.runGame(new agents.human.Agent(), level, 200, 2, true, 21));
+    	MarioLevelGenerator generator = new levelGenerators.notch.LevelGenerator(0, 10);
+    	//MarioLevelGenerator generator = new levelGenerators.notch.LevelGenerator(0, 0);
+
+        String level = generator.getGeneratedLevel(new MarioLevelModel(200, 20), new MarioTimer(5 * 60 * 60 * 1000));
+        
+        generateAndSaveThousandLevels(generator, "notchMedium");
+        //String level = Utils.getLevel("levels/original/lvl-12.txt");
+    	//MarioGame game = new MarioGame();
+        //Agent agent = new agents.human.Agent();
+        //printResults(game.runGame(agent, level, 100, 2, true, 21));
     }
 }
