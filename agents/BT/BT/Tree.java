@@ -9,14 +9,15 @@ public class Tree {
 	public Node root;
 	NodeMap nodemap;
 	public Actions actions;
-	public Conditions conditions;
+	//public Conditions conditions;
+	public ConditionsDetailed conditions;
 	public Blackboard blackboard;
 	
 	private void init(){
 		nodemap = new NodeMap();
 		blackboard = new Blackboard();
 		actions = new Actions(blackboard);
-		conditions = new Conditions(blackboard);
+		conditions = new ConditionsDetailed(blackboard);
 	}
 	
 	void addChildrenToInterior(Interior interior, int numChildren, Scanner fi){

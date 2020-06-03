@@ -22,6 +22,20 @@ public class NodeMap {
 		return null;
 	}
 	
+	public Node getNode(int typeID, int ID, Actions actions, ConditionsDetailed conditions){
+		if(typeID == OTHER_INTERIOR.value())
+			return getOtherInterior(ID);
+		if(typeID == UNORDERED_INTERIOR.value())
+			return getUnorderedInterior(ID);
+		if(typeID == DECORATOR.value())
+			return getDectorator(ID);
+		if(typeID == ACTION.value())
+			return getAction(ID, actions);
+		if(typeID == CONDITION.value())
+			return conditions.makeCondition(ID);
+		return null;
+	}
+	
 	public Interior getOtherInterior(int ID){
 		Interior tmp = null;
 		if(ID == 0)
