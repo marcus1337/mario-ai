@@ -8,6 +8,7 @@ import engine.effects.*;
 import engine.graphics.MarioBackground;
 import engine.helper.EventType;
 import engine.helper.GameStatus;
+import engine.helper.MarioActions;
 import engine.helper.SpriteType;
 import engine.helper.TileFeature;
 import engine.sprites.*;
@@ -350,10 +351,15 @@ public class MarioWorld {
             }
         }
     }
+    
+    int frameCounter = 0;
+    boolean hasMovedRight = false;
 
     public void update(boolean[] actions) {
         if(!shouldUpdate())
         	return;
+        
+        killStaleAIs(actions);
         	
         this.currentTick += 1;
         moveCamera();
@@ -458,6 +464,16 @@ public class MarioWorld {
             }
         }
     }
+
+	private void killStaleAIs(boolean[] actions) {
+		if(actions[MarioActions.RIGHT.getValue()]){
+        	hasMovedRight = true;
+        }
+		if(!hasMovedRight)
+			frameCounter++;
+        if(!hasMovedRight && frameCounter > 100)
+        	lose();
+	}
 
     public void bump(int xTile, int yTile, boolean canBreakBricks) {
         int block = this.level.getBlock(xTile, yTile);

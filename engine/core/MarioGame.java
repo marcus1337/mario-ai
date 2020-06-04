@@ -173,6 +173,7 @@ public class MarioGame {
         }
     }
     
+    
     void updateWorld(boolean[] actions){
         this.world.update(actions);
         gameEvents.addAll(this.world.lastFrameEvents);
@@ -201,7 +202,7 @@ public class MarioGame {
     private MarioResult gameLoop(String level, int timer, int marioState, boolean visual, int fps) {
     	initGame(level, timer, marioState, visual, fps);
 
-        while (this.world.gameStatus == GameStatus.RUNNING) {
+        while (world.gameStatus == GameStatus.RUNNING) {
         	MarioForwardModel model = new MarioForwardModel(this.world.clone());
             if (!this.pause) {
                 boolean[] actions = getAIActions(model);
