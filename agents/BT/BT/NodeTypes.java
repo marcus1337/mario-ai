@@ -7,7 +7,7 @@ public enum NodeTypes {
 	public static final int maxOtherInteriorID = 3;
 	public static final int maxUnorderedInteriorID = 0;
 	public static final int maxDecoratorID = 0;
-	public static final int maxActionID = 8;
+	public static final int maxActionID = 6;
 	public static final int maxConditionID = new ConditionsDetailed(null).getNumConditions()-1;
 
 	NodeTypes(int id) {

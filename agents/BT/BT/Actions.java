@@ -16,39 +16,31 @@ public class Actions {
 
 	public Task makeAction(int ID) {
 		Task task = null;
-		if (ID == 0){
+		if (ID == 0) {
 			task = new Task(null, this::shoot);
 			task.description = "Fire";
 		}
-		if (ID == 1){
+		if (ID == 1) {
 			task = new Task(null, this::duck);
 			task.description = "Duck";
 		}
-		if (ID == 2){
+		if (ID == 2) {
 			task = new Task(null, this::walkLeft);
 			task.description = "Left";
 		}
-		if (ID == 3){
+		if (ID == 3) {
 			task = new Task(null, this::walkRight);
 			task.description = "Right";
 		}
-		if (ID == 4){
-			task = new Task(null, this::highJump);
-			task.description = "Jump 3";
+		if (ID == 4) {
+			task = new Task(null, this::jump);
+			task.description = "Jump";
 		}
-		if (ID == 5){
-			task = new Task(null, this::mediumJump);
-			task.description = "Jump 2";
-		}
-		if (ID == 6){
-			task = new Task(null, this::smallJump);
-			task.description = "Jump 1";
-		}
-		if (ID == 7){
+		if (ID == 5) {
 			task = new Task(null, this::speed);
 			task.description = "Speed";
 		}
-		if (ID == 8){
+		if (ID == 6) {
 			task = new Task(null, this::noOperation);
 			task.description = "NOP";
 		}
@@ -69,12 +61,12 @@ public class Actions {
 	}
 
 	STATE duck() {
-		if (model.getMarioMode() > 0)
-			if (model.isMarioOnGround() || blackboard.prevActions[MarioActions.DOWN.getValue()]) {
-				blackboard.actions[MarioActions.DOWN.getValue()] = true;
-				return SUCCESS;
-			}
-		return FAILURE;
+		if (model.getMarioMode() == 0)
+			return FAILURE;
+		blackboard.actions[MarioActions.DOWN.getValue()] = true;
+		if (model.isMarioOnGround())
+			return SUCCESS;
+		return RUNNING;
 	}
 
 	STATE walkLeft() {
@@ -99,41 +91,21 @@ public class Actions {
 			blackboard.actions[i] = false;
 		return SUCCESS;
 	}
-
-	STATE highJump() {
-		return jumpTowardLimit(7);
-	}
-
-	STATE mediumJump() {
-		return jumpTowardLimit(3);
-	}
-
-	STATE smallJump() {
-		return jumpTowardLimit(1);
+	
+	STATE jump(){
+		blackboard.actions[MarioActions.JUMP.getValue()] = true;
+		if (canJump())
+			return SUCCESS;
+		else if(blackboard.prevActions[MarioActions.JUMP.getValue()]){
+			blackboard.actions[MarioActions.JUMP.getValue()] = false;
+			return FAILURE;
+		}		
+		return RUNNING;
 	}
 
 	private boolean canJump() {
 		return (model.mayMarioJump() || !model.isMarioOnGround())
 				&& (model.getMarioCanJumpHigher() || blackboard.ticksSinceStartJump == 0);
 	}
-
-	private STATE jumpingTowardLimit(int limit) { // 7 is max
-		if (blackboard.ticksSinceStartJump < limit) {
-			blackboard.actions[MarioActions.JUMP.getValue()] = true;
-			return RUNNING;
-		}
-		return SUCCESS;
-	}
-
-	private boolean reachedJumpLimit(int limit) {
-		return limit == blackboard.ticksSinceStartJump && blackboard.prevActions[MarioActions.JUMP.getValue()] == true;
-	}
-
-	private STATE jumpTowardLimit(int limit) {
-		if (canJump())
-			return jumpingTowardLimit(limit);
-		if (reachedJumpLimit(limit))
-			return SUCCESS;
-		return FAILURE;
-	}
+	
 }
