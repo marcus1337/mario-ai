@@ -8,6 +8,7 @@ import agents.BT.BT.Tree;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
 import engine.core.MarioTimer;
+import engine.helper.MarioActions;
 
 
 public class BTAgent implements MarioAgent {
@@ -20,9 +21,6 @@ public class BTAgent implements MarioAgent {
 	}
 
 	boolean[] processReturnedActions(MarioForwardModel model) {
-		tree.blackboard.ticksSinceStartJump++;
-		if (model.isMarioOnGround())
-			tree.blackboard.ticksSinceStartJump = 0;
 		tree.blackboard.prevActions = tree.blackboard.actions;
 		return tree.blackboard.actions;
 	}
@@ -38,7 +36,10 @@ public class BTAgent implements MarioAgent {
 		prepareData(model);
 		tree.root.resetLastReturnedStatuses();
 		tree.root.run();
-		return processReturnedActions(model);
+		boolean[] tmpActions = processReturnedActions(model);
+		if(!tmpActions[MarioActions.JUMP.getValue()])
+			tree.blackboard.hasPausedJump = true;
+		return tmpActions;
 	}
 
 	@Override
