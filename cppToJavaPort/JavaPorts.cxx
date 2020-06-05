@@ -34,12 +34,20 @@ std::string JavaPorts::getTreeString(int index) {
     return "";
 }
 
+std::string JavaPorts::getEliteTreeString(int index) {
+    if (aiType == BT) {
+        return BTInterface.getEliteTreeString(index);
+    }
+
+    return "";
+}
+
 void JavaPorts::saveGeneration(std::string filename) {
     if (aiType == BT) {
         BTInterface.saveGeneration(filename);
     }
     if (aiType == NEAT) {
-        NEATInterface.save(0, filename);
+        NEATInterface.saveGeneration(filename);
     }
 }
 
@@ -48,7 +56,7 @@ void JavaPorts::loadGeneration(std::string filename, int generation) {
         BTInterface.loadGeneration(filename, generation);
     }
     if (aiType == NEAT) {
-        NEATInterface.load(filename, 0);
+        NEATInterface.loadGeneration(filename, generation);
     }
 }
 
@@ -74,14 +82,83 @@ void JavaPorts::setBehavior(int index, std::vector<int> behaviors) {
     if (aiType == BT) {
         BTInterface.setBehavior(index, behaviors);
     }
+    if (aiType == NEAT) {
+        NEATInterface.setBehavior(index, behaviors);
+    }
 }
 
 void JavaPorts::setTargetSpecies(int numTargetSpecies) {
     if (aiType == BT) {
         BTInterface.setTargetSpecies(numTargetSpecies);
     }
+    if (aiType == NEAT) {
+        NEATInterface.setTargetSpecies(numTargetSpecies);
+    }
+}
+
+void JavaPorts::setSurpriseEffect(float effect) {
+    if (aiType == BT) {
+        BTInterface.setSurpriseEffect(effect);
+    }
+    if (aiType == NEAT) {
+        NEATInterface.setSurpriseEffect(effect);
+    }
 }
 
 JavaPorts::JavaPorts(AIType _aitype) : aiType(_aitype) {
 
+}
+
+void JavaPorts::mapElites() {
+    if (aiType == BT) {
+        BTInterface.mapElites();
+    }
+    if (aiType == NEAT) {
+        NEATInterface.mapElites();
+    }
+}
+
+void JavaPorts::randomizeBTPopulation(int minNodes, int maxNodes) {
+    if (aiType == BT) {
+        BTInterface.randomizePopulation(minNodes, maxNodes);
+    }
+    if (aiType == NEAT) {
+        NEATInterface.randomizePopulation(minNodes, maxNodes);
+    }
+}
+
+void JavaPorts::randomizePopulationFromElites() {
+    if (aiType == BT) {
+        BTInterface.randomizePopulationFromElites();
+    }
+    if (aiType == NEAT) {
+        NEATInterface.randomizePopulationFromElites();
+    }
+}
+
+void JavaPorts::saveElites(std::string foldername) {
+    if (aiType == BT) {
+        BTInterface.saveElites(foldername);
+    }
+    if (aiType == NEAT) {
+        NEATInterface.saveElites(foldername);
+    }
+}
+
+void JavaPorts::loadElites(std::string foldername) {
+    if (aiType == BT) {
+        BTInterface.loadElites(foldername);
+    }
+    if (aiType == NEAT) {
+        NEATInterface.loadElites(foldername);
+    }
+}
+
+void JavaPorts::storeElites() {
+    if (aiType == BT) {
+        BTInterface.storeElites();
+    }
+    if (aiType == NEAT) {
+        NEATInterface.storeElites();
+    }
 }

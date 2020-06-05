@@ -24,6 +24,7 @@ public:
     int getGeneration();
 
     std::string getTreeString(int index);
+    std::string getEliteTreeString(int index);
 
     void saveGeneration(std::string filename);
 
@@ -33,7 +34,14 @@ public:
 
     void setFitness(int index, int fitness);
     void setBehavior(int index, std::vector<int> behaviors);
-
     void setTargetSpecies(int numTargetSpecies);
+    void setSurpriseEffect(float effect);
+
+    void mapElites();
+    void randomizeBTPopulation(int minNodes, int maxNodes);
+    void randomizePopulationFromElites();
+    void saveElites(std::string foldername = "TREES_ELITE");
+    void loadElites(std::string foldername = "TREES_ELITE");
+    void storeElites();
 
 };
