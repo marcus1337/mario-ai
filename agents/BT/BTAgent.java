@@ -30,6 +30,8 @@ public class BTAgent implements MarioAgent {
 		tree.actions.model = model;
 		tree.conditions.updateConditionParameters(model);
 	}
+	
+	boolean firstRun = true;
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
@@ -37,8 +39,9 @@ public class BTAgent implements MarioAgent {
 		tree.root.resetLastReturnedStatuses();
 		tree.root.run();
 		boolean[] tmpActions = processReturnedActions(model);
-		if(!tmpActions[MarioActions.JUMP.getValue()])
+		if(!tmpActions[MarioActions.JUMP.getValue()] && !firstRun)
 			tree.blackboard.hasPausedJump = true;
+		firstRun = false;
 		return tmpActions;
 	}
 

@@ -94,19 +94,15 @@ public class Actions {
 	
 	
 	STATE jump(){
-		blackboard.actions[MarioActions.JUMP.getValue()] = true;
 		if (canJump()){
-			blackboard.hasPausedJump = false;
+			blackboard.actions[MarioActions.JUMP.getValue()] = true;
 			return SUCCESS;
-		}else if(!blackboard.hasPausedJump){
-			blackboard.actions[MarioActions.JUMP.getValue()] = false;
-			return FAILURE;
-		}		
+		}	
 		return RUNNING;
 	}
 
 	private boolean canJump() {
-		return (model.mayMarioJump() || !model.isMarioOnGround()) && model.getMarioCanJumpHigher();
+		return (model.mayMarioJump() || !model.isMarioOnGround()) || model.getMarioCanJumpHigher();
 	}
 	
 }
