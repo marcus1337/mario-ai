@@ -22,7 +22,7 @@ public class PlayLevel {
     	
     	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 30, 30, 21);
     	
-    	gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 190, 17);
+    	gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 113, 17);
     	
     	gaTester.cleanUp();
     }

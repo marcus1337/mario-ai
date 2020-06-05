@@ -63,10 +63,11 @@ public class Actions {
 	STATE duck() {
 		if (model.getMarioMode() == 0)
 			return FAILURE;
-		blackboard.actions[MarioActions.DOWN.getValue()] = true;
-		if (model.isMarioOnGround())
-			return SUCCESS;
-		return RUNNING;
+		if (model.isMarioOnGround() || blackboard.prevActions[MarioActions.DOWN.getValue()]){
+			blackboard.actions[MarioActions.DOWN.getValue()] = true;
+			return SUCCESS;	
+		}
+		return FAILURE;
 	}
 
 	STATE walkLeft() {
@@ -98,7 +99,7 @@ public class Actions {
 			blackboard.actions[MarioActions.JUMP.getValue()] = true;
 			return SUCCESS;
 		}	
-		return RUNNING;
+		return FAILURE;
 	}
 
 	private boolean canJump() {
