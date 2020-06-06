@@ -23,6 +23,21 @@ public class exampleJNI {
   public final static native int IntVec_doSet(long jarg1, IntVec jarg1_, int jarg2, int jarg3);
   public final static native void IntVec_doRemoveRange(long jarg1, IntVec jarg1_, int jarg2, int jarg3);
   public final static native void delete_IntVec(long jarg1);
+  public final static native long new_FloatVec__SWIG_0();
+  public final static native long new_FloatVec__SWIG_1(long jarg1, FloatVec jarg1_);
+  public final static native long FloatVec_capacity(long jarg1, FloatVec jarg1_);
+  public final static native void FloatVec_reserve(long jarg1, FloatVec jarg1_, long jarg2);
+  public final static native boolean FloatVec_isEmpty(long jarg1, FloatVec jarg1_);
+  public final static native void FloatVec_clear(long jarg1, FloatVec jarg1_);
+  public final static native long new_FloatVec__SWIG_2(int jarg1, float jarg2);
+  public final static native int FloatVec_doSize(long jarg1, FloatVec jarg1_);
+  public final static native void FloatVec_doAdd__SWIG_0(long jarg1, FloatVec jarg1_, float jarg2);
+  public final static native void FloatVec_doAdd__SWIG_1(long jarg1, FloatVec jarg1_, int jarg2, float jarg3);
+  public final static native float FloatVec_doRemove(long jarg1, FloatVec jarg1_, int jarg2);
+  public final static native float FloatVec_doGet(long jarg1, FloatVec jarg1_, int jarg2);
+  public final static native float FloatVec_doSet(long jarg1, FloatVec jarg1_, int jarg2, float jarg3);
+  public final static native void FloatVec_doRemoveRange(long jarg1, FloatVec jarg1_, int jarg2, int jarg3);
+  public final static native void delete_FloatVec(long jarg1);
   public final static native long new_JavaPorts(int jarg1);
   public final static native void JavaPorts_init__SWIG_0(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3, int jarg4, int jarg5, int jarg6, int jarg7);
   public final static native void JavaPorts_init__SWIG_1(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3, int jarg4);
@@ -44,5 +59,7 @@ public class exampleJNI {
   public final static native void JavaPorts_loadElites__SWIG_0(long jarg1, JavaPorts jarg1_, String jarg2);
   public final static native void JavaPorts_loadElites__SWIG_1(long jarg1, JavaPorts jarg1_);
   public final static native void JavaPorts_storeElites(long jarg1, JavaPorts jarg1_);
+  public final static native void JavaPorts_calcNEATInput(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, FloatVec jarg3_);
+  public final static native long JavaPorts_getNEATOutput(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native void delete_JavaPorts(long jarg1);
 }

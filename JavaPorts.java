@@ -119,4 +119,12 @@ public class JavaPorts {
     exampleJNI.JavaPorts_storeElites(swigCPtr, this);
   }
 
+  public void calcNEATInput(int index, FloatVec inputs) {
+    exampleJNI.JavaPorts_calcNEATInput(swigCPtr, this, index, FloatVec.getCPtr(inputs), inputs);
+  }
+
+  public FloatVec getNEATOutput(int index) {
+    return new FloatVec(exampleJNI.JavaPorts_getNEATOutput(swigCPtr, this, index), true);
+  }
+
 }
