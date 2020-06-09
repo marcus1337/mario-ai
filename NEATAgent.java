@@ -12,32 +12,50 @@ public class NEATAgent implements MarioAgent {
 	private int[][] enemyField = null;
 	private boolean isFacingRight;
 	private JavaPorts evolver;
+	boolean isElite;
 
 	public int AIIndex;
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
+		updateFields(model);
+		calculateInput();
+		boolean[] tmpActions = getNetworkOutput();
+		return tmpActions;
+	}
+
+	private void updateFields(MarioForwardModel model) {
 		field = recField.getBlockReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
 		isFacingRight = model.isFacingRight();
+	}
 
+	private void calculateInput() {
 		FloatVec floatVec = makeNetworkInput();
-		evolver.calcNEATInput(AIIndex, floatVec);
-		
-		boolean[] tmpActions = getNetworkOutput();
-		
-
-		return tmpActions;
+		if(isElite)
+			evolver.calcNEATEliteInput(AIIndex, floatVec);
+		else
+			evolver.calcNEATInput(AIIndex, floatVec);
 	}
 
 	private boolean[] getNetworkOutput() {
 		boolean[] tmpActions = new boolean[5];
-		FloatVec output = evolver.getNEATOutput(AIIndex);
-		for(int i = 0 ; i < output.size(); i++){
-			if(output.get(i) > 0.5f)
+		FloatVec output = getOutput();
+
+		for (int i = 0; i < output.size(); i++) {
+			if (output.get(i) > 0.5f)
 				tmpActions[i] = true;
 		}
 		return tmpActions;
+	}
+
+	private FloatVec getOutput() {
+		FloatVec output;
+		if (isElite)
+			output = evolver.getNEATEliteOutput(AIIndex);
+		else
+			output = evolver.getNEATOutput(AIIndex);
+		return output;
 	}
 
 	private FloatVec makeNetworkInput() {
@@ -58,7 +76,7 @@ public class NEATAgent implements MarioAgent {
 					floatVec.add(0.f);
 			}
 		}
-		if(isFacingRight)
+		if (isFacingRight)
 			floatVec.add(1.f);
 		else
 			floatVec.add(0.f);
@@ -73,6 +91,15 @@ public class NEATAgent implements MarioAgent {
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
 
+	}
+
+	public NEATAgent(JavaPorts evolver, int AIIndex) {
+		preInitialize(evolver, AIIndex);
+	}
+
+	public NEATAgent(JavaPorts evolver, int AIIndex, boolean isElite) {
+		this.isElite = isElite;
+		preInitialize(evolver, AIIndex);
 	}
 
 	public void preInitialize(JavaPorts evolver, int AIIndex) {

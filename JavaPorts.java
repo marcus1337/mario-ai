@@ -91,8 +91,8 @@ public class JavaPorts {
     exampleJNI.JavaPorts_mapElites(swigCPtr, this);
   }
 
-  public void randomizeBTPopulation(int minNodes, int maxNodes) {
-    exampleJNI.JavaPorts_randomizeBTPopulation(swigCPtr, this, minNodes, maxNodes);
+  public void randomizePopulation(int minNodes, int maxNodes) {
+    exampleJNI.JavaPorts_randomizePopulation(swigCPtr, this, minNodes, maxNodes);
   }
 
   public void randomizePopulationFromElites() {
@@ -125,6 +125,14 @@ public class JavaPorts {
 
   public FloatVec getNEATOutput(int index) {
     return new FloatVec(exampleJNI.JavaPorts_getNEATOutput(swigCPtr, this, index), true);
+  }
+
+  public void calcNEATEliteInput(int index, FloatVec inputs) {
+    exampleJNI.JavaPorts_calcNEATEliteInput(swigCPtr, this, index, FloatVec.getCPtr(inputs), inputs);
+  }
+
+  public FloatVec getNEATEliteOutput(int index) {
+    return new FloatVec(exampleJNI.JavaPorts_getNEATEliteOutput(swigCPtr, this, index), true);
   }
 
 }

@@ -1,6 +1,8 @@
-package _GA_TESTS;
+
 
 import java.util.concurrent.ThreadLocalRandom;
+
+import _GA_TESTS.Utils;
 import engine.core.MarioAgentEvent;
 import engine.core.MarioEvent;
 import engine.core.MarioGame;
@@ -24,6 +26,11 @@ public class LevelHandler {
 	}
 
 	public void runGameWithVisuals(agents.BT.BTAgent agent, int fps) {
+		MarioGame game = new MarioGame(); // 21 fps is normal
+		game.runGame(agent, Utils.getLevel("levels/original/lvl-1.txt"), 50, marioStartState, true, fps);
+	}
+	
+	public void runGameWithVisuals(NEATAgent agent, int fps) {
 		MarioGame game = new MarioGame(); // 21 fps is normal
 		game.runGame(agent, Utils.getLevel("levels/original/lvl-1.txt"), 50, marioStartState, true, fps);
 	}
@@ -90,8 +97,28 @@ public class LevelHandler {
 			return game.runGame(agent, level3, 50, marioStartState, false);
 		return game.runGame(agent, level4, 50, marioStartState, false);
 	}
+	
+	private MarioResult runGameAndGetResult(NEATAgent agent, int levelType) {
+		MarioGame game = new MarioGame();
+		if (levelType == 0)
+			return game.runGame(agent, level1, 50, marioStartState, false);
+		if (levelType == 1)
+			return game.runGame(agent, level2, 50, marioStartState, false);
+		if (levelType == 2)
+			return game.runGame(agent, level3, 50, marioStartState, false);
+		return game.runGame(agent, level4, 50, marioStartState, false);
+	}
 
 	public MarioResult simulateAndEvaluate(agents.BT.BTAgent agent, int levelType) {
+		MarioResult result = runGameAndGetResult(agent, levelType);
+		result.fitness += addGameEndFitness(result);
+		result.fitness += addCompletionRateFitness(result);
+		result.fitness = Math.max(0, result.fitness);
+		setBehaviors(result);
+		return result;
+	}
+	
+	public MarioResult simulateAndEvaluate(NEATAgent agent, int levelType) {
 		MarioResult result = runGameAndGetResult(agent, levelType);
 		result.fitness += addGameEndFitness(result);
 		result.fitness += addCompletionRateFitness(result);

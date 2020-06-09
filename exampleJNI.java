@@ -52,7 +52,7 @@ public class exampleJNI {
   public final static native void JavaPorts_setTargetSpecies(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native void JavaPorts_setSurpriseEffect(long jarg1, JavaPorts jarg1_, float jarg2);
   public final static native void JavaPorts_mapElites(long jarg1, JavaPorts jarg1_);
-  public final static native void JavaPorts_randomizeBTPopulation(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3);
+  public final static native void JavaPorts_randomizePopulation(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3);
   public final static native void JavaPorts_randomizePopulationFromElites(long jarg1, JavaPorts jarg1_);
   public final static native void JavaPorts_saveElites__SWIG_0(long jarg1, JavaPorts jarg1_, String jarg2);
   public final static native void JavaPorts_saveElites__SWIG_1(long jarg1, JavaPorts jarg1_);
@@ -61,5 +61,7 @@ public class exampleJNI {
   public final static native void JavaPorts_storeElites(long jarg1, JavaPorts jarg1_);
   public final static native void JavaPorts_calcNEATInput(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, FloatVec jarg3_);
   public final static native long JavaPorts_getNEATOutput(long jarg1, JavaPorts jarg1_, int jarg2);
+  public final static native void JavaPorts_calcNEATEliteInput(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, FloatVec jarg3_);
+  public final static native long JavaPorts_getNEATEliteOutput(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native void delete_JavaPorts(long jarg1);
 }

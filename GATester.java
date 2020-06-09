@@ -150,7 +150,7 @@ public class GATester {
 		int totalCounter = 1;
 		for (int G = 0; G < numIterations; G++) {
 			for (int i = 2; i <= 5; i++) {
-				evolver.randomizeBTPopulation(i, i);
+				evolver.randomizePopulation(i, i);
 				simulateGeneration(evolver);
 				evolver.storeElites();
 				evolver.saveElites(eliteFolderName);
