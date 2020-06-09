@@ -38,17 +38,17 @@ public class NEATTester {
 	}
 
 	public JavaPorts getEvolver() {
-		return gaLoader.getJavaPort(AIType.BT);
+		return gaLoader.getJavaPort(AIType.NEAT);
 	}
 
 	public void loadAndShowNEATAgent(String filename, int generation, int aiIndex, int fps) {
-		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
+		JavaPorts evolver = gaLoader.getJavaPort(AIType.NEAT);
 		evolver.loadGeneration(filename, generation);
 		levelHandler.runGameWithVisuals(getNEATAgents(evolver, aiIndex).get(aiIndex), fps);
 	}
 
 	public void loadAndShowEliteNEATAgent(String filename, int aiIndex, int fps) {
-		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
+		JavaPorts evolver = gaLoader.getJavaPort(AIType.NEAT);
 		evolver.loadElites(filename);
 		levelHandler.runGameWithVisuals(getEliteNEATAgent(evolver, aiIndex), fps);
 	}
@@ -110,7 +110,7 @@ public class NEATTester {
 	}
 
 	private JavaPorts getAndInitBTEvolver() {
-		JavaPorts evolver = gaLoader.getJavaPort(AIType.BT);
+		JavaPorts evolver = gaLoader.getJavaPort(AIType.NEAT);
 		evolver.init(numAI, NodeTypes.maxOtherInteriorID, NodeTypes.maxUnorderedInteriorID, NodeTypes.maxDecoratorID,
 				NodeTypes.maxActionID, NodeTypes.maxConditionID);
 		return evolver;
@@ -149,7 +149,7 @@ public class NEATTester {
 
 	public void evolveNEATsFromScratch(int numGenerations) {
 		JavaPorts evolver = getAndInitBTEvolver();
-		clearOldElites();
+		//clearOldElites();
 		
 		// evolver.loadElites(eliteFolderName);
 		randomizeMapElites(evolver, 5);
