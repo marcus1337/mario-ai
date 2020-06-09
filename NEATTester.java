@@ -97,16 +97,13 @@ public class NEATTester {
 
 	public void continueEvolveBTs(int numGenerations, int generationStart) {
 		JavaPorts evolver = getAndInitBTEvolver();
-
 		evolver.loadElites(eliteFolderName);
 		evolver.loadGeneration(fileNameBT, generationStart);
-		evolveBTs(evolver, numGenerations);
+		evolveNEATs(evolver, numGenerations);
 	}
 
 	private void evolveBTGeneration(JavaPorts evolver) {
-		
 		simulateGeneration(evolver);
-
 		evolver.saveGeneration(fileNameBT);
 		evolver.saveElites(eliteFolderName);
 		evolver.evolve();
@@ -119,7 +116,7 @@ public class NEATTester {
 		return evolver;
 	}
 
-	private void evolveBTs(JavaPorts evolver, int numIterations) {
+	private void evolveNEATs(JavaPorts evolver, int numIterations) {
 		for (int gen = 0; gen < numIterations; gen++) {
 			evolveBTGeneration(evolver);
 			if (gen > 0 && gen % 20 == 0){
@@ -150,7 +147,7 @@ public class NEATTester {
 		}
 	}
 
-	public void evolveBTsFromScratch(int numGenerations) {
+	public void evolveNEATsFromScratch(int numGenerations) {
 		JavaPorts evolver = getAndInitBTEvolver();
 		clearOldElites();
 		
@@ -159,6 +156,6 @@ public class NEATTester {
 		System.out.println("Randomization step done.----------------");
 
 		evolver.setSurpriseEffect(0.2f);
-		evolveBTs(evolver, numGenerations);
+		evolveNEATs(evolver, numGenerations);
 	}
 }
