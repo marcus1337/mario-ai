@@ -96,7 +96,7 @@ public class NEATTester {
 	}
 
 	public void continueEvolveBTs(int numGenerations, int generationStart) {
-		JavaPorts evolver = getAndInitBTEvolver();
+		JavaPorts evolver = getAndInitNEATEvolver();
 		evolver.loadElites(eliteFolderName);
 		evolver.loadGeneration(fileNameBT, generationStart);
 		evolveNEATs(evolver, numGenerations);
@@ -109,10 +109,9 @@ public class NEATTester {
 		evolver.evolve();
 	}
 
-	private JavaPorts getAndInitBTEvolver() {
+	private JavaPorts getAndInitNEATEvolver() {
 		JavaPorts evolver = gaLoader.getJavaPort(AIType.NEAT);
-		evolver.init(numAI, NodeTypes.maxOtherInteriorID, NodeTypes.maxUnorderedInteriorID, NodeTypes.maxDecoratorID,
-				NodeTypes.maxActionID, NodeTypes.maxConditionID);
+		evolver.init(61, 5, numAI);
 		return evolver;
 	}
 
@@ -148,7 +147,7 @@ public class NEATTester {
 	}
 
 	public void evolveNEATsFromScratch(int numGenerations) {
-		JavaPorts evolver = getAndInitBTEvolver();
+		JavaPorts evolver = getAndInitNEATEvolver();
 		//clearOldElites();
 		
 		// evolver.loadElites(eliteFolderName);
