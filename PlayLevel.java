@@ -12,18 +12,22 @@ import visuals.TreeVisualizer;
 
 public class PlayLevel {
 
-    public static void main(String[] args) {    	
-    	GATester gaTester = new GATester(100, "TEST_DIST");
+    public static void main(String[] args) {   
+    	int maxGens = 100;
     	
-    	//int maxGens = 100;
+    	NEATTester neatTester = new NEATTester(100, "NEAT_DIST");
+    	neatTester.evolveNEATsFromScratch(maxGens);
+    	
+    	
+    	neatTester.cleanUp();
+    	
+    	
+    	
+    	//GATester gaTester = new GATester(100, "TEST_DIST");
     	//gaTester.evolveBTsFromScratch(maxGens);
-  
     	//gaTester.continueEvolveBTs(maxGens-8, 8);
-    	
     	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 30, 30, 21);
-    	
     	//gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 161, 17);
-    	
-    	gaTester.cleanUp();
+    	//gaTester.cleanUp();
     }
 }
