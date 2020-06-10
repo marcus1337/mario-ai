@@ -2,55 +2,78 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import agents.BT.BT.NodeTypes;
 import engine.core.MarioResult;
 
 public class NEATTester {
-	private GALoader gaLoader;
+
 	private int numAI;
 	private LevelHandler levelHandler;
 
 	public String fileNameBT;
 	public String eliteFolderName;
+	private JavaPorts evolver;
+	
+	
 
 	public NEATTester(int numAI, String fileName) {
+		loadDll();
+		evolver = new JavaPorts(AIType.NEAT);
 		this.numAI = numAI;
-		gaLoader = new GALoader();
 		levelHandler = new LevelHandler();
 		fileNameBT = fileName; 
 		eliteFolderName = fileNameBT + "_Elite";
+		evolver.init(61, 5, numAI);
 	}
 
-	public NEATAgent getNEATAgent(JavaPorts evolver, int index) {
+	private void loadDll() {
+		try {
+			System.load("C:/Users/Marcus/Documents/swigwin-4.0.1/swigwin-4.0.1/Examples/JavaPorts/JavaPorts/GA_Ports.dll");
+		} catch (UnsatisfiedLinkError e) {
+			System.err.println(
+					"Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n"
+							+ e);
+			System.exit(1);
+		}
+	}
+
+	public NEATAgent getNEATAgent(int index) {
 		return new NEATAgent(evolver, index);
 	}
 
-	public NEATAgent getEliteNEATAgent(JavaPorts evolver, int index) {
+	public NEATAgent getEliteNEATAgent(int index) {
 		return new NEATAgent(evolver, index, true);
 	}
 
-	ArrayList<NEATAgent> getNEATAgents(JavaPorts evolver, int numAI) {
+	ArrayList<NEATAgent> getNEATAgents(int numAI) {
 		ArrayList<NEATAgent> agents = new ArrayList<NEATAgent>();
 		for (int i = 0; i < numAI; i++)
-			agents.add(getNEATAgent(evolver, i));
+			agents.add(getNEATAgent(i));
 		return agents;
 	}
 
-	public JavaPorts getEvolver() {
-		return gaLoader.getJavaPort(AIType.NEAT);
-	}
-
 	public void loadAndShowNEATAgent(String filename, int generation, int aiIndex, int fps) {
-		JavaPorts evolver = gaLoader.getJavaPort(AIType.NEAT);
+	
 		evolver.loadGeneration(filename, generation);
-		levelHandler.runGameWithVisuals(getNEATAgents(evolver, aiIndex).get(aiIndex), fps);
+		ArrayList<NEATAgent> agents = getNEATAgents(numAI);
+		levelHandler.runGameWithVisuals(agents.get(aiIndex), fps);
 	}
 
 	public void loadAndShowEliteNEATAgent(String filename, int aiIndex, int fps) {
-		JavaPorts evolver = gaLoader.getJavaPort(AIType.NEAT);
+
 		evolver.loadElites(filename);
-		levelHandler.runGameWithVisuals(getEliteNEATAgent(evolver, aiIndex), fps);
+		
+		FloatVec tmp = new FloatVec();
+		for(int i = 0 ; i < 61; i++){
+			tmp.add(1.f);
+		}
+		evolver.calcNEATEliteInput(0, tmp);
+		
+		FloatVec vec = evolver.getNEATEliteOutput(0);
+		
+		levelHandler.runGameWithVisuals(getEliteNEATAgent(aiIndex), fps);
 	}
 	
 	private MarioResult getMeanMarioResult(ArrayList<MarioResult> results){
@@ -61,17 +84,17 @@ public class NEATTester {
 		return result;
 	}
 
-	private void evaluateNEATAgent(JavaPorts evolver, NEATAgent agent, int aiIndex) {
+	private void evaluateNEATAgent(NEATAgent agent, int aiIndex) {
 		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
 		for(int i = 0; i < 4; i++){
 			MarioResult marioResult = levelHandler.simulateAndEvaluate(agent, i);
 			results.add(marioResult);
 		}
 		MarioResult result = getMeanMarioResult(results);
-		setAIResults(evolver, aiIndex, result);
+		setAIResults(aiIndex, result);
 	}
 
-	public void setAIResults(JavaPorts evolver, int aiIndex, MarioResult marioResult) {
+	public void setAIResults(int aiIndex, MarioResult marioResult) {
 		int fitness = marioResult.fitness;
 		evolver.setFitness(aiIndex, fitness);
 		IntVec behvaior = new IntVec(
@@ -86,38 +109,34 @@ public class NEATTester {
 	}
 
 	public void cleanUp() {
-		gaLoader.cleanup();
+		evolver.delete();
 	}
 	
 	public void clearOldElites(){
 		String path = FileSystems.getDefault().getPath(".").toAbsolutePath().toString();
-		path = path.substring(0, path.length() - 1) + "BT_EVO\\"+eliteFolderName;
+		path = path.substring(0, path.length() - 1) + "NEAT_EVO\\"+eliteFolderName;
 		Arrays.stream(new File(path).listFiles()).forEach(File::delete);
 	}
 
 	public void continueEvolveBTs(int numGenerations, int generationStart) {
-		JavaPorts evolver = getAndInitNEATEvolver();
+
 		evolver.loadElites(eliteFolderName);
 		evolver.loadGeneration(fileNameBT, generationStart);
-		evolveNEATs(evolver, numGenerations);
+		evolveNEATs(numGenerations);
 	}
 
-	private void evolveBTGeneration(JavaPorts evolver) {
-		simulateGeneration(evolver);
+	private void evolveBTGeneration() {
+		simulateGeneration();
+		System.out.println("before save");
 		evolver.saveGeneration(fileNameBT);
 		evolver.saveElites(eliteFolderName);
 		evolver.evolve();
+		System.out.println("after save");
 	}
 
-	private JavaPorts getAndInitNEATEvolver() {
-		JavaPorts evolver = gaLoader.getJavaPort(AIType.NEAT);
-		evolver.init(61, 5, numAI);
-		return evolver;
-	}
-
-	private void evolveNEATs(JavaPorts evolver, int numIterations) {
+	private void evolveNEATs(int numIterations) {
 		for (int gen = 0; gen < numIterations; gen++) {
-			evolveBTGeneration(evolver);
+			evolveBTGeneration();
 			if (gen > 0 && gen % 20 == 0){
 				evolver.randomizePopulationFromElites();
 			}
@@ -125,20 +144,20 @@ public class NEATTester {
 		}
 	}
 
-	public void simulateGeneration(JavaPorts evolver) {
+	public void simulateGeneration() {
 		levelHandler.prepareGenerationLevels();
-		ArrayList<NEATAgent> agents = getNEATAgents(evolver, numAI);
+		ArrayList<NEATAgent> agents = getNEATAgents(numAI);
 		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
-			evaluateNEATAgent(evolver, agents.get(aiIndex), aiIndex);
+			evaluateNEATAgent(agents.get(aiIndex), aiIndex);
 	}
 
-	public void randomizeMapElites(JavaPorts evolver, int numIterations) {
+	public void randomizeMapElites(int numIterations) {
 		int totalCounter = 1;
 		for (int G = 0; G < numIterations; G++) {
 			for (int i = 2; i <= 5; i++) {
 				
 				evolver.randomizePopulation(i, i);
-				simulateGeneration(evolver);
+				simulateGeneration();
 				evolver.storeElites();
 				evolver.saveElites(eliteFolderName);
 				System.out.println("Randomizations done: " + totalCounter++);
@@ -147,14 +166,14 @@ public class NEATTester {
 	}
 
 	public void evolveNEATsFromScratch(int numGenerations) {
-		JavaPorts evolver = getAndInitNEATEvolver();
 		//clearOldElites();
 		
 		// evolver.loadElites(eliteFolderName);
-		randomizeMapElites(evolver, 5);
+		//randomizeMapElites(evolver, 5);
 		System.out.println("Randomization step done.----------------");
 
 		evolver.setSurpriseEffect(0.2f);
-		evolveNEATs(evolver, numGenerations);
+		System.out.println("surprise...");
+		evolveNEATs(numGenerations);
 	}
 }

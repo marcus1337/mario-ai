@@ -21,6 +21,7 @@ public class NEATAgent implements MarioAgent {
 		updateFields(model);
 		calculateInput();
 		boolean[] tmpActions = getNetworkOutput();
+
 		return tmpActions;
 	}
 

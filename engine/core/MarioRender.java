@@ -68,7 +68,6 @@ public class MarioRender extends JComponent implements FocusListener {
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
 		renderBackGround(g, og);
-
 		renderMarioWorld(world, og);
 		renderSeparatorBar(og);
 		renderBT(og);

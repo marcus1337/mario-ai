@@ -16,9 +16,10 @@ public class PlayLevel {
     	int maxGens = 100;
     	
     	NEATTester neatTester = new NEATTester(100, "NEAT_DIST");
-    	neatTester.evolveNEATsFromScratch(maxGens);
+    	//neatTester.evolveNEATsFromScratch(maxGens);
     	
-    	
+    	//neatTester.loadAndShowNEATAgent(neatTester.fileNameBT, 5, 5, 21);
+    	neatTester.loadAndShowEliteNEATAgent(neatTester.eliteFolderName, 0, 21);
     	neatTester.cleanUp();
     	
     	
