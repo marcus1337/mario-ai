@@ -11,6 +11,7 @@ public class NEATAgent implements MarioAgent {
 	private int[][] field = null;
 	private int[][] enemyField = null;
 	private boolean isFacingRight;
+	private boolean canJumpHigher;
 	private JavaPorts evolver;
 	boolean isElite;
 
@@ -29,6 +30,7 @@ public class NEATAgent implements MarioAgent {
 		field = recField.getBlockReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
 		isFacingRight = model.isFacingRight();
+		canJumpHigher = model.getMarioCanJumpHigher();
 	}
 
 	private void calculateInput() {
@@ -64,7 +66,7 @@ public class NEATAgent implements MarioAgent {
 		addFieldInput(floatVec, field);
 		addFieldInput(floatVec, enemyField);
 		addInputValue(floatVec, isFacingRight);
-		
+		addInputValue(floatVec, canJumpHigher);
 		return floatVec;
 	}
 	

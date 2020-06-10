@@ -25,7 +25,7 @@ public class NEATTester {
 		levelHandler = new LevelHandler();
 		fileNameBT = fileName; 
 		eliteFolderName = fileNameBT + "_Elite";
-		evolver.init(61, 5, numAI);
+		evolver.init(62, 5, numAI);
 	}
 
 	private void loadDll() {
@@ -157,10 +157,10 @@ public class NEATTester {
 	}
 
 	public void evolveNEATsFromScratch(int numGenerations) {
-		//clearOldElites();
+		clearOldElites();
 		
 		// evolver.loadElites(eliteFolderName);
-		//randomizeMapElites(evolver, 5);
+		randomizeMapElites(5);
 		System.out.println("Randomization step done.----------------");
 
 		evolver.setSurpriseEffect(0.2f);
