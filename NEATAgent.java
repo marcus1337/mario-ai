@@ -30,7 +30,7 @@ public class NEATAgent implements MarioAgent {
 		field = recField.getBlockReceptiveField(model);
 		enemyField = recField.getEnemyReceptiveField(model);
 		isFacingRight = model.isFacingRight();
-		canJumpHigher = model.getMarioCanJumpHigher();
+		canJumpHigher = model.getMarioCanJumpHigher() || model.mayMarioJump();
 	}
 
 	private void calculateInput() {
