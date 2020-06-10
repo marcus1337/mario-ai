@@ -64,15 +64,6 @@ public class NEATTester {
 	public void loadAndShowEliteNEATAgent(String filename, int aiIndex, int fps) {
 
 		evolver.loadElites(filename);
-		
-		FloatVec tmp = new FloatVec();
-		for(int i = 0 ; i < 61; i++){
-			tmp.add(1.f);
-		}
-		evolver.calcNEATEliteInput(0, tmp);
-		
-		FloatVec vec = evolver.getNEATEliteOutput(0);
-		
 		levelHandler.runGameWithVisuals(getEliteNEATAgent(aiIndex), fps);
 	}
 	
