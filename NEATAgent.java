@@ -61,27 +61,24 @@ public class NEATAgent implements MarioAgent {
 
 	private FloatVec makeNetworkInput() {
 		FloatVec floatVec = new FloatVec();
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 6; j++) {
-				if (field[i][j] != 0)
-					floatVec.add(1.f);
-				else
-					floatVec.add(0.f);
-			}
-		}
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 6; j++) {
-				if (enemyField[i][j] != 0)
-					floatVec.add(1.f);
-				else
-					floatVec.add(0.f);
-			}
-		}
-		if (isFacingRight)
+		addFieldInput(floatVec, field);
+		addFieldInput(floatVec, enemyField);
+		addInputValue(floatVec, isFacingRight);
+		
+		return floatVec;
+	}
+	
+	private void addInputValue(FloatVec floatVec, boolean _condition){
+		if (_condition)
 			floatVec.add(1.f);
 		else
 			floatVec.add(0.f);
-		return floatVec;
+	}
+
+	private void addFieldInput(FloatVec floatVec, int[][] _field) {
+		for (int i = 0; i < 5; i++)
+			for (int j = 0; j < 6; j++) 
+				addInputValue(floatVec, _field[i][j] != 0);
 	}
 
 	@Override
