@@ -36,7 +36,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		this.setEnabled(true);
 		this.scale = scale;
 
-		Dimension size = new Dimension(1280, 720);
+		Dimension size = new Dimension(1280, 580); //720
 
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -112,6 +112,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		int imgLenY = (int) (ORIGIN_HEIGHT * scale * 2);
 		if (scale > 1) {
 			g.drawImage(image, 0, 0, 1280, 720, null);
+			//g.drawImage(image, 0, 0, 1280, 600, null);
 			// g.drawImage(image, 0, 0, imgLenX, imgLenY, null);
 		} else {
 			g.drawImage(image, 0, 0, null);

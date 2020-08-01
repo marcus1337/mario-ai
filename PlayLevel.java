@@ -19,7 +19,10 @@ public class PlayLevel {
     	//neatTester.evolveNEATsFromScratch(maxGens);
     	
     	//neatTester.loadAndShowNEATAgent(neatTester.fileNameBT, 5, 5, 21);
-    	neatTester.loadAndShowEliteNEATAgent(neatTester.eliteFolderName, 900, 21);
+    	
+    
+    	
+    	neatTester.loadAndShowEliteNEATAgent(neatTester.eliteFolderName, 1027, 21);
     	neatTester.cleanUp();
     	
     	

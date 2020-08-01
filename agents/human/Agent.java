@@ -82,10 +82,24 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		//recField.printReceptiveField(field);
 	}
 	
+	private boolean isNearRightEdge(){
+		if(field[0][4] != 0 && field[1][4] == 0){
+			float tmpX = (model.getMarioFloatPos()[0]%16.0f);
+			if(tmpX >= 4.0f){
+				return true;
+			}
+		}
+		return false;
+	}
+	//just have isNearEdge
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		updateConditionParameters(model);
+		
+
+		//System.out.println(model.getMarioFloatVelocity()[0]); //9.7 max
+		
 		//actions[MarioActions.RIGHT.getValue()] = true;
 		
 		return actions;

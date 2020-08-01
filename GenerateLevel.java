@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import _GA_TESTS.Utils;
+import agents.QLearning.QAgent;
 import agents.human.Agent;
 import engine.core.MarioGame;
 import engine.core.MarioLevelGenerator;
@@ -54,9 +55,11 @@ public class GenerateLevel {
 
     public static void main(String[] args) {
         
-        String level = Utils.getLevel("levels/hopper/lvl-77.txt");
+        String level = Utils.getLevel("levels/notchParam/lvl-20.txt");
     	MarioGame game = new MarioGame();
-        Agent agent = new agents.human.Agent();
+     //   Agent agent = new agents.human.Agent();
+        
+        QAgent agent = new agents.QLearning.QAgent();
         printResults(game.runGame(agent, level, 100, 2, true, 21));
     }
 }

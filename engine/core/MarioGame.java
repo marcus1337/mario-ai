@@ -169,7 +169,7 @@ public class MarioGame {
         	
             render.renderWorld(world, renderTarget, backBuffer, currentBuffer);
 
-            
+            //System.out.println("MARIO: " + (int)(world.mario.x%16) + ", " + (int)(world.mario.y%16));
         }
     }
     

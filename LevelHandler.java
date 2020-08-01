@@ -11,6 +11,8 @@ import engine.helper.GameStatus;
 
 public class LevelHandler {
 	private int marioStartState = 2;
+	
+	public static final int gameTimeSeconds = 40;
 
 	public LevelHandler() {
 	}
@@ -27,12 +29,12 @@ public class LevelHandler {
 
 	public void runGameWithVisuals(agents.BT.BTAgent agent, int fps) {
 		MarioGame game = new MarioGame(); // 21 fps is normal
-		game.runGame(agent, Utils.getLevel("levels/original/lvl-1.txt"), 50, marioStartState, true, fps);
+		game.runGame(agent, Utils.getLevel("levels/original/lvl-1.txt"), gameTimeSeconds, marioStartState, true, fps);
 	}
 	
 	public void runGameWithVisuals(NEATAgent agent, int fps) {
 		MarioGame game = new MarioGame(); // 21 fps is normal
-		game.runGame(agent, Utils.getLevel("levels/original/lvl-1.txt"), 50, marioStartState, true, fps);
+		game.runGame(agent, Utils.getLevel("levels/original/lvl-3.txt"), gameTimeSeconds, marioStartState, true, fps);
 	}
 
 	public String getRandomLvl() {
@@ -90,23 +92,23 @@ public class LevelHandler {
 	private MarioResult runGameAndGetResult(agents.BT.BTAgent agent, int levelType) {
 		MarioGame game = new MarioGame();
 		if (levelType == 0)
-			return game.runGame(agent, level1, 50, marioStartState, false);
+			return game.runGame(agent, level1, gameTimeSeconds, marioStartState, false);
 		if (levelType == 1)
-			return game.runGame(agent, level2, 50, marioStartState, false);
+			return game.runGame(agent, level2, gameTimeSeconds, marioStartState, false);
 		if (levelType == 2)
-			return game.runGame(agent, level3, 50, marioStartState, false);
-		return game.runGame(agent, level4, 50, marioStartState, false);
+			return game.runGame(agent, level3, gameTimeSeconds, marioStartState, false);
+		return game.runGame(agent, level4, gameTimeSeconds, marioStartState, false);
 	}
 	
 	private MarioResult runGameAndGetResult(NEATAgent agent, int levelType) {
 		MarioGame game = new MarioGame();
 		if (levelType == 0)
-			return game.runGame(agent, level1, 50, marioStartState, false);
+			return game.runGame(agent, level1, gameTimeSeconds, marioStartState, false);
 		if (levelType == 1)
-			return game.runGame(agent, level2, 50, marioStartState, false);
+			return game.runGame(agent, level2, gameTimeSeconds, marioStartState, false);
 		if (levelType == 2)
-			return game.runGame(agent, level3, 50, marioStartState, false);
-		return game.runGame(agent, level4, 50, marioStartState, false);
+			return game.runGame(agent, level3, gameTimeSeconds, marioStartState, false);
+		return game.runGame(agent, level4, gameTimeSeconds, marioStartState, false);
 	}
 
 	public MarioResult simulateAndEvaluate(agents.BT.BTAgent agent, int levelType) {
