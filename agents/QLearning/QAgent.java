@@ -31,14 +31,13 @@ public class QAgent implements MarioAgent {
 	private int[][] field = null;
 	private int[][] enemyField = null;
 	
-	public double epsilon;
 	HashMap<Integer, double[]> qMappings; //States to array of Q-action-values
 	
 	int prevStateNumber;
 	
 	int getBestActionNumberForState(int stateNumber){
 		double[] qvalues = getQValuesMappedToState(stateNumber);
-		return getHighestQIndex(qvalues);
+		return getHighestQIndex(qvalues)+1;
 	}
 
 	private double[] getQValuesMappedToState(int stateNumber) {
@@ -174,12 +173,29 @@ public class QAgent implements MarioAgent {
 	}
 	
 	public boolean[] getRandomAction(){
-		return numberToAction(random.nextInt(12)+1);
+		explorationActionNumber = random.nextInt(12)+1;
+		return numberToAction(explorationActionNumber);
 	}
 	
-	public boolean[] getBestAction(){
-		
-		return null;
+	public boolean[] getBestAction(int stateNumber){
+		return numberToAction(getBestActionNumberForState(stateNumber));
+	}
+	
+
+	public double gamma = 0.6;
+	public double alpha = 0.3;
+	public double epsilon = 0.1;
+	public boolean learning = true;
+	
+	int frameCounter = 0;
+	int explorationActionNumber;
+	
+	private double getQValue(int stateNumber, int actionNumber){
+		return qMappings.get(stateNumber)[actionNumber-1];
+	}
+	private void setQValue(int stateNumber, int actionNumber, double value){
+		double[] qValues = qMappings.get(stateNumber);
+		qValues[actionNumber-1] = value;
 	}
 
 	@Override
@@ -187,22 +203,58 @@ public class QAgent implements MarioAgent {
 		this.model = model;
 		updateFields();
 		int stateNumber = getStateNumber();		
-		boolean[] tmpActions = numberToAction(getBestActionNumberForState(stateNumber));
+		boolean[] actions = getAction(stateNumber);
 		
-		
-		if(prevStateNumber != stateNumber){
-			
-			
-			
+		if(isNewState(stateNumber)){
+			frameCounter = 0;
+			if(learning){
+				
+				updateQValue(stateNumber);
+				
+				explorationActionNumber = -1;
+				if(isRandomAction((int)(epsilon*100.0))){
+					actions = getRandomAction();
+				}
+								
+			}
+			prevStateNumber = stateNumber;
 		}
 		
-		if(isRandomAction(5)){
-			tmpActions = getRandomAction();
-		}
+		prevActions = actions;
+		return actions;
+	}
+
+	private void updateQValue(int stateNumber) {
+		int bestActionIndex = getBestActionNumberForState(stateNumber);
+		double oldQValue = getOldQValue();
+		double nextMaxQ = getQValue(stateNumber, bestActionIndex);
 		
-		prevStateNumber = stateNumber;
-		prevActions = tmpActions;
+		double reward = 0;
+		
+		double newValue = (1.0 - alpha) * oldQValue + alpha * (reward + gamma * nextMaxQ);
+		setQValue(stateNumber, bestActionIndex, newValue);
+	}
+
+	private double getOldQValue() {
+		double oldQValue = 0;
+		if(explorationActionNumber != -1)
+			oldQValue = getQValue(prevStateNumber, explorationActionNumber);
+		else
+			oldQValue = getQValue(prevStateNumber, getBestActionNumberForState(prevStateNumber));
+		return oldQValue;
+	}
+
+	private boolean[] getAction(int stateNumber) {
+		boolean[] tmpActions = getBestAction(stateNumber);
+		if(explorationActionNumber != -1){
+			tmpActions = numberToAction(explorationActionNumber);
+		}
 		return tmpActions;
+	}
+
+	private boolean isNewState(int stateNumber) {
+		frameCounter = (frameCounter + 1) % 6;
+		return frameCounter == 5 || prevStateNumber != stateNumber;
 	}
 
 	@Override
@@ -215,6 +267,7 @@ public class QAgent implements MarioAgent {
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
 		this.model = model;
 		prevStateNumber = -1;
+		explorationActionNumber = -1;
 		prevActions = new boolean[]{true,true,true,true,true};
 		random = new Random();
 		qMappings = new HashMap<Integer, double[]>();

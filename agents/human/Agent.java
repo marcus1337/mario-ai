@@ -92,12 +92,14 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		return false;
 	}
 	//just have isNearEdge
+	
+	int counter = 0;
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		updateConditionParameters(model);
 		
-
+		//System.out.println((counter++)%21);
 		//System.out.println(model.getMarioFloatVelocity()[0]); //9.7 max
 		
 		//actions[MarioActions.RIGHT.getValue()] = true;
