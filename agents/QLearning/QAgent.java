@@ -217,6 +217,7 @@ public class QAgent implements MarioAgent {
 				}
 								
 			}
+			//insert reward start info
 			prevStateNumber = stateNumber;
 		}
 		
