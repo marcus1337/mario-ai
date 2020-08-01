@@ -34,6 +34,8 @@ public class QAgent implements MarioAgent {
 	public double epsilon;
 	HashMap<Integer, double[]> qMappings; //States to array of Q-action-values
 	
+	int prevStateNumber;
+	
 	int getBestActionNumberForState(int stateNumber){
 		double[] qvalues = getQValuesMappedToState(stateNumber);
 		return getHighestQIndex(qvalues);
@@ -172,8 +174,7 @@ public class QAgent implements MarioAgent {
 	}
 	
 	public boolean[] getRandomAction(){
-		
-		return null;
+		return numberToAction(random.nextInt(12)+1);
 	}
 	
 	public boolean[] getBestAction(){
@@ -185,14 +186,21 @@ public class QAgent implements MarioAgent {
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
 		this.model = model;
 		updateFields();
-		int stateNumber = getStateNumber();
+		int stateNumber = getStateNumber();		
 		boolean[] tmpActions = numberToAction(getBestActionNumberForState(stateNumber));
 		
-		if(isRandomAction(5)){
-			tmpActions = numberToAction(random.nextInt(12)+1);
+		
+		if(prevStateNumber != stateNumber){
+			
+			
+			
 		}
 		
+		if(isRandomAction(5)){
+			tmpActions = getRandomAction();
+		}
 		
+		prevStateNumber = stateNumber;
 		prevActions = tmpActions;
 		return tmpActions;
 	}
@@ -206,6 +214,7 @@ public class QAgent implements MarioAgent {
 	@Override
 	public void initialize(MarioForwardModel model, MarioTimer timer) {
 		this.model = model;
+		prevStateNumber = -1;
 		prevActions = new boolean[]{true,true,true,true,true};
 		random = new Random();
 		qMappings = new HashMap<Integer, double[]>();
