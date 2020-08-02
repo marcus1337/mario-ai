@@ -60,6 +60,13 @@ public class GenerateLevel {
        // Agent agent = new agents.human.Agent();
         
         QAgent agent = new agents.QLearning.QAgent();
+        
+        for(int i = 0 ; i < 500; i++){
+            game.runGame(agent, level, 30, 2, false);
+            System.out.println("Done... " + i);
+        }
+        agent.learning = false;
+
         printResults(game.runGame(agent, level, 100, 2, true, 21));
     }
 }
