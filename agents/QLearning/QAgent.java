@@ -288,8 +288,8 @@ public class QAgent implements MarioAgent {
 	}
 
 	private boolean isNewState(int stateNumber) {
-		frameCounter = (frameCounter + 1) % 6;
-		return frameCounter == 5 || prevStateNumber != stateNumber;
+		frameCounter = (frameCounter + 1) % 11;
+		return frameCounter == 10 || prevStateNumber != stateNumber;
 	}
 
 	@Override
