@@ -206,9 +206,9 @@ public class QAgent implements MarioAgent {
 		return numberToAction(getBestActionNumberForState(stateNumber));
 	}
 
-	public double gamma = 0.3;
-	public double alpha = 0.6;
-	public double epsilon = 0.3;
+	public double gamma = 0.05;
+	public double alpha = 0.1;
+	public double epsilon = 0.1;
 
 	private double getQValue(int stateNumber, int actionNumber) {
 		return qMappings.get(stateNumber)[actionNumber - 1];
@@ -225,11 +225,11 @@ public class QAgent implements MarioAgent {
 		int res = 0;
 		int nowXLocation = ((int) model.getMarioFloatPos()[0]) / 16;
 
-		res -= numFramesPassed*5;
+		//res -= numFramesPassed*5;
 		res += (nowXLocation-previousXLocation) * 100;
 		if (prevMarioState < model.getMarioMode()) {
 			prevMarioState = model.getMarioMode();
-			res -= 100;
+			res -= 10;
 		}
 
 		previousXLocation = nowXLocation;
