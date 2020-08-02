@@ -57,9 +57,9 @@ public class GenerateLevel {
         
         String level = Utils.getLevel("levels/notchParam/lvl-20.txt");
     	MarioGame game = new MarioGame();
-        Agent agent = new agents.human.Agent();
+       // Agent agent = new agents.human.Agent();
         
-       // QAgent agent = new agents.QLearning.QAgent();
+        QAgent agent = new agents.QLearning.QAgent();
         printResults(game.runGame(agent, level, 100, 2, true, 21));
     }
 }

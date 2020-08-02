@@ -101,6 +101,7 @@ public class Agent extends KeyAdapter implements MarioAgent {
 		
 		//System.out.println((counter++)%21);
 		//System.out.println(model.getMarioFloatVelocity()[0]); //9.7 max
+		System.out.println("TEST: " + ((int)model.getMarioFloatPos()[0])/16);
 		
 		//actions[MarioActions.RIGHT.getValue()] = true;
 		

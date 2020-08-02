@@ -27,8 +27,12 @@ public class ReceptiveField {
 	}
 
 	public ArrayList<Integer> obstacleValues;
-
+	private boolean alwaysRight = false;
 	public ReceptiveField() {
+		obstacleValues = getObstacleValues();
+	}
+	public ReceptiveField(boolean alwaysRight) {
+		this.alwaysRight = alwaysRight;
 		obstacleValues = getObstacleValues();
 	}
 
@@ -75,7 +79,7 @@ public class ReceptiveField {
 
 	private int[][] getField(MarioForwardModel model, int[][] observations) {
 		int[][] field = null;
-		if (model.isFacingRight())
+		if (alwaysRight || model.isFacingRight())
 			field = getRightReceptiveField(observations);
 		else
 			field = getLefttReceptiveField(observations);

@@ -7,7 +7,9 @@ import java.util.Random;
 import _GA_TESTS.ReceptiveField;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
+import engine.core.MarioResult;
 import engine.core.MarioTimer;
+import engine.helper.GameStatus;
 import engine.helper.MarioActions;
 
 
@@ -17,9 +19,11 @@ public class QAgent implements MarioAgent {
 	Random random;
 	MarioForwardModel model;
 	
-	//STATES, EnemyClose, enemyFar, BLOCKS AHEAD, 5x5, NearEdge, RunButtonPrevPressed?, isFireMario
-	//			1			1		 25					1				1					1
+	//STATES, EnemyClose, enemyFar, NearEdge, RunButtonPrevPressed?, isFireMario, inAir
+	//			1			1		  1				1					1		  1
 	///Actions, RIGHT, LEFT, JUMP, SHOOT, RUN 
+	//ground blocks 5
+	//other blocks 13
 	
 	/***shoot-run-neither	* 2 options...add prev action to state instead		12 actions in total 
 	*	right-left-neither	* 3 options
@@ -27,7 +31,7 @@ public class QAgent implements MarioAgent {
 	*************************/
 	//ACTION_INFO_STATES: PREV-TURN-RUNNING?
 	
-	private ReceptiveField recField = new ReceptiveField();
+	private ReceptiveField recField = new ReceptiveField(true);
 	private int[][] field = null;
 	private int[][] enemyField = null;
 	
@@ -76,22 +80,35 @@ public class QAgent implements MarioAgent {
 	}
 	
 	private boolean[] getStateArray(){
-		boolean[] result = new boolean[30];
+		boolean[] result = new boolean[24];
 		result[0] = isNearRightEdge();
 		result[1] = isEnemyClose();
 		result[2] = isEnemyFarAway();
 		result[3] = model.getMarioMode() == 2;
 		result[4] = prevActions[MarioActions.SPEED.getValue()];
+		result[5] = model.isMarioOnGround();
 		boolean[] fieldBools = getFieldBlocks();
-		System.arraycopy(fieldBools, 0, result, 5, 25);
+		System.arraycopy(fieldBools, 0, result, 6, 18);
 		return result;
 	}
 	
 	private boolean[] getFieldBlocks(){
-		boolean[] result = new boolean[25];
+		boolean[] result = new boolean[18];
 		int counter = 0;
-		for(int i = 0; i < 5; i++){
-			for(int j = 1 ; j < 6; j++){
+		
+		for(int i= 0 ; i < 5; i++){
+			if(field[i][4] != 0 || field[i][5] != 0)
+				result[counter] = true;
+			counter++;
+		}
+		
+		if(field[0][1] != 0){
+			result[counter] = true;
+		}
+		counter++;
+		
+		for(int i = 1; i < 5; i++){
+			for(int j = 1 ; j < 4; j++){
 				if(field[i][j] != 0)
 					result[counter] = true;
 				counter++;
@@ -182,7 +199,7 @@ public class QAgent implements MarioAgent {
 	}
 	
 
-	public double gamma = 0.6;
+	public double gamma = 0.5;
 	public double alpha = 0.3;
 	public double epsilon = 0.1;
 	public boolean learning = true;
@@ -197,6 +214,26 @@ public class QAgent implements MarioAgent {
 		double[] qValues = qMappings.get(stateNumber);
 		qValues[actionNumber-1] = value;
 	}
+	
+	int previousXLocation;
+	int numFramesPassed;
+	int prevMarioState = 2;
+	
+	private double getReward(){
+		int res = 0;
+		int nowXLocation = ((int)model.getMarioFloatPos()[0])/16;
+		
+		res -= numFramesPassed;
+		res += nowXLocation * 100;
+		if(prevMarioState < model.getMarioMode()){
+			prevMarioState = model.getMarioMode();
+			res -= 500;
+		}
+		
+		previousXLocation = nowXLocation;
+		numFramesPassed = 0;
+		return (double)res;
+	}
 
 	@Override
 	public boolean[] getActions(MarioForwardModel model, MarioTimer timer) {
@@ -205,19 +242,16 @@ public class QAgent implements MarioAgent {
 		int stateNumber = getStateNumber();		
 		boolean[] actions = getAction(stateNumber);
 		
+		numFramesPassed++;
+		
 		if(isNewState(stateNumber)){
 			frameCounter = 0;
 			if(learning){
-				
 				updateQValue(stateNumber);
-				
 				explorationActionNumber = -1;
-				if(isRandomAction((int)(epsilon*100.0))){
-					actions = getRandomAction();
-				}
-								
+				if(isRandomAction((int)(epsilon*100.0)))
+					actions = getRandomAction();		
 			}
-			//insert reward start info
 			prevStateNumber = stateNumber;
 		}
 		
@@ -230,7 +264,7 @@ public class QAgent implements MarioAgent {
 		double oldQValue = getOldQValue();
 		double nextMaxQ = getQValue(stateNumber, bestActionIndex);
 		
-		double reward = 0;
+		double reward = getReward();
 		
 		double newValue = (1.0 - alpha) * oldQValue + alpha * (reward + gamma * nextMaxQ);
 		setQValue(stateNumber, bestActionIndex, newValue);
