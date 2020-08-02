@@ -359,7 +359,7 @@ public class MarioWorld {
         if(!shouldUpdate())
         	return;
         
-        killStaleAIs(actions);
+        //killStaleAIs(actions);
         	
         this.currentTick += 1;
         moveCamera();
