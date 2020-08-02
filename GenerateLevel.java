@@ -61,7 +61,7 @@ public class GenerateLevel {
         
         QAgent agent = new agents.QLearning.QAgent();
         
-        for(int i = 0 ; i < 500; i++){
+        for(int i = 0 ; i < 1000; i++){
             game.runGame(agent, level, 30, 2, false);
             System.out.println("Done... " + i);
         }
