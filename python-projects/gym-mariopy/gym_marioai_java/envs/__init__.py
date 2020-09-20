@@ -1,0 +1,2 @@
+from gym_marioai_java.envs.marioai_training1_env import MarioAITraining1
+from gym_marioai_java.envs.marioai_test1_env import MarioAITest1

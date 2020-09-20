@@ -1,0 +1,7 @@
+README.md
+setup.py
+gym_marioai_java.egg-info/PKG-INFO
+gym_marioai_java.egg-info/SOURCES.txt
+gym_marioai_java.egg-info/dependency_links.txt
+gym_marioai_java.egg-info/requires.txt
+gym_marioai_java.egg-info/top_level.txt
