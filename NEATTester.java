@@ -157,7 +157,7 @@ public class NEATTester {
 	}
 
 	public void evolveNEATsFromScratch(int numGenerations) {
-		clearOldElites();
+		//clearOldElites();
 		
 		// evolver.loadElites(eliteFolderName);
 		randomizeMapElites(5);

@@ -56,6 +56,7 @@ public class GenerateLevel {
     public static void main(String[] args) {
         
         String level = Utils.getLevel("levels/notchParam/lvl-20.txt");
+        level = Utils.getLevel("levels/notchMedium/lvl-20.txt");
     	MarioGame game = new MarioGame();
        // Agent agent = new agents.human.Agent();
         
