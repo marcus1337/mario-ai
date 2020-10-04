@@ -59,6 +59,7 @@ public class exampleJNI {
   public final static native long JavaPorts_getNEATOutput(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native void JavaPorts_calcNEATEliteInput(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, FloatVec jarg3_);
   public final static native long JavaPorts_getNEATEliteOutput(long jarg1, JavaPorts jarg1_, int jarg2);
+  public final static native void JavaPorts_insertEliteIntoGeneration(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3);
   public final static native long new_JavaPorts();
   public final static native void delete_JavaPorts(long jarg1);
 }

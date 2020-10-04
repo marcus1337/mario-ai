@@ -63,8 +63,7 @@ public class NEATTester {
 
 	public void loadAndShowEliteAgent(String filename, int aiIndex, int fps) {
 		evolver.loadElites(filename);
-		agents.get(0).isElite = true;
-		agents.get(0).AIIndex = aiIndex;
+		evolver.insertEliteIntoGeneration(aiIndex, 0);
 		levelHandler.runGameWithVisuals(agents.get(0), fps);		
 	}
 

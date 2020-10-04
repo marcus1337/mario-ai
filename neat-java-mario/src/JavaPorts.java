@@ -119,6 +119,10 @@ public class JavaPorts {
     return new FloatVec(exampleJNI.JavaPorts_getNEATEliteOutput(swigCPtr, this, index), true);
   }
 
+  public void insertEliteIntoGeneration(int eliteIndex, int aiIndex) {
+    exampleJNI.JavaPorts_insertEliteIntoGeneration(swigCPtr, this, eliteIndex, aiIndex);
+  }
+
   public JavaPorts() {
     this(exampleJNI.new_JavaPorts(), true);
   }
