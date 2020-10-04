@@ -96,8 +96,9 @@ public class LevelHandler {
 		while(!game.isGameDone()){
 			MarioForwardModel model = game.getModel();
 			agent.updateFields(model);
-			
 			agent.calculateInput();
+			agent.setActions(model);
+
 			game.stepWorld(agent.action.actions, agent.action.shoot);
 		}
 		return game.getResult();

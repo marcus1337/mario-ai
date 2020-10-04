@@ -49,6 +49,8 @@ public class NEATAgent implements MarioAgent {
 		else
 			evolver.calcNEATInput(AIIndex, floatVec);
 		floatVec.delete();
+		
+		
 	}
 
 	private boolean[] getNetworkOutput() {

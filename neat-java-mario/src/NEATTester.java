@@ -75,7 +75,6 @@ public class NEATTester {
 		behavior.add(marioResult.jumpFrequency);
 		behavior.add(marioResult.numKills);		
 		evolver.setBehavior(aiIndex, behavior);
-		//System.out.println("fitness: " + fitness);
 	}
 
 	public void cleanUp() {
