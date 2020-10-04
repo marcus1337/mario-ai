@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
+import _GA_TESTS.Observation;
 import engine.core.MarioResult;
 
 public class NEATTester {
@@ -29,7 +30,7 @@ public class NEATTester {
 		levelHandler = new LevelHandler(mapType);
 		this.fileName = fileName; 
 		eliteFolderName = fileName + "_Elite";
-		evolver.init(62, 5, numAI);
+		evolver.init(Observation.numObservations, 5, numAI);
 		
 		agents = new ArrayList<NEATAgent>();
 		for (int i = 0; i < numAI; i++)
