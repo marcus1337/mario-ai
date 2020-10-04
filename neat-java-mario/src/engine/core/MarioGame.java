@@ -239,7 +239,8 @@ public class MarioGame {
     public void initGameAndVisuals(String level, int timer, int marioState){
         world = new MarioWorld(killEvents);
         world.visuals = true;
-        world.initializeLevel(level, 1000 * timer);
+        world.initializeLevel(level, 1000 * timer);        
+        render.getGraphicsConfiguration();
         world.initializeVisuals(render.getGraphicsConfiguration());
         world.mario.isLarge = marioState > 0;
         world.mario.isFire = marioState > 1;
@@ -257,6 +258,19 @@ public class MarioGame {
         	agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
         updateWorld(new boolean[5]);
     }
+    
+	public void initRenderWindow2(float scale){
+		window = new JFrame("Mario AI Framework");
+		window.setUndecorated(true);
+		render = new MarioRender(scale);
+
+		window.setContentPane(render);
+		window.pack();
+		window.setResizable(false);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		render.init(null);
+		window.setVisible(true);
+	}
     
 
     public boolean isGameDone(){

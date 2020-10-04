@@ -8,7 +8,7 @@ import engine.core.MarioTimer;
 
 public class NEATAgent implements MarioAgent {
 	
-	private Observation observation;
+	public Observation observation;
 	public Action action;
 	private JavaPorts evolver;
 	

@@ -27,9 +27,10 @@ public class LevelHandler {
 	
 	public void runGameWithVisuals(NEATAgent agent, int fps) {
 		MarioGame game = new MarioGame(); // 21 fps is normal
-		String testMap = LevelHandler.getTestLevel(mapType, LevelHandler.getRandomTestLvlNumber());
-		
+		game.initRenderWindow2(2);
+		String testMap = LevelHandler.getRandomTestLevel(mapType);
 		game.initGameAndVisuals(testMap, LevelHandler.gameTimeSeconds, 2);
+		
 		while(!game.isGameDone()){
 			MarioForwardModel model = game.getModel();
 			agent.updateFields(model);
@@ -95,6 +96,7 @@ public class LevelHandler {
 		while(!game.isGameDone()){
 			MarioForwardModel model = game.getModel();
 			agent.updateFields(model);
+			
 			agent.calculateInput();
 			game.stepWorld(agent.action.actions, agent.action.shoot);
 		}

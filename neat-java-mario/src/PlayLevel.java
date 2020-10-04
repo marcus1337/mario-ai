@@ -16,15 +16,15 @@ public class PlayLevel {
     	String mapType = "notchParam";
 		LevelHandler.initMaps();
     	
-    	NEATTester neatTester = new NEATTester(20, "NEAT_DIST1", mapType);
-    	neatTester.evolveNEATsFromScratch(maxGens);
+    	NEATTester neatTester = new NEATTester(100, "NEAT_DIST1", mapType);
+    	//neatTester.evolveNEATsFromScratch(maxGens);
     	
     	
     	
     	//neatTester.loadAndShowNEATAgent(neatTester.fileNameBT, 5, 5, 21);
-    	//neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 24, 21);
+    	neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 0, 21);
     	
-    	neatTester.saveGenerationAndElites();
+    	//neatTester.saveGenerationAndElites();
     	neatTester.cleanUp();
     	
     }

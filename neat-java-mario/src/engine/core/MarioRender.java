@@ -72,7 +72,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		g2.translate(0, 70);
 		g2.scale(2, 2);
 		world.render(og);
-		//renderRectangles(og);
+		renderRectangles(og);
 
 		g2.translate(0, -35);
 		renderTextInfo(world, og);
@@ -108,24 +108,26 @@ public class MarioRender extends JComponent implements FocusListener {
 
 	ReceptiveField receptiveField = null;
 	int[][] enemyField = null;
+	int[][] enemyNonJumpField = null;
 	int[][] blockField = null;
+	int[][] platformField = null;
 
 	void renderReceptiveField(Graphics2D g, float topX, float topY, float brickLen) {
 
 		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 5; j++) {
-				float tmpX = topX + brickLen * j;
+			for (int j = 0; j < 5*2+1; j++) {
+				float tmpX = topX + brickLen * j - brickLen*5;
 				float tmpY = topY + brickLen * i;
 				g.setColor(Color.gray);
 				g.drawRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
 			}
 		}
 
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 5; j++) {
-				float tmpX = topX + brickLen * j;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 5*2+1; j++) {
+				float tmpX = topX + brickLen * j - brickLen*5;
 				float tmpY = topY + brickLen * i;
-				if (blockField[j][i] != 0) {
+				if (blockField[j][i] != 0 || platformField[j][i] != 0) {
 					int alpha = 90;
 					Color myColour = new Color(Color.GREEN.getRed(), Color.GREEN.getGreen(), Color.GREEN.getBlue(),
 							alpha);
@@ -138,10 +140,10 @@ public class MarioRender extends JComponent implements FocusListener {
 		}
 
 		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 5; j++) {
-				float tmpX = topX + brickLen * j;
+			for (int j = 0; j < 5*2+1; j++) {
+				float tmpX = topX + brickLen * j - brickLen*5;
 				float tmpY = topY + brickLen * i;
-				if (enemyField[j][i] != 0) {
+				if (enemyField[j][i] != 0 || enemyNonJumpField[j][i] != 0) {
 					int alpha = 90;
 					Color myColour = new Color(Color.RED.getRed(), Color.RED.getGreen(), Color.RED.getBlue(), alpha);
 					g.setColor(myColour);
@@ -149,6 +151,20 @@ public class MarioRender extends JComponent implements FocusListener {
 					g.setColor(Color.RED);
 					g.drawRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
 				}
+			}
+		}
+		
+		
+		
+		boolean floorMarks[] = receptiveField.getFloor(model);
+		for(int i = 0 ; i < 11; i++){
+			float tmpX = topX + brickLen * i - brickLen*5;
+			float tmpY = topY + brickLen * 4;
+			g.setColor(Color.DARK_GRAY);
+			if(floorMarks[i]){
+				g.drawRect((int) tmpX, (int) tmpY + 1, (int) brickLen, (int) brickLen);
+				g.drawRect((int) tmpX, (int) tmpY + 2, (int) brickLen, (int) brickLen);
+				g.drawRect((int) tmpX, (int) tmpY + 3, (int) brickLen, (int) brickLen);
 			}
 		}
 
@@ -175,7 +191,9 @@ public class MarioRender extends JComponent implements FocusListener {
 		float topY = marioPos[1] - brLen * 4;
 		receptiveField = new ReceptiveField();
 
-		//enemyField = receptiveField.getEnemyReceptiveField(model);
+		enemyField = receptiveField.getEnemyReceptiveFieldStompable(model);
+		enemyNonJumpField = receptiveField.getEnemyReceptiveFieldNonStompable(model);
+		platformField = receptiveField.getPlatformReceptiveField(model);
 		blockField = receptiveField.getBlockReceptiveField(model);
 
 		renderReceptiveField(g2, topX, topY, brLen);

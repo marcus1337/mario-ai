@@ -60,14 +60,11 @@ public class NEATTester {
 		Arrays.stream(new File(path).listFiles()).forEach(File::delete);
 	}
 
-	public void loadAndShowAgent(String filename, int generation, int aiIndex, int fps) {
-		evolver.loadGeneration(filename, generation);
-		levelHandler.runGameWithVisuals(new NEATAgent(evolver, aiIndex), fps);
-	}
 
 	public void loadAndShowEliteAgent(String filename, int aiIndex, int fps) {
 		evolver.loadElites(filename);
-		levelHandler.runGameWithVisuals(new NEATAgent(evolver, aiIndex, true), fps);
+		//agents.get(0).isElite = true;
+		levelHandler.runGameWithVisuals(agents.get(0), fps);		
 	}
 
 	public void setAIResults(int aiIndex, MarioResult marioResult) {
@@ -78,6 +75,7 @@ public class NEATTester {
 		behavior.add(marioResult.jumpFrequency);
 		behavior.add(marioResult.numKills);		
 		evolver.setBehavior(aiIndex, behavior);
+		//System.out.println("fitness: " + fitness);
 	}
 
 	public void cleanUp() {
