@@ -106,6 +106,7 @@ public class LevelHandler {
 		result.fitness += addGameEndFitness(result);
 		result.fitness += addCompletionRateFitness(result);
 		result.fitness = Math.max(0, result.fitness);
+		setBehaviors(result);
 		return result;
 	}
 	
