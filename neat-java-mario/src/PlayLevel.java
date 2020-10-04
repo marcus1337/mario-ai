@@ -19,12 +19,12 @@ public class PlayLevel {
 		
     	NEATTester neatTester = new NEATTester(100, "NEAT_DIST1", mapType);
     	
-    	//neatTester.evolveNEATsFromScratch(maxGens);
-    	//neatTester.saveGenerationAndElites();
+    	neatTester.evolveNEATsFromScratch(maxGens);
+    	neatTester.saveGenerationAndElites();
     	
     	
     	//neatTester.loadAndShowEliteAgent(filename, aiIndex, fps);
-    	neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 101, 21);
+    	//neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 101, 21);
     	
     	neatTester.cleanUp();
     	
