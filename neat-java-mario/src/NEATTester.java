@@ -37,6 +37,11 @@ public class NEATTester {
 			agents.add(new NEATAgent(evolver, i));
 		
 	}
+	
+	public void saveGenerationAndElites(){
+		evolver.saveGeneration(fileName);
+		evolver.saveElites(eliteFolderName);
+	}
 
 	private void loadDll() {
 		try {

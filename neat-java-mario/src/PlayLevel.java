@@ -12,16 +12,19 @@ import engine.core.MarioWorld;
 public class PlayLevel {
 
     public static void main(String[] args) {   
-    	int maxGens = 10;
+    	int maxGens = 50;
     	String mapType = "notchParam";
 		LevelHandler.initMaps();
     	
-    	NEATTester neatTester = new NEATTester(10, "NEAT_DIST1", mapType);
+    	NEATTester neatTester = new NEATTester(20, "NEAT_DIST1", mapType);
     	neatTester.evolveNEATsFromScratch(maxGens);
+    	
+    	
     	
     	//neatTester.loadAndShowNEATAgent(neatTester.fileNameBT, 5, 5, 21);
     	//neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 24, 21);
     	
+    	neatTester.saveGenerationAndElites();
     	neatTester.cleanUp();
     	
     }
