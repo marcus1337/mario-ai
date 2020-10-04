@@ -358,8 +358,6 @@ public class MarioWorld {
     public void update(boolean[] actions) {
         if(!shouldUpdate())
         	return;
-        
-        //killStaleAIs(actions);
         	
         this.currentTick += 1;
         moveCamera();
@@ -464,16 +462,6 @@ public class MarioWorld {
             }
         }
     }
-
-	private void killStaleAIs(boolean[] actions) {
-		if(actions[MarioActions.RIGHT.getValue()]){
-        	hasMovedRight = true;
-        }
-		if(!hasMovedRight)
-			frameCounter++;
-        if(!hasMovedRight && frameCounter > 100)
-        	lose();
-	}
 
     public void bump(int xTile, int yTile, boolean canBreakBricks) {
         int block = this.level.getBlock(xTile, yTile);

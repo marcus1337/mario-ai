@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import agents.human.Agent;
+import engine.helper.EventType;
 import engine.helper.GameStatus;
 import engine.helper.MarioActions;
 
@@ -219,6 +220,8 @@ public class MarioGame {
 		return new MarioForwardModel(world.clone());
 	}
     
+	float bestXPosition;
+	int numStepsSinceImprovedXPosition;
     public void initGame(String level, int timer, int marioState){
         world = new MarioWorld(killEvents);
         world.visuals = false;
@@ -234,6 +237,8 @@ public class MarioGame {
         if(agent != null)
         	agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
         updateWorld(new boolean[5]);
+        bestXPosition = -1;
+        numStepsSinceImprovedXPosition = 0;
     }
     
     public void initGameAndVisuals(String level, int timer, int marioState){
@@ -279,6 +284,9 @@ public class MarioGame {
     
     
     public void stepWorld(boolean[] actions, boolean shootFire){
+    	
+    	endGameIfStuck();
+    	
     	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
     	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
             updateWorld(actions);
@@ -290,6 +298,17 @@ public class MarioGame {
             }
     	}
     }
+
+	private void endGameIfStuck() {
+		numStepsSinceImprovedXPosition++;
+    	float currentXPosition = this.world.mario.x;
+    	if(currentXPosition > bestXPosition){
+    		bestXPosition = currentXPosition;
+    		numStepsSinceImprovedXPosition = 0;
+    	}
+    	if(numStepsSinceImprovedXPosition > 4 * 10)
+            this.world.lose();
+	}
     
     public void stepWorldWithVisuals(boolean[] actions, boolean shootFire){
     	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
