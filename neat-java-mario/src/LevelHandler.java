@@ -35,6 +35,7 @@ public class LevelHandler {
 			MarioForwardModel model = game.getModel();
 			agent.updateFields(model);
 			agent.calculateInput();
+			agent.setActions(model);
 			game.stepWorldWithVisuals(agent.action.actions, agent.action.shoot);
 		}
 		
