@@ -86,6 +86,7 @@ public class NEATTester {
 		levelHandler.pickTrainingLevel();
 		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
 		{
+			evolver.resetRecurrentState(aiIndex);
 			MarioResult marioResult = levelHandler.simulateAndEvaluate(agents.get(aiIndex));
 			setAIResults(aiIndex, marioResult);
 		}
@@ -95,7 +96,7 @@ public class NEATTester {
 	private void testAndStoreElites(){
 		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
 		{
-			MarioResult marioResult = levelHandler.simulateAndEvaluateElite(agents.get(aiIndex));
+			MarioResult marioResult = levelHandler.simulateAndEvaluateElite(agents.get(aiIndex), evolver);
 			setAIResults(aiIndex, marioResult);
 		}
 		evolver.storeElites();

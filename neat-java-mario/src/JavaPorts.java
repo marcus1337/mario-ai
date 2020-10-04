@@ -123,6 +123,10 @@ public class JavaPorts {
     exampleJNI.JavaPorts_insertEliteIntoGeneration(swigCPtr, this, eliteIndex, aiIndex);
   }
 
+  public void resetRecurrentState(int aiIndex) {
+    exampleJNI.JavaPorts_resetRecurrentState(swigCPtr, this, aiIndex);
+  }
+
   public JavaPorts() {
     this(exampleJNI.new_JavaPorts(), true);
   }

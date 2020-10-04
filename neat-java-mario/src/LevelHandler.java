@@ -132,10 +132,12 @@ public class LevelHandler {
 		return result;
 	}
 	
-	public MarioResult simulateAndEvaluateElite(NEATAgent agent){
+	public MarioResult simulateAndEvaluateElite(NEATAgent agent, JavaPorts evolver){
 		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
-		for(int i = 0 ; i < 5; i++)
-			results.add(simulateAndEvaluateElite(agent, i));
+		for(int i = 0 ; i < 5; i++){
+			evolver.resetRecurrentState(agent.AIIndex);
+			results.add(simulateAndEvaluateElite(agent, i));	
+		}
 		return getMeanMarioResult(results);
 	}
 	

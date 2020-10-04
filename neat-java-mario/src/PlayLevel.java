@@ -17,13 +17,13 @@ public class PlayLevel {
 		LevelHandler.initMaps();
     	
 		
-    	NEATTester neatTester = new NEATTester(100, "NEAT_DIST1", mapType);
+    	NEATTester neatTester = new NEATTester(200, "NEAT_DIST1", mapType);
     	
     	//neatTester.evolveNEATsFromScratch(maxGens);
     	//neatTester.saveGenerationAndElites();
     	
     	
-    	neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 109, 21);
+    	neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 63, 21);
     	
     	neatTester.cleanUp();
     	
