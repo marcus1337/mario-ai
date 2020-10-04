@@ -107,6 +107,7 @@ public class NEATTester {
 			populationElitism(gen);
 			System.out.println("Generations complete: " + (gen + 1));
 		}
+		testAndStoreElites();
 	}
 
 	private void populationElitism(int gen) {
