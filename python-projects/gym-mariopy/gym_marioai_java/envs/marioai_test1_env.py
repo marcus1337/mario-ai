@@ -74,6 +74,11 @@ class MarioAITest1(gym.Env, utils.EzPickle):
     def close(self):
         pass
 
+    def setSpecificMap(self, lvlNum):
+        self.lvl = lvlNum
+        self.Main.initTestMap(self.mapType, self.lvl)
+        print("Testing map: " + str(lvlNum))
+
     def setMapType(self, mapType):
         self.mapType = mapType
 

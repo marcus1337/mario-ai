@@ -67,7 +67,7 @@ def testRLNetwork(networkNumber, mapType):
     completionPercentage = 0.0
     completionRates = []
     for i in range(100):
-        env.lvl = i+1
+        env.setSpecificMap(i+1)
         testRL(rlModel, rlNetworkName, False, env)
         completionPercentage += env.getCompletionPercentage()
         completionRates.append(env.getCompletionPercentage())
