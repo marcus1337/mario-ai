@@ -5,7 +5,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import _GA_TESTS.ReceptiveField;
-import agents.BT.BT.STATE;
 import engine.core.MarioAgent;
 import engine.core.MarioForwardModel;
 import engine.core.MarioTimer;
@@ -27,37 +26,6 @@ public class Agent extends KeyAdapter implements MarioAgent {
 	private int maxXPosReached = 0;
 	private int framesAtMaxXPos = 0;
 	private int frameCounter = 0;
-
-	STATE isObstacleAhead() {
-		for (int i = 0; i < recField.obstacleValues.size(); i++)
-			if (recField.tunneledFieldContains(field, recField.obstacleValues.get(i)))
-				return STATE.SUCCESS;
-		return STATE.FAILURE;
-	}
-
-	STATE isEnemyAhead() {
-		if (recField.fieldContainsAnything(enemyField))
-			return STATE.SUCCESS;
-		return STATE.FAILURE;
-	}
-	
-	STATE isGapAhead() {
-		if (recField.isGapAhead(field))
-			return STATE.SUCCESS;
-		return STATE.FAILURE;
-	}
-	
-	STATE isStuck(){
-		if(getFramesSinceMaxXPos() > 150)
-			return STATE.SUCCESS;
-		return STATE.FAILURE;
-	}
-	
-	STATE upIsPushable(){
-		if(recField.upIsPushable(field))
-			return STATE.SUCCESS;
-		return STATE.FAILURE;
-	}
 	
 	private int getFramesSinceMaxXPos(){
 		return frameCounter - framesAtMaxXPos;
@@ -77,9 +45,6 @@ public class Agent extends KeyAdapter implements MarioAgent {
 	public void updateConditionParameters(MarioForwardModel model){
 		this.model = model;
 		updateIdleChecker();
-		field = recField.getBlockReceptiveField(model);
-		enemyField = recField.getEnemyReceptiveField(model);
-		//recField.printReceptiveField(field);
 	}
 	
 	private boolean isNearRightEdge(){

@@ -1,10 +1,14 @@
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-import _GA_TESTS.Utils;
 import engine.core.MarioAgentEvent;
 import engine.core.MarioEvent;
+import engine.core.MarioForwardModel;
 import engine.core.MarioGame;
 import engine.core.MarioResult;
 import engine.helper.GameStatus;
@@ -13,41 +17,40 @@ public class LevelHandler {
 	private int marioStartState = 2;
 	
 	public static final int gameTimeSeconds = 40;
+	
+	public static MarioGame game = new MarioGame();
 
-	public LevelHandler() {
+	public LevelHandler(String mapType) {
+		this.mapType = mapType;
 	}
 
-	public String getRandomLevel(int difficulty) {
-		if (difficulty == 0)
-			return Utils.getLevel("levels/notchEasy/" + getRandomLvl());
-		if (difficulty == 1)
-			return Utils.getLevel("levels/notchMedium/" + getRandomLvl());
-		if (difficulty == 2)
-			return Utils.getLevel("levels/notchParam/" + getRandomLvl());
-		return Utils.getLevel("levels/hopper/" + getRandomLvl());
-	}
-
-	public void runGameWithVisuals(agents.BT.BTAgent agent, int fps) {
-		MarioGame game = new MarioGame(); // 21 fps is normal
-		game.runGame(agent, Utils.getLevel("levels/original/lvl-1.txt"), gameTimeSeconds, marioStartState, true, fps);
-	}
 	
 	public void runGameWithVisuals(NEATAgent agent, int fps) {
 		MarioGame game = new MarioGame(); // 21 fps is normal
-		game.runGame(agent, Utils.getLevel("levels/original/lvl-3.txt"), gameTimeSeconds, marioStartState, true, fps);
+		String testMap = LevelHandler.getTestLevel(mapType, LevelHandler.getRandomTestLvlNumber());
+		
+		game.initGameAndVisuals(testMap, LevelHandler.gameTimeSeconds, 2);
+		while(!game.isGameDone()){
+			MarioForwardModel model = game.getModel();
+			agent.updateFields(model);
+			agent.calculateInput();
+			game.stepWorldWithVisuals(agent.action.actions, agent.action.shoot);
+		}
+		
 	}
 
-	public String getRandomLvl() {
-		int randomNum = ThreadLocalRandom.current().nextInt(1, 998 + 1);
-		return "lvl-" + randomNum + ".txt";
-	}
 
 	private int addGameEndFitness(MarioResult result) {
+		int bonusScore = 0;
 		if (result.getGameStatus() == GameStatus.LOSE)
-			return -10;
+			bonusScore -= 10;
 		if (result.getGameStatus() == GameStatus.WIN)
-			return 10 + result.getRemainingTime();
-		return 0;
+			bonusScore += 10;
+		if(result.getMarioMode() < 2)
+			bonusScore -= 10;
+		if(result.getMarioMode() < 1)
+			bonusScore -= 10;
+		return bonusScore;
 	}
 
 	public int addCompletionRateFitness(MarioResult result) {
@@ -79,40 +82,36 @@ public class LevelHandler {
 		result.jumpFrequency = getJumpFrequency(result);
 		result.numKills = Math.min(100, result.getKillsTotal());
 	}
-
-	String level1, level2, level3, level4;
-
-	public void prepareGenerationLevels() {
-		level1 = getRandomLevel(0);
-		level2 = getRandomLevel(1);
-		level3 = getRandomLevel(2);
-		level4 = getRandomLevel(3);
+	
+	public void addBehaviors(MarioResult result) {
+		result.gameCompletion += (int) (result.getCompletionPercentage() * 100.0f);
+		result.jumpFrequency += getJumpFrequency(result);
+		result.numKills += Math.min(100, result.getKillsTotal());
 	}
 
-	private MarioResult runGameAndGetResult(agents.BT.BTAgent agent, int levelType) {
-		MarioGame game = new MarioGame();
-		if (levelType == 0)
-			return game.runGame(agent, level1, gameTimeSeconds, marioStartState, false);
-		if (levelType == 1)
-			return game.runGame(agent, level2, gameTimeSeconds, marioStartState, false);
-		if (levelType == 2)
-			return game.runGame(agent, level3, gameTimeSeconds, marioStartState, false);
-		return game.runGame(agent, level4, gameTimeSeconds, marioStartState, false);
+	
+	private MarioResult runGameAndGetResult(NEATAgent agent) {
+		game.initGame(trainingLvl, LevelHandler.gameTimeSeconds, 2);
+		while(!game.isGameDone()){
+			MarioForwardModel model = game.getModel();
+			agent.updateFields(model);
+			agent.calculateInput();
+			game.stepWorld(agent.action.actions, agent.action.shoot);
+		}
+		return game.getResult();
 	}
 	
-	private MarioResult runGameAndGetResult(NEATAgent agent, int levelType) {
-		MarioGame game = new MarioGame();
-		if (levelType == 0)
-			return game.runGame(agent, level1, gameTimeSeconds, marioStartState, false);
-		if (levelType == 1)
-			return game.runGame(agent, level2, gameTimeSeconds, marioStartState, false);
-		if (levelType == 2)
-			return game.runGame(agent, level3, gameTimeSeconds, marioStartState, false);
-		return game.runGame(agent, level4, gameTimeSeconds, marioStartState, false);
+	public MarioResult simulateAndEvaluate(NEATAgent agent) {
+		MarioResult result = runGameAndGetResult(agent);
+		result.fitness += addGameEndFitness(result);
+		result.fitness += addCompletionRateFitness(result);
+		result.fitness = Math.max(0, result.fitness);
+		return result;
 	}
-
-	public MarioResult simulateAndEvaluate(agents.BT.BTAgent agent, int levelType) {
-		MarioResult result = runGameAndGetResult(agent, levelType);
+	
+	private MarioResult simulateAndEvaluateElite(NEATAgent agent, int lvlNumber) {
+		trainingLvl = LevelHandler.getLevel(mapType, lvlNumber);
+		MarioResult result = runGameAndGetResult(agent);
 		result.fitness += addGameEndFitness(result);
 		result.fitness += addCompletionRateFitness(result);
 		result.fitness = Math.max(0, result.fitness);
@@ -120,13 +119,89 @@ public class LevelHandler {
 		return result;
 	}
 	
-	public MarioResult simulateAndEvaluate(NEATAgent agent, int levelType) {
-		MarioResult result = runGameAndGetResult(agent, levelType);
-		result.fitness += addGameEndFitness(result);
-		result.fitness += addCompletionRateFitness(result);
-		result.fitness = Math.max(0, result.fitness);
-		setBehaviors(result);
+	private MarioResult getMeanMarioResult(ArrayList<MarioResult> results){
+		MarioResult result = results.get(0);
+		for(int i = 1; i < results.size(); i++)
+			result.add(results.get(i));
+		result.divide(results.size());
 		return result;
+	}
+	
+	public MarioResult simulateAndEvaluateElite(NEATAgent agent){
+		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
+		for(int i = 0 ; i < 5; i++)
+			results.add(simulateAndEvaluateElite(agent, i));
+		return getMeanMarioResult(results);
+	}
+	
+	//////////////////////////////
+	
+	private String trainingLvl;
+	private static String[] notchParamMaps;
+	private static String[] notchMediumMaps;
+	
+	public static void initMaps(){
+		notchParamMaps = new String[1001];
+		notchMediumMaps = new String[1001];
+		for(int i = 1; i < 1000; i++){
+			notchParamMaps[i] = getLevel("notchParam", i);
+			notchMediumMaps[i] = getLevel("notchMedium", i);
+		}
+	}
+	
+	public static String getRandomTrainingLevel(String lvlName) {
+		if(lvlName.equals("notchParam"))
+			return notchParamMaps[getRandomTrainingLvlNumber()];
+		return notchMediumMaps[getRandomTrainingLvlNumber()];
+	}
+	
+	public static String getTestLevel(String lvlName, int levelNumber) { //1 to 100 levels
+		if(lvlName.equals("notchParam"))
+			return notchParamMaps[levelNumber + 899];
+		return notchMediumMaps[levelNumber + 899];
+	}
+	
+	public static String getRandomTestLevel(String lvlName) {
+		if(lvlName.equals("notchParam"))
+			return notchParamMaps[getRandomTestLvlNumber()];
+		return notchMediumMaps[getRandomTestLvlNumber()];
+	}
+	
+	public static String getLevel(String lvlName, int lvl){
+		if(lvlName.equals("notchMedium"))
+			return getExactLevel("levels/notchMedium/" + "lvl-" + lvl + ".txt");
+		return getExactLevel("levels/notchParam/" + "lvl-" + lvl + ".txt");
+	}
+	
+	public static int getRandomTrainingLvlNumber(){
+		return ThreadLocalRandom.current().nextInt(1, 899);
+	}
+	
+	public static int getRandomTestLvlNumber(){
+		return ThreadLocalRandom.current().nextInt(900, 999);
+	}
+
+	public static String getRandomTrainingLvl() {
+		int randomNum = ThreadLocalRandom.current().nextInt(1, 899);
+		return "lvl-" + randomNum + ".txt";
+	}
+	public static String getRandomTestLvl() {
+		int randomNum = ThreadLocalRandom.current().nextInt(900, 999);
+		return "lvl-" + randomNum + ".txt";
+	}
+	
+    private static String getExactLevel(String filepath) {
+        String content = "";
+        try {
+            content = new String(Files.readAllBytes(Paths.get(filepath)));
+        } catch (IOException e) {}
+        return content;
+    }
+    
+    public String mapType;
+
+	public void pickTrainingLevel() {
+		trainingLvl = getRandomTrainingLevel(mapType);
 	}
 
 }

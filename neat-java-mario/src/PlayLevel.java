@@ -8,27 +8,21 @@ import engine.core.MarioGame;
 import engine.core.MarioResult;
 import engine.core.MarioTimer;
 import engine.core.MarioWorld;
-import visuals.TreeVisualizer;
 
 public class PlayLevel {
 
     public static void main(String[] args) {   
-    	int maxGens = 100;
+    	int maxGens = 10;
+    	String mapType = "notchParam";
+		LevelHandler.initMaps();
     	
-    	NEATTester neatTester = new NEATTester(10, "NEAT_DIST3");
-    	//neatTester.evolveNEATsFromScratch(maxGens);
+    	NEATTester neatTester = new NEATTester(10, "NEAT_DIST1", mapType);
+    	neatTester.evolveNEATsFromScratch(maxGens);
     	
     	//neatTester.loadAndShowNEATAgent(neatTester.fileNameBT, 5, 5, 21);
-    	neatTester.loadAndShowEliteNEATAgent(neatTester.eliteFolderName, 24, 21);
+    	//neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 24, 21);
+    	
     	neatTester.cleanUp();
     	
-    	
-    	
-    	//GATester gaTester = new GATester(100, "TEST_DIST");
-    	//gaTester.evolveBTsFromScratch(maxGens);
-    	//gaTester.continueEvolveBTs(maxGens-8, 8);
-    	//gaTester.loadAndShowBTAgent(gaTester.fileNameBT, 30, 30, 21);
-    	//gaTester.loadAndShowEliteBTAgent(gaTester.eliteFolderName, 161, 17);
-    	//gaTester.cleanUp();
     }
 }

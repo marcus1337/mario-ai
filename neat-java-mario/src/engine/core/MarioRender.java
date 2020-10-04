@@ -3,11 +3,8 @@ package engine.core;
 import javax.swing.*;
 
 import _GA_TESTS.ReceptiveField;
-import agents.BT.BTAgent;
 import engine.helper.Assets;
 import engine.helper.MarioActions;
-import visuals.TextInBoxTreePane;
-import visuals.TreeVisualizer;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -52,25 +49,15 @@ public class MarioRender extends JComponent implements FocusListener {
 		graphicsConfiguration = getGraphicsConfiguration();
 		Assets.init(graphicsConfiguration);
 
-		if (agent instanceof BTAgent) {
-			btAgent = (BTAgent) agent;
-			btAgent.partiallyInitialize();
-			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-			treeWidth = treePanel.getWidth();
-			treeHeight = treePanel.getHeight();
-		}
-
 	}
 
 	MarioWorld world = null;
-	public BTAgent btAgent = null;
 
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
 		renderBackGround(g, og);
 		renderMarioWorld(world, og);
 		renderSeparatorBar(og);
-		renderBT(og);
 		renderMarioImage(image, g);
 	}
 
@@ -85,7 +72,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		g2.translate(0, 70);
 		g2.scale(2, 2);
 		world.render(og);
-		renderRectangles(og);
+		//renderRectangles(og);
 
 		g2.translate(0, -35);
 		renderTextInfo(world, og);
@@ -124,12 +111,6 @@ public class MarioRender extends JComponent implements FocusListener {
 	int[][] blockField = null;
 
 	void renderReceptiveField(Graphics2D g, float topX, float topY, float brickLen) {
-
-		if (!model.isFacingRight()) {
-			topX -= 4 * brickLen;
-			receptiveField.mirrorReceptiveField(blockField);
-			receptiveField.mirrorReceptiveField(enemyField);
-		}
 
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -194,7 +175,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		float topY = marioPos[1] - brLen * 4;
 		receptiveField = new ReceptiveField();
 
-		enemyField = receptiveField.getEnemyReceptiveField(model);
+		//enemyField = receptiveField.getEnemyReceptiveField(model);
 		blockField = receptiveField.getBlockReceptiveField(model);
 
 		renderReceptiveField(g2, topX, topY, brLen);
@@ -211,23 +192,6 @@ public class MarioRender extends JComponent implements FocusListener {
 			g.fillRect(0, 0, WIDTH * 100, HEIGHT * 100);
 		}
 		doneOnce = true;
-	}
-
-	public void renderBT(Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		if (btAgent != null) {
-			AffineTransform oldAT = g2.getTransform();
-			TextInBoxTreePane treePanel = TreeVisualizer.getBTPanel(btAgent.tree);
-			
-			int extraMargin = treeWidth - 399;
-			if (extraMargin < 0)
-				extraMargin = 0;
-
-			int transX = 1280 - treeWidth - 399 / 2 + treeWidth / 2 - extraMargin / 2;			
-			g2.translate(transX, 50);
-			treePanel.paint(g2);
-			g2.setTransform(oldAT);
-		}
 	}
 
 	public void drawStringDropShadow(Graphics g, String text, int x, int y, int c) {

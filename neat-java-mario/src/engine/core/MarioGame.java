@@ -15,12 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import agents.BT.BTAgent;
 import agents.human.Agent;
 import engine.helper.GameStatus;
 import engine.helper.MarioActions;
-import visuals.TextInBoxTreePane;
-import visuals.TreeVisualizer;
 
 public class MarioGame {
     public static final long maxTime = 40;
@@ -214,4 +211,94 @@ public class MarioGame {
         }
         return new MarioResult(this.world, gameEvents, agentEvents);
     }
+    
+    
+    
+    
+	public MarioForwardModel getModel(){
+		return new MarioForwardModel(world.clone());
+	}
+    
+    public void initGame(String level, int timer, int marioState){
+        world = new MarioWorld(killEvents);
+        world.visuals = false;
+        world.initializeLevel(level, 1000 * timer);
+        world.mario.isLarge = marioState > 0;
+        world.mario.isFire = marioState > 1;
+        world.update(new boolean[MarioActions.numberOfActions()]);
+        currentTime = System.currentTimeMillis();
+
+        gameEvents = new ArrayList<>();
+        agentEvents = new ArrayList<>();
+        agentTimer = new MarioTimer(MarioGame.maxTime);
+        if(agent != null)
+        	agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
+        updateWorld(new boolean[5]);
+    }
+    
+    public void initGameAndVisuals(String level, int timer, int marioState){
+        world = new MarioWorld(killEvents);
+        world.visuals = true;
+        world.initializeLevel(level, 1000 * timer);
+        world.initializeVisuals(render.getGraphicsConfiguration());
+        world.mario.isLarge = marioState > 0;
+        world.mario.isFire = marioState > 1;
+        world.update(new boolean[MarioActions.numberOfActions()]);
+        currentTime = System.currentTimeMillis();
+        renderTarget = render.createVolatileImage(1280, 720);
+        backBuffer = render.getGraphics();
+        currentBuffer = renderTarget.getGraphics();
+        render.addFocusListener(render);
+
+        gameEvents = new ArrayList<>();
+        agentEvents = new ArrayList<>();
+        agentTimer = new MarioTimer(MarioGame.maxTime);
+        if(agent != null)
+        	agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
+        updateWorld(new boolean[5]);
+    }
+    
+
+    public boolean isGameDone(){
+    	return world.gameStatus != GameStatus.RUNNING;
+    }
+    
+    
+    public void stepWorld(boolean[] actions, boolean shootFire){
+    	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
+    	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
+            updateWorld(actions);
+            if(i == 1 && shootFire){
+            	actions[MarioActions.SPEED.getValue()] = false;
+            }
+            if(i == 2 && shootFire){
+            	actions[MarioActions.SPEED.getValue()] = wasRunning;
+            }
+    	}
+    }
+    
+    public void stepWorldWithVisuals(boolean[] actions, boolean shootFire){
+    	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
+    	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
+            updateWorld(actions);
+            if(i == 1 && shootFire){
+            	actions[MarioActions.SPEED.getValue()] = false;
+            }
+            if(i == 2 && shootFire){
+            	actions[MarioActions.SPEED.getValue()] = wasRunning;
+            }
+        	MarioForwardModel model = new MarioForwardModel(world.clone());
+            renderWorld(model);
+            delay(21);
+    	}
+    }
+    
+    public MarioResult getResult(){
+    	return new MarioResult(this.world, gameEvents, agentEvents);
+    }
+    
+    
+    
+    
+    
 }

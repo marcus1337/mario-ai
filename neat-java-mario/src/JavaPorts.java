@@ -35,28 +35,12 @@ public class JavaPorts {
     }
   }
 
-  public JavaPorts(AIType _aitype) {
-    this(exampleJNI.new_JavaPorts(_aitype.swigValue()), true);
-  }
-
-  public void init(int numTrees, int maxOtherInteriors, int maxUnorderedInteriors, int maxDecorators, int maxActions, int maxConditions) {
-    exampleJNI.JavaPorts_init__SWIG_0(swigCPtr, this, numTrees, maxOtherInteriors, maxUnorderedInteriors, maxDecorators, maxActions, maxConditions);
-  }
-
   public void init(int numInputNodes, int numOutputNode, int numAIs) {
-    exampleJNI.JavaPorts_init__SWIG_1(swigCPtr, this, numInputNodes, numOutputNode, numAIs);
+    exampleJNI.JavaPorts_init(swigCPtr, this, numInputNodes, numOutputNode, numAIs);
   }
 
   public int getGeneration() {
     return exampleJNI.JavaPorts_getGeneration(swigCPtr, this);
-  }
-
-  public String getTreeString(int index) {
-    return exampleJNI.JavaPorts_getTreeString(swigCPtr, this, index);
-  }
-
-  public String getEliteTreeString(int index) {
-    return exampleJNI.JavaPorts_getEliteTreeString(swigCPtr, this, index);
   }
 
   public void saveGeneration(String filename) {
@@ -133,6 +117,10 @@ public class JavaPorts {
 
   public FloatVec getNEATEliteOutput(int index) {
     return new FloatVec(exampleJNI.JavaPorts_getNEATEliteOutput(swigCPtr, this, index), true);
+  }
+
+  public JavaPorts() {
+    this(exampleJNI.new_JavaPorts(), true);
   }
 
 }
