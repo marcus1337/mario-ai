@@ -300,6 +300,7 @@ public class MarioGame {
     }
 
 	private void endGameIfStuck() {
+		//System.out.println(numStepsSinceImprovedXPosition);
 		numStepsSinceImprovedXPosition++;
     	float currentXPosition = this.world.mario.x;
     	if(currentXPosition > bestXPosition){

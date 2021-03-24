@@ -55,12 +55,13 @@ public class exampleJNI {
   public final static native void JavaPorts_loadElites__SWIG_0(long jarg1, JavaPorts jarg1_, String jarg2);
   public final static native void JavaPorts_loadElites__SWIG_1(long jarg1, JavaPorts jarg1_);
   public final static native void JavaPorts_storeElites(long jarg1, JavaPorts jarg1_);
+  public final static native void JavaPorts_loadBestElite(long jarg1, JavaPorts jarg1_, String jarg2, String jarg3);
+  public final static native void JavaPorts_saveBestElite(long jarg1, JavaPorts jarg1_, String jarg2, String jarg3);
   public final static native void JavaPorts_calcNEATInput(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, FloatVec jarg3_);
   public final static native long JavaPorts_getNEATOutput(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native void JavaPorts_calcNEATEliteInput(long jarg1, JavaPorts jarg1_, int jarg2, long jarg3, FloatVec jarg3_);
   public final static native long JavaPorts_getNEATEliteOutput(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native void JavaPorts_insertEliteIntoGeneration(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3);
-  public final static native void JavaPorts_resetRecurrentState(long jarg1, JavaPorts jarg1_, int jarg2);
   public final static native long new_JavaPorts();
   public final static native void delete_JavaPorts(long jarg1);
 }

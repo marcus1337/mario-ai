@@ -103,6 +103,14 @@ public class JavaPorts {
     exampleJNI.JavaPorts_storeElites(swigCPtr, this);
   }
 
+  public void loadBestElite(String foldername, String filename) {
+    exampleJNI.JavaPorts_loadBestElite(swigCPtr, this, foldername, filename);
+  }
+
+  public void saveBestElite(String foldername, String filename) {
+    exampleJNI.JavaPorts_saveBestElite(swigCPtr, this, foldername, filename);
+  }
+
   public void calcNEATInput(int index, FloatVec inputs) {
     exampleJNI.JavaPorts_calcNEATInput(swigCPtr, this, index, FloatVec.getCPtr(inputs), inputs);
   }
@@ -121,10 +129,6 @@ public class JavaPorts {
 
   public void insertEliteIntoGeneration(int eliteIndex, int aiIndex) {
     exampleJNI.JavaPorts_insertEliteIntoGeneration(swigCPtr, this, eliteIndex, aiIndex);
-  }
-
-  public void resetRecurrentState(int aiIndex) {
-    exampleJNI.JavaPorts_resetRecurrentState(swigCPtr, this, aiIndex);
   }
 
   public JavaPorts() {

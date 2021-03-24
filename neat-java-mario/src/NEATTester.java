@@ -10,7 +10,7 @@ import engine.core.MarioResult;
 public class NEATTester {
 
 	private int numAI;
-	private LevelHandler levelHandler;
+	public LevelHandler levelHandler;
 
 	public String fileName;
 	public String eliteFolderName;
@@ -19,7 +19,7 @@ public class NEATTester {
 	private JavaPorts evolver;
 	private IntVec behavior;
 	
-	private ArrayList<NEATAgent> agents;
+	public ArrayList<NEATAgent> agents;
 	
 
 	public NEATTester(int numAI, String fileName, String mapType) {
@@ -41,6 +41,14 @@ public class NEATTester {
 	public void saveGenerationAndElites(){
 		evolver.saveGeneration(fileName);
 		evolver.saveElites(eliteFolderName);
+	}
+	
+	public void saveBestElite(int ID){
+		evolver.saveBestElite("BEST_ELITES", "ELITE_" + Integer.toString(ID));
+	}
+	
+	public void loadBestElite(int ID){
+		evolver.loadBestElite("BEST_ELITES", "ELITE_" + Integer.toString(ID));
 	}
 
 	private void loadDll() {
@@ -81,16 +89,31 @@ public class NEATTester {
 		evolver.delete();
 		behavior.delete();
 	}
+	
+	public int numGenerations;
+	
+	//Assume the first AI in a generation is the ELITE.
+	public float scoreElite(){
+		float marioResult = levelHandler.evaluateTestLevels(agents.get(0), evolver);
+		return marioResult;
+	}
 
-	private void evolveGeneration() {
-		levelHandler.pickTrainingLevel();
-		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
-		{
-			evolver.resetRecurrentState(aiIndex);
-			MarioResult marioResult = levelHandler.simulateAndEvaluate(agents.get(aiIndex));
-			setAIResults(aiIndex, marioResult);
+	public void evolveNEATsFromScratch(long timeLimit) {
+		System.out.println("Starting up...");
+		evolver.setSurpriseEffect(0.05f);
+		System.out.println("Surprise effect configured...");
+		numGenerations = 0;
+		evolveNEATs(timeLimit);
+	}
+	
+	private void evolveNEATs(long timeLimit) {
+		long startTime = System.currentTimeMillis();
+		while (startTime + timeLimit > System.currentTimeMillis()) {
+			numGenerations++;
+			testAndStoreElites();
+			evolveGeneration();
+			System.out.println("Generations complete: " + Integer.toString(numGenerations));
 		}
-		evolver.evolve();
 	}
 	
 	private void testAndStoreElites(){
@@ -101,27 +124,21 @@ public class NEATTester {
 		}
 		evolver.storeElites();
 	}
-
-	private void evolveNEATs(int numGenerations) {
-		for (int gen = 0; gen < numGenerations; gen++) {
-			evolveGeneration();
-			populationElitism(gen);
-			System.out.println("Generations complete: " + (gen + 1));
+	
+	private void evolveGeneration() {
+		levelHandler.pickTrainingLevel();
+		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
+		{
+			MarioResult marioResult = levelHandler.simulateAndEvaluate(agents.get(aiIndex));
+			setAIResults(aiIndex, marioResult);
 		}
-		testAndStoreElites();
+		evolver.evolve();
 	}
-
-	private void populationElitism(int gen) {
+	
+	/*private void populationElitism(int gen) {
 		if (gen > 0 && gen % 20 == 0){
 			testAndStoreElites();
 			evolver.randomizePopulationFromElites();
 		}
-	}
-
-	public void evolveNEATsFromScratch(int numGenerations) {
-		System.out.println("Starting up...");
-		evolver.setSurpriseEffect(0.2f);
-		System.out.println("Surprise effect configured...");
-		evolveNEATs(numGenerations);
-	}
+	}*/
 }

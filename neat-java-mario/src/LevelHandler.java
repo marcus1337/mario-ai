@@ -114,8 +114,16 @@ public class LevelHandler {
 		return result;
 	}
 	
-	private MarioResult simulateAndEvaluateElite(NEATAgent agent, int lvlNumber) {
-		trainingLvl = LevelHandler.getLevel(mapType, lvlNumber);
+	/*private MarioResult getMeanMarioResult(ArrayList<MarioResult> results){
+		MarioResult result = results.get(0);
+		for(int i = 1; i < results.size(); i++)
+			result.add(results.get(i));
+		result.divide(results.size());
+		return result;
+	}*/
+	
+	public MarioResult simulateAndEvaluateElite(NEATAgent agent, JavaPorts evolver){
+		trainingLvl = LevelHandler.eliteLvl;
 		MarioResult result = runGameAndGetResult(agent);
 		result.fitness += addGameEndFitness(result);
 		result.fitness += addCompletionRateFitness(result);
@@ -124,28 +132,27 @@ public class LevelHandler {
 		return result;
 	}
 	
-	private MarioResult getMeanMarioResult(ArrayList<MarioResult> results){
-		MarioResult result = results.get(0);
-		for(int i = 1; i < results.size(); i++)
-			result.add(results.get(i));
-		result.divide(results.size());
-		return result;
+	public float evaluateTestLevels(NEATAgent agent, JavaPorts evolver){
+		float result = 0;
+		for(int i = 0 ; i < 100; i++){
+			trainingLvl = LevelHandler.getTestLevel(mapType, i);
+			MarioResult marioResult = simulateAndEvaluate(agent);
+			result += marioResult.getCompletionPercentage()*100.f;
+		}
+		return result/100.f;
 	}
 	
-	public MarioResult simulateAndEvaluateElite(NEATAgent agent, JavaPorts evolver){
-		ArrayList<MarioResult> results = new ArrayList<MarioResult>();
-		for(int i = 0 ; i < 5; i++){
-			evolver.resetRecurrentState(agent.AIIndex);
-			results.add(simulateAndEvaluateElite(agent, i));	
-		}
-		return getMeanMarioResult(results);
-	}
 	
 	//////////////////////////////
 	
 	private String trainingLvl;
 	private static String[] notchParamMaps;
 	private static String[] notchMediumMaps;
+	public static String eliteLvl;
+	
+	public static void initEliteMap(String lvlName){
+		eliteLvl = getRandomTrainingLevel(lvlName);
+	}
 	
 	public static void initMaps(){
 		notchParamMaps = new String[1001];
