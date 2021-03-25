@@ -131,6 +131,10 @@ public class JavaPorts {
     exampleJNI.JavaPorts_insertEliteIntoGeneration(swigCPtr, this, eliteIndex, aiIndex);
   }
 
+  public void setMaxHiddenNodes(int numNodes) {
+    exampleJNI.JavaPorts_setMaxHiddenNodes(swigCPtr, this, numNodes);
+  }
+
   public JavaPorts() {
     this(exampleJNI.new_JavaPorts(), true);
   }

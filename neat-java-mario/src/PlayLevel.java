@@ -24,7 +24,7 @@ public class PlayLevel {
 		LevelHandler.initMaps();
     	
 		makeElites(mapType);
-		//scoreElitesAndSaveStatistics(mapType);
+		scoreElitesAndSaveStatistics(mapType);
 		//showSingleEliteVisually(2, mapType);
     }
     
@@ -105,7 +105,7 @@ public class PlayLevel {
 			LevelHandler.initEliteMap(mapType);
 			String neatName = "NEATS_" + mapType + "_" + Integer.toString(testNum);
 	    	NEATTester neatTester = new NEATTester(200, neatName, mapType);
-	    	neatTester.evolveNEATsFromScratch( 1 * 10 * 1000);
+	    	neatTester.evolveNEATsFromScratch( 10 * 60 * 1000);
 	    	neatTester.saveBestElite(testNum);
 	    	neatTester.cleanUp();
 		}

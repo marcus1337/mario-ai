@@ -102,6 +102,7 @@ public class NEATTester {
 		System.out.println("Starting up...");
 		evolver.setSurpriseEffect(0.05f);
 		System.out.println("Surprise effect configured...");
+		evolver.setMaxHiddenNodes(170);
 		numGenerations = 0;
 		evolveNEATs(timeLimit);
 	}
@@ -110,7 +111,10 @@ public class NEATTester {
 		long startTime = System.currentTimeMillis();
 		while (startTime + timeLimit > System.currentTimeMillis()) {
 			numGenerations++;
-			testAndStoreElites();
+			if(numGenerations % 5 == 0)
+				testAndStoreElites();
+			if(numGenerations % 30 == 0)
+				evolver.randomizePopulationFromElites();
 			evolveGeneration();
 			System.out.println("Generations complete: " + Integer.toString(numGenerations));
 		}
