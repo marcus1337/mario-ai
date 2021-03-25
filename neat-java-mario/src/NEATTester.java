@@ -113,7 +113,7 @@ public class NEATTester {
 			numGenerations++;
 			if(numGenerations % 5 == 0)
 				testAndStoreElites();
-			if(numGenerations % 30 == 0)
+			if(numGenerations % 50 == 0)
 				evolver.randomizePopulationViaElites();
 			evolveGeneration();
 			System.out.println("Generations complete: " + Integer.toString(numGenerations));
