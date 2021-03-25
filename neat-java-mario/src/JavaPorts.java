@@ -35,6 +35,10 @@ public class JavaPorts {
     }
   }
 
+  public JavaPorts() {
+    this(exampleJNI.new_JavaPorts(), true);
+  }
+
   public void init(int numInputNodes, int numOutputNode, int numAIs) {
     exampleJNI.JavaPorts_init(swigCPtr, this, numInputNodes, numOutputNode, numAIs);
   }
@@ -79,8 +83,8 @@ public class JavaPorts {
     exampleJNI.JavaPorts_randomizePopulation(swigCPtr, this, minNodes, maxNodes);
   }
 
-  public void randomizePopulationFromElites() {
-    exampleJNI.JavaPorts_randomizePopulationFromElites(swigCPtr, this);
+  public void randomizePopulationViaElites() {
+    exampleJNI.JavaPorts_randomizePopulationViaElites(swigCPtr, this);
   }
 
   public void saveElites(String foldername) {
@@ -133,10 +137,6 @@ public class JavaPorts {
 
   public void setMaxHiddenNodes(int numNodes) {
     exampleJNI.JavaPorts_setMaxHiddenNodes(swigCPtr, this, numNodes);
-  }
-
-  public JavaPorts() {
-    this(exampleJNI.new_JavaPorts(), true);
   }
 
 }
