@@ -303,7 +303,7 @@ public class MarioGame {
 		//System.out.println(numStepsSinceImprovedXPosition);
 		numStepsSinceImprovedXPosition++;
     	float currentXPosition = this.world.mario.x;
-    	if(currentXPosition + 10.f > bestXPosition){
+    	if(currentXPosition + 7.f > bestXPosition){
     		bestXPosition = currentXPosition;
     		numStepsSinceImprovedXPosition = 0;
     	}

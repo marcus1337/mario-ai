@@ -23,9 +23,9 @@ public class PlayLevel {
     	String mapType = "notchParam";
 		LevelHandler.initMaps();
     	
-		makeElites(mapType);
-		scoreElitesAndSaveStatistics(mapType);
-		//showSingleEliteVisually(5, mapType);
+		//makeElites(mapType);
+		//scoreElitesAndSaveStatistics(mapType);
+		showSingleEliteVisually(5, mapType);
     }
     
     public static void showSingleEliteVisually(int ID, String mapType){
