@@ -16,7 +16,8 @@ import engine.core.MarioWorld;
 
 public class PlayLevel {
 	
-	public static int sampleSize = 5;
+	public static final int sampleSize = 5;
+	public static final int minutesPerSample = 60;
 
     public static void main(String[] args) {   
 
@@ -42,10 +43,6 @@ public class PlayLevel {
     	
     }
     
-	//neatTester.evolveNEATsFromScratch(maxGens);
-	//neatTester.saveGenerationAndElites();
-	//neatTester.loadAndShowEliteAgent(neatTester.eliteFolderName, 63, 21);
-    
     public static double calcStandardDeviation(ArrayList<Double> table, double mean)
     {
         double temp = 0;
@@ -67,7 +64,6 @@ public class PlayLevel {
 		double mean = 0;
 		
 		for(int i = 0; i < scores.size(); i++){
-			System.out.println(Integer.toString(i+1) + ": " + Double.toString(scores.get(i)));
 			mean += scores.get(i);
 		}
 		mean /= scores.size();
@@ -77,21 +73,25 @@ public class PlayLevel {
 		scoreText += "NUMBER OF SAMPLES: " + Integer.toString(scores.size()) + "\n";
 		scoreText += "MEAN: " + Double.toString(mean) + "\n";
 		scoreText += "STANDARD DEVIATION: " + Double.toString(standardDeviation) + "\n";
-		scoreText += "\n---RAW SCORE DATA BELOW---\n\n";
+		scoreText += "\n---RAW SCORE DATA---\n\n";
 		for(int i = 0 ; i < scores.size(); i++){
 			scoreText += Double.toString(scores.get(i)) + "\n";
-		}
+		}		
 		
 		System.out.println(scoreText);
 		
+		saveTextToFile(scoreText, "NEAT_Statistics.txt");
+		
+	}
+
+	private static void saveTextToFile(String text, String fileName) {
 		try {
-			try (PrintStream out = new PrintStream(new FileOutputStream("NEAT_Statistics.txt"))) {
-			    out.print(scoreText);
+			try (PrintStream out = new PrintStream(new FileOutputStream(fileName))) {
+			    out.print(text);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
 	}
     
     private static float scoreElite(String mapType, int eliteID){
@@ -108,7 +108,12 @@ public class PlayLevel {
 			LevelHandler.initEliteMap(mapType);
 			String neatName = "NEATS_" + mapType + "_" + Integer.toString(testNum);
 	    	NEATTester neatTester = new NEATTester(200, neatName, mapType);
-	    	neatTester.evolveNEATsFromScratch( 15 * 60 * 1000);
+	    	neatTester.evolveNEATsFromScratch( minutesPerSample * 60 * 1000);
+	    	
+	    	String eliteInfo = neatTester.getEliteInfo();
+	    	System.out.println(eliteInfo);
+	    	saveTextToFile(eliteInfo, "ELITE_INFO_" + Integer.toString(testNum));
+	    	
 	    	neatTester.saveBestElite(testNum);
 	    	neatTester.cleanUp();
 		}

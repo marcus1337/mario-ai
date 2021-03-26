@@ -79,6 +79,7 @@ public class LevelHandler {
 		return (int) ((numAirTimeFrames / totalFrames) * 100.f);
 	}
 
+	//BEHAVIORS: 1. Game Completion 2. Jump-Time Frequency 3. Enemy Kills
 	public void setBehaviors(MarioResult result) {
 		result.gameCompletion = (int) (result.getCompletionPercentage() * 100.0f);
 		result.jumpFrequency = getJumpFrequency(result);

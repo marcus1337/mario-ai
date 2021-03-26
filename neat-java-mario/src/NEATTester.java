@@ -43,6 +43,19 @@ public class NEATTester {
 		evolver.saveElites(eliteFolderName);
 	}
 	
+	public String getEliteInfo(){
+		String result = "";
+		result += "NUM ELITES: " + Integer.toString(evolver.getNumElites()) + "\n";
+		result += "BEHAVIORS: 1. Game Completion 2. Jump-Time Frequency 3. Enemy Kills\n";
+		IntVec vec = evolver.getBestEliteBehavior();
+		if(vec.size() > 0)
+			result += "BEST ELITE BEHAVIOUR: <" + Integer.toString(vec.get(0)) + ", " + Integer.toString(vec.get(1)) +
+					", " + Integer.toString(vec.get(2)) + ">\n";
+		result += "Num unique dimension keys (100 is max): [" + Integer.toString(evolver.getNumElitesOfUniqueDimensionValue(0)) + ", " + Integer.toString(evolver.getNumElitesOfUniqueDimensionValue(1)) + ", " + Integer.toString(evolver.getNumElitesOfUniqueDimensionValue(2)) + "]" + "\n\n";		
+		vec.delete();
+		return result;
+	}
+	
 	public void saveBestElite(int ID){
 		evolver.saveBestElite("BEST_ELITES", "ELITE_" + Integer.toString(ID));
 	}
@@ -116,7 +129,9 @@ public class NEATTester {
 			if(numGenerations % 30 == 0)
 				evolver.randomizePopulationViaElites();
 			evolveGeneration();
-			System.out.println("Generations complete: " + Integer.toString(numGenerations));
+			
+			if(numGenerations % 10 == 0)
+				System.out.println("Generations complete: " + Integer.toString(numGenerations));
 		}
 	}
 	
