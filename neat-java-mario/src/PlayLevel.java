@@ -22,10 +22,13 @@ public class PlayLevel {
 
     	String mapType = "notchParam";
 		LevelHandler.initMaps();
+    	boolean isExperimenting = true;
     	
-		//makeElites(mapType);
-		//scoreElitesAndSaveStatistics(mapType);
-		showSingleEliteVisually(5, mapType);
+		if(isExperimenting){
+			makeElites(mapType);
+			scoreElitesAndSaveStatistics(mapType);
+		}else
+			showSingleEliteVisually(5, mapType);
     }
     
     public static void showSingleEliteVisually(int ID, String mapType){
@@ -105,7 +108,7 @@ public class PlayLevel {
 			LevelHandler.initEliteMap(mapType);
 			String neatName = "NEATS_" + mapType + "_" + Integer.toString(testNum);
 	    	NEATTester neatTester = new NEATTester(200, neatName, mapType);
-	    	neatTester.evolveNEATsFromScratch( 2 * 60 * 1000);
+	    	neatTester.evolveNEATsFromScratch( 15 * 60 * 1000);
 	    	neatTester.saveBestElite(testNum);
 	    	neatTester.cleanUp();
 		}

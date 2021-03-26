@@ -102,3 +102,5 @@ setDirectoryToSavesFolder()
     #testRLNetwork((i+1), ENV_MAP_NAME1)
 
 #testRLNetworkVisually(1, ENV_MAP_NAME2) #For Video Recordings.
+
+# START JAVA "SERVER", START PYTHON CLIENT... JAVA SERVER ONCE WHILE PYTHON RESTART?

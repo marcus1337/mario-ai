@@ -22,6 +22,8 @@ class MarioAITraining1(gym.Env, utils.EzPickle):
         self.renderActive = False
         self.mapType = "notchParam"
 
+
+
     def step(self, action):
         if (not isinstance(action, list)):
             action = int(action)
@@ -43,6 +45,9 @@ class MarioAITraining1(gym.Env, utils.EzPickle):
                 bool_array[i] = False
 
         self.Main.setActions(bool_array)
+
+
+
 
         self.Main.step()
         obsJava = self.Main.getDiscreteObservations()

@@ -221,6 +221,9 @@ public class MarioGame {
 	}
     
 	float bestXPosition;
+	float lastXPosition;
+	float startXPosition;
+	
 	int numStepsSinceImprovedXPosition;
     public void initGame(String level, int timer, int marioState){
         world = new MarioWorld(killEvents);
@@ -238,6 +241,8 @@ public class MarioGame {
         	agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
         updateWorld(new boolean[5]);
         bestXPosition = -1;
+        lastXPosition = this.world.mario.x;
+        startXPosition = this.world.mario.x;
         numStepsSinceImprovedXPosition = 0;
     }
     
@@ -284,9 +289,7 @@ public class MarioGame {
     
     
     public void stepWorld(boolean[] actions, boolean shootFire){
-    	
     	endGameIfStuck();
-    	
     	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
     	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
             updateWorld(actions);
@@ -303,12 +306,16 @@ public class MarioGame {
 		//System.out.println(numStepsSinceImprovedXPosition);
 		numStepsSinceImprovedXPosition++;
     	float currentXPosition = this.world.mario.x;
-    	if(currentXPosition + 7.f > bestXPosition){
-    		bestXPosition = currentXPosition;
+    	
+    	if(currentXPosition >= lastXPosition + 7.0f || currentXPosition <= lastXPosition - 7.0f){
+    		lastXPosition = currentXPosition;
     		numStepsSinceImprovedXPosition = 0;
     	}
-    	if(numStepsSinceImprovedXPosition > 4 * 10)
+    	if( (numStepsSinceImprovedXPosition > 5 && Math.abs(currentXPosition-startXPosition) < 1.f) || numStepsSinceImprovedXPosition > 40 ){
+    		//if(currentXPosition > 8.f)
+        	//	System.out.println(currentXPosition);
             this.world.lose();
+    	}
 	}
     
     public void stepWorldWithVisuals(boolean[] actions, boolean shootFire){
