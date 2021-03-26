@@ -124,13 +124,13 @@ public class NEATTester {
 		long startTime = System.currentTimeMillis();
 		while (startTime + timeLimit > System.currentTimeMillis()) {
 			numGenerations++;
-			if(numGenerations % 5 == 0)
+			if(numGenerations % 100 == 0)
 				testAndStoreElites();
-			if(numGenerations % 30 == 0)
+			if(numGenerations % 200 == 0)
 				evolver.randomizePopulationViaElites();
 			evolveGeneration();
 			
-			if(numGenerations % 10 == 0)
+			if(numGenerations % 1 == 0)
 				System.out.println("Generations complete: " + Integer.toString(numGenerations));
 		}
 	}

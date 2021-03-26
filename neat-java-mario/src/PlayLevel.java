@@ -17,7 +17,7 @@ import engine.core.MarioWorld;
 public class PlayLevel {
 	
 	public static final int sampleSize = 5;
-	public static final int minutesPerSample = 60;
+	public static final int minutesPerSample = 1;
 
     public static void main(String[] args) {   
 
@@ -26,10 +26,10 @@ public class PlayLevel {
     	boolean isExperimenting = true;
     	
 		if(isExperimenting){
-			makeElites(mapType);
+			//makeElites(mapType);
 			scoreElitesAndSaveStatistics(mapType);
 		}else
-			showSingleEliteVisually(5, mapType);
+			showSingleEliteVisually(1, mapType);
     }
     
     public static void showSingleEliteVisually(int ID, String mapType){
@@ -110,9 +110,9 @@ public class PlayLevel {
 	    	NEATTester neatTester = new NEATTester(200, neatName, mapType);
 	    	neatTester.evolveNEATsFromScratch( minutesPerSample * 60 * 1000);
 	    	
-	    	String eliteInfo = neatTester.getEliteInfo();
-	    	System.out.println(eliteInfo);
-	    	saveTextToFile(eliteInfo, "ELITE_INFO_" + Integer.toString(testNum));
+	    	//String eliteInfo = neatTester.getEliteInfo();
+	    	//System.out.println(eliteInfo);
+	    	//saveTextToFile(eliteInfo, "ELITE_INFO_" + Integer.toString(testNum));
 	    	
 	    	neatTester.saveBestElite(testNum);
 	    	neatTester.cleanUp();
