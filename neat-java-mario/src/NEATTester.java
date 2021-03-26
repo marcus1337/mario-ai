@@ -111,9 +111,9 @@ public class NEATTester {
 		long startTime = System.currentTimeMillis();
 		while (startTime + timeLimit > System.currentTimeMillis()) {
 			numGenerations++;
-			if(numGenerations % 1 == 0)
+			if(numGenerations % 5 == 0)
 				testAndStoreElites();
-			if(numGenerations % 3 == 0)
+			if(numGenerations % 30 == 0)
 				evolver.randomizePopulationViaElites();
 			evolveGeneration();
 			System.out.println("Generations complete: " + Integer.toString(numGenerations));
