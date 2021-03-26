@@ -35,10 +35,6 @@ public class JavaPorts {
     }
   }
 
-  public JavaPorts() {
-    this(exampleJNI.new_JavaPorts(), true);
-  }
-
   public void init(int numInputNodes, int numOutputNode, int numAIs) {
     exampleJNI.JavaPorts_init(swigCPtr, this, numInputNodes, numOutputNode, numAIs);
   }
@@ -137,6 +133,38 @@ public class JavaPorts {
 
   public void setMaxHiddenNodes(int numNodes) {
     exampleJNI.JavaPorts_setMaxHiddenNodes(swigCPtr, this, numNodes);
+  }
+
+  public int getNumElites() {
+    return exampleJNI.JavaPorts_getNumElites(swigCPtr, this);
+  }
+
+  public int getNumElitesOfUniqueDimensionValue(int dimension) {
+    return exampleJNI.JavaPorts_getNumElitesOfUniqueDimensionValue(swigCPtr, this, dimension);
+  }
+
+  public int getNumElitesOfDimensionWithValue(int dimension, int value) {
+    return exampleJNI.JavaPorts_getNumElitesOfDimensionWithValue(swigCPtr, this, dimension, value);
+  }
+
+  public int getNumElitesOfDimensionWithinThreshold(int dimension, int low, int high) {
+    return exampleJNI.JavaPorts_getNumElitesOfDimensionWithinThreshold(swigCPtr, this, dimension, low, high);
+  }
+
+  public IntVec getBestEliteBehavior() {
+    return new IntVec(exampleJNI.JavaPorts_getBestEliteBehavior(swigCPtr, this), true);
+  }
+
+  public void setMutationRates(float newNodeRate, float newLinkRate, float randomizeLinkRate, float mutateLinkRate, float enableDisableLinkRate, boolean enableExtraMutationRate) {
+    exampleJNI.JavaPorts_setMutationRates__SWIG_0(swigCPtr, this, newNodeRate, newLinkRate, randomizeLinkRate, mutateLinkRate, enableDisableLinkRate, enableExtraMutationRate);
+  }
+
+  public void setMutationRates(float newNodeRate, float newLinkRate, float randomizeLinkRate, float mutateLinkRate, float enableDisableLinkRate) {
+    exampleJNI.JavaPorts_setMutationRates__SWIG_1(swigCPtr, this, newNodeRate, newLinkRate, randomizeLinkRate, mutateLinkRate, enableDisableLinkRate);
+  }
+
+  public JavaPorts() {
+    this(exampleJNI.new_JavaPorts(), true);
   }
 
 }

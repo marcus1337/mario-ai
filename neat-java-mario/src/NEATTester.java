@@ -100,7 +100,7 @@ public class NEATTester {
 
 	public void evolveNEATsFromScratch(long timeLimit) {
 		System.out.println("Starting up...");
-		evolver.setSurpriseEffect(0.05f);
+		evolver.setSurpriseEffect(0.07f);
 		System.out.println("Surprise effect configured...");
 		evolver.setMaxHiddenNodes(170);
 		numGenerations = 0;
