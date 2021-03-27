@@ -18,18 +18,21 @@ public class PlayLevel {
 	
 	public static final int sampleSize = 5;
 	public static final int minutesPerSample = 1;
+	
+	private static final String mapType1 = "notchParam";
+	private static final String mapType2 = "notchMedium";
 
     public static void main(String[] args) {   
 
-    	String mapType = "notchParam";
+    	String mapType = mapType2;
 		LevelHandler.initMaps();
-    	boolean isExperimenting = true;
+    	boolean isExperimenting = false;
     	
 		if(isExperimenting){
 			//makeElites(mapType);
 			scoreElitesAndSaveStatistics(mapType);
 		}else
-			showSingleEliteVisually(1, mapType);
+			showSingleEliteVisually(5, mapType);
     }
     
     public static void showSingleEliteVisually(int ID, String mapType){
@@ -110,9 +113,9 @@ public class PlayLevel {
 	    	NEATTester neatTester = new NEATTester(200, neatName, mapType);
 	    	neatTester.evolveNEATsFromScratch( minutesPerSample * 60 * 1000);
 	    	
-	    	//String eliteInfo = neatTester.getEliteInfo();
-	    	//System.out.println(eliteInfo);
-	    	//saveTextToFile(eliteInfo, "ELITE_INFO_" + Integer.toString(testNum));
+	    	String eliteInfo = neatTester.getEliteInfo();
+	    	System.out.println(eliteInfo);
+	    	saveTextToFile(eliteInfo, "ELITE_INFO_" + Integer.toString(testNum));
 	    	
 	    	neatTester.saveBestElite(testNum);
 	    	neatTester.cleanUp();
