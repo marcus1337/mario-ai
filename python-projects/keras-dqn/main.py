@@ -19,6 +19,8 @@ ENV_MAP_NAME1 = "notchParam"
 ENV_MAP_NAME2 = "notchMedium"
 NUM_OBSERVATIONS = 237
 nb_actions = 32
+NUM_SAMPLES = 5
+NUM_STEPS = 100
 
 def getEnv(envName):
     envTmp = gym.make(envName)
@@ -28,7 +30,7 @@ def getEnv(envName):
     return envTmp
 
 def trainRL(agent, rlName, environment):
-    agent.fit(environment, nb_steps=25000, visualize=False, verbose=2)
+    agent.fit(environment, nb_steps=NUM_STEPS, visualize=False, verbose=2)
     agent.save_weights(rlName, overwrite=True)
 
 def testRL(agent, rlName, isVisual, environment):
@@ -49,6 +51,7 @@ def getDuelDQNModel():
     tmpDQN.compile(Adam(lr=1e-3), metrics=['mae'])
     return tmpDQN
 
+
 def trainRLNetworks(numNetworks, mapType):
     env = getEnv(ENV_NAME_TRAINING)
     env.setMapType(mapType)
@@ -67,7 +70,7 @@ def testRLNetwork(networkNumber, mapType):
     completionPercentage = 0.0
     completionRates = []
     for i in range(100):
-        env.setSpecificMap(i+1)
+        env.lvl = i+1
         testRL(rlModel, rlNetworkName, False, env)
         completionPercentage += env.getCompletionPercentage()
         completionRates.append(env.getCompletionPercentage())
@@ -93,14 +96,13 @@ def setDirectoryToSavesFolder():
 
 setDirectoryToSavesFolder()
 
-#trainRLNetworks(20, ENV_MAP_NAME2)
-#for i in range(20):
-    #testRLNetwork((i+1), ENV_MAP_NAME2)
+#trainRLNetworks(NUM_SAMPLES, ENV_MAP_NAME2)
+
+for i in range(NUM_SAMPLES):
+    testRLNetwork((i+1), ENV_MAP_NAME2)
 
 #trainRLNetworks(20, ENV_MAP_NAME1)
 #for i in range(20):
     #testRLNetwork((i+1), ENV_MAP_NAME1)
 
 #testRLNetworkVisually(1, ENV_MAP_NAME2) #For Video Recordings.
-
-# START JAVA "SERVER", START PYTHON CLIENT... JAVA SERVER ONCE WHILE PYTHON RESTART?
