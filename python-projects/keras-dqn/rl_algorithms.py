@@ -111,10 +111,10 @@ def testRLNetworks(NUM_SAMPLES, ENV_MAP_NAME):
     for i in range(NUM_SAMPLES):
         testRLNetwork((i+1), ENV_MAP_NAME)
 
-setDirectoryToSavesFolder()
-#testRLNetworks(2, ENV_MAP_NAME2)
+#setDirectoryToSavesFolder()
+#testRLNetworks(2, ENV_MAP_NAME1)
 
-trainRLNetworks(3, ENV_MAP_NAME1)
+#trainRLNetworks(3, ENV_MAP_NAME1)
 #for i in range(NUM_SAMPLES):
 #    testRLNetwork((i+1), ENV_MAP_NAME2)
 

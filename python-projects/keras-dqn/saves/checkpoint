@@ -1,2 +1,2 @@
-model_checkpoint_path: "duel_dqn_notchParam1"
-all_model_checkpoint_paths: "duel_dqn_notchParam1"
+model_checkpoint_path: "duel_dqn_notchParam3"
+all_model_checkpoint_paths: "duel_dqn_notchParam3"
