@@ -14,7 +14,7 @@ def getMeans(directory):
         result_file = directory + str(indexer) + ".txt"
         indexer = indexer + 1
         with open(result_file, "r") as file1:
-            means.append(float(file1.readline()))
+            means.append(float(file1.readline())*100)
     return means
 
 def getStatistics():
@@ -27,7 +27,3 @@ def getStatistics():
     result += "\n---RAW SCORE DATA---\n\n"
     result += str(means)
     return result
-
-
-print(getStatistics())
-

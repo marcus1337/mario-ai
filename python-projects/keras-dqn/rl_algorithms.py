@@ -19,7 +19,7 @@ ENV_MAP_NAME1 = "notchParam"
 ENV_MAP_NAME2 = "notchMedium"
 NUM_OBSERVATIONS = 237
 nb_actions = 32
-NUM_SAMPLES = 5
+#NUM_SAMPLES = 5
 NUM_STEPS = 100
 
 def getEnv(envName):
@@ -94,15 +94,17 @@ def setDirectoryToSavesFolder():
     currentDirectory = os.getcwd()
     os.chdir(currentDirectory + "\\saves")
 
-setDirectoryToSavesFolder()
+def testRLNetworks(NUM_SAMPLES, ENV_MAP_NAME):
+    for i in range(NUM_SAMPLES):
+        testRLNetwork((i+1), ENV_MAP_NAME)
+
+#setDirectoryToSavesFolder()
 
 #trainRLNetworks(NUM_SAMPLES, ENV_MAP_NAME2)
+#for i in range(NUM_SAMPLES):
+#    testRLNetwork((i+1), ENV_MAP_NAME2)
 
-for i in range(NUM_SAMPLES):
-    testRLNetwork((i+1), ENV_MAP_NAME2)
 
-#trainRLNetworks(20, ENV_MAP_NAME1)
-#for i in range(20):
-    #testRLNetwork((i+1), ENV_MAP_NAME1)
+
 
 #testRLNetworkVisually(1, ENV_MAP_NAME2) #For Video Recordings.

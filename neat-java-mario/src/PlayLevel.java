@@ -24,9 +24,9 @@ public class PlayLevel {
 
     public static void main(String[] args) {   
 
-    	String mapType = mapType2;
+    	String mapType = mapType1;
 		LevelHandler.initMaps();
-    	boolean isExperimenting = false;
+    	boolean isExperimenting = true;
     	
 		if(isExperimenting){
 			//makeElites(mapType);

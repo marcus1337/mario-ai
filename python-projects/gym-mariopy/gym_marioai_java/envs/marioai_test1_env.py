@@ -5,7 +5,7 @@ from gym import error, spaces
 from gym import utils
 from gym.utils import seeding
 
-from py4j.java_gateway import JavaGateway
+from py4j.java_gateway import JavaGateway, GatewayParameters
 
 import logging
 logger = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ class MarioAITest1(gym.Env, utils.EzPickle):
         self.observation_space = spaces.Discrete(237)
         self.action_space = spaces.Discrete(5)
         self.status = "Running"
-        self.gateway = JavaGateway()
+        self.gateway = JavaGateway(gateway_parameters=GatewayParameters(port=25335))
         self.Main = self.gateway.entry_point
         self.renderActive = False
         self.mapType = "notchParam"
