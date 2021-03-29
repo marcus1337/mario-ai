@@ -37,6 +37,19 @@ def testRL(agent, rlName, isVisual, environment):
     agent.load_weights(rlName)
     agent.test(environment, nb_episodes=1, visualize=isVisual)
 
+def getSmallDuelDQNModel():
+    model = Sequential()
+    model.add(Flatten(input_shape=(1,) + (NUM_OBSERVATIONS,)))
+    model.add(Dense(170, activation='relu', use_bias=False))
+    model.add(Dense(nb_actions, activation='linear', use_bias=False))
+    #print(model.summary())
+    memory = SequentialMemory(limit=50000, window_length=1)
+    policy = BoltzmannQPolicy()
+    tmpDQN = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=10,
+                   enable_dueling_network=True, dueling_type='avg', enable_double_dqn=True, target_model_update=1e-2, policy=policy)
+    tmpDQN.compile(Adam(lr=1e-3), metrics=['mae'])
+    return tmpDQN
+
 def getDuelDQNModel():
     model = Sequential()
     model.add(Flatten(input_shape=(1,) + (NUM_OBSERVATIONS,)))
@@ -56,7 +69,7 @@ def trainRLNetworks(numNetworks, mapType):
     env = getEnv(ENV_NAME_TRAINING)
     env.setMapType(mapType)
     for i in range(numNetworks):
-        rlModel = getDuelDQNModel()
+        rlModel = getSmallDuelDQNModel()
         rlNetworkName = "duel_dqn_notchParam" + str(i+1)
         rlDataName = "dqnTrainingData" + str(i+1)
         sys.stdout = open(rlDataName + ".txt", 'w')
@@ -66,7 +79,7 @@ def testRLNetwork(networkNumber, mapType):
     env = getEnv(ENV_NAME_TESTING)
     env.setMapType(mapType)
     rlNetworkName = "duel_dqn_notchParam" + str(networkNumber)
-    rlModel = getDuelDQNModel()
+    rlModel = getSmallDuelDQNModel()
     completionPercentage = 0.0
     completionRates = []
     for i in range(100):

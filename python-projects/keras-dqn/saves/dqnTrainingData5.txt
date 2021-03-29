@@ -1,0 +1,6 @@
+Training for 101 steps ...
+  47/101: episode: 1, duration: 7.571s, episode steps:  47, steps per second:   6, episode reward: 2933.000, mean reward: 62.404 [-201.000, 299.000], mean action: 13.660 [0.000, 30.000],  loss: 3577.183126, mae: 3.103285, mean_q: 2.832097
+  92/101: episode: 2, duration: 6.042s, episode steps:  45, steps per second:   7, episode reward: 7155.000, mean reward: 159.000 [-1.000, 399.000], mean action: 14.578 [6.000, 30.000],  loss: 7179.197266, mae: 11.409350, mean_q: 17.704702
+  98/101: episode: 3, duration: 0.888s, episode steps:   6, steps per second:   7, episode reward: 1194.000, mean reward: 199.000 [-1.000, 299.000], mean action: 10.000 [10.000, 10.000],  loss: 9524.581055, mae: 21.288519, mean_q: 39.910431
+done, took 15.040 seconds
+Unexpected error: <class 'statistics.StatisticsError'>

@@ -1,0 +1,3 @@
+Training for 101 steps ...
+  97/101: episode: 1, duration: 14.623s, episode steps:  97, steps per second:   7, episode reward: 8923.000, mean reward: 91.990 [-201.000, 299.000], mean action: 16.835 [0.000, 31.000],  loss: 4203.995400, mae: 7.116989, mean_q: 9.399671
+done, took 15.224 seconds

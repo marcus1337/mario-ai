@@ -15,7 +15,7 @@ def startJavaServer():
 
 
 
-javaServer = startJavaServer()
+#javaServer = startJavaServer()
 
 try:
     print("starting...")
@@ -26,7 +26,7 @@ try:
     os.chdir('..')
 except:
     print("Unexpected error:", sys.exc_info()[0])
-    javaServer.kill()
+    #javaServer.kill()
     raise
 
-javaServer.kill()
+#javaServer.kill()
