@@ -83,7 +83,7 @@ def testRLNetwork(networkNumber, mapType):
     completionPercentage = 0.0
     completionRates = []
     for i in range(100):
-        env.lvl = i+1
+        env.setLvl(i+1)
         testRL(rlModel, rlNetworkName, False, env)
         completionPercentage += env.getCompletionPercentage()
         completionRates.append(env.getCompletionPercentage())
@@ -99,7 +99,7 @@ def testRLNetworkVisually(networkNumber, mapType):
     env = getEnv(ENV_NAME_TESTING)
     env.setMapType(mapType)
     rlNetworkName = "duel_dqn_notchParam" + str(networkNumber)
-    rlModel = getDuelDQNModel()
+    rlModel = getSmallDuelDQNModel()
     testRL(rlModel, rlNetworkName, True, env)
     print("Completion %:" + str(env.getCompletionPercentage()))
 
@@ -111,13 +111,14 @@ def testRLNetworks(NUM_SAMPLES, ENV_MAP_NAME):
     for i in range(NUM_SAMPLES):
         testRLNetwork((i+1), ENV_MAP_NAME)
 
-#setDirectoryToSavesFolder()
+setDirectoryToSavesFolder()
+#testRLNetworks(2, ENV_MAP_NAME2)
 
-#trainRLNetworks(NUM_SAMPLES, ENV_MAP_NAME2)
+trainRLNetworks(3, ENV_MAP_NAME1)
 #for i in range(NUM_SAMPLES):
 #    testRLNetwork((i+1), ENV_MAP_NAME2)
 
 
 
 
-#testRLNetworkVisually(1, ENV_MAP_NAME2) #For Video Recordings.
+#testRLNetworkVisually(2, ENV_MAP_NAME1) #For Video Recordings.

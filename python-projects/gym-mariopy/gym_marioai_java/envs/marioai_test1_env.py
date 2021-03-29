@@ -23,6 +23,9 @@ class MarioAITest1(gym.Env, utils.EzPickle):
         self.mapType = "notchParam"
         self.lvl = -1
 
+    def setLvl(self, lvl):
+        self.lvl = lvl
+
 
     def step(self, action):
         if (not isinstance(action, list)):
@@ -57,6 +60,8 @@ class MarioAITest1(gym.Env, utils.EzPickle):
         return ob, reward, episode_over, {}
 
     def reset(self):
+        #self.lvl += 1
+        print("LVL: " + str(self.lvl))
         if(self.lvl == -1):
             self.Main.initTestMap(self.mapType)
         else:
