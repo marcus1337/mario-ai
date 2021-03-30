@@ -17,8 +17,10 @@ public class Main {
 	}
 	
 	public static void resetGateway(){
-		gatewayServer.shutdown();
-		gatewayServer.start();
+        gatewayServer.shutdown();
+        gatewayServer = new GatewayServer(new GenerateLevel(), 25335);
+        gatewayServer.start();
+        System.out.println("Reset Java Server");
 	}
 
 }

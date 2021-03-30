@@ -86,7 +86,7 @@ def testRLNetwork(networkNumber, mapType):
     rlModel = getDQNModel()
     completionPercentage = 0.0
     completionRates = []
-    for i in range(100):
+    for i in range(2):
         env.setLvl(i+1)
         testRL(rlModel, rlNetworkName, False, env)
         completionPercentage += env.getCompletionPercentage()

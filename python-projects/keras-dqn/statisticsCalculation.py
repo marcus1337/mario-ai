@@ -19,7 +19,7 @@ def getMeans(directory):
 
 def getStatistics():
     result = ""
-    directory = os.getcwd() + "\\saves\\"
+    directory = os.getcwd() + "\\"
     means = getMeans(directory)
     result += "NUMBER OF SAMPLES: " + str(len(means)) + "\n"
     result += "MEAN: " + str(np.mean(means)) + "\n"

@@ -7,6 +7,7 @@ import engine.core.MarioGame;
 public class GenerateLevel {
 	
 	public GenerateLevel(){
+		System.out.println("Starting something...");
 		LevelHandler.initMaps();
 		observation = new Observation();
 		action = new Action();
@@ -14,6 +15,7 @@ public class GenerateLevel {
 	
 	public boolean[] getDiscreteObservations(){
 		observation.updateModel(game.getModel());
+		//System.out.println(observation.getStateArray().length);
 		return observation.getStateArray();
 	}
 	
@@ -56,21 +58,19 @@ public class GenerateLevel {
     public void initTestMap(String lvlName, int lvlNumber){
     	String lvlStr = LevelHandler.getTestLevel(lvlName, lvlNumber);
     	if(game == null)
-        	game = new MarioGame(true);
-    	System.out.println("NUM " + Integer.toString(lvlNumber));
-		game.initGame(lvlStr, LevelHandler.gameTimeTestSeconds, 2, true);
+        	game = new MarioGame(); //Bool for visuals...
+    	//System.out.println("NUM " + Integer.toString(lvlNumber) + ": " + lvlName);
+		game.initGame(lvlStr, LevelHandler.gameTimeTestSeconds, 2, false);  //Bool for visuals...
     }
     
     public float getMapCompletionPercentage(){
     	return game.getResult().getCompletionPercentage();
     }
 
-    public static void main(String[] args) {
-    	LevelHandler.initMaps();
-    	
-    	new MarioGame().runGame(new Agent(), LevelHandler.getExactLevel("levels/notchMedium/lvl-100.txt"), 100, 2, true, 21); //Disable renderRectangles in MarioRenderer.java
-    	
+    //public static void main(String[] args) {
+    //	LevelHandler.initMaps();
+    //	new MarioGame().runGame(new Agent(), LevelHandler.getExactLevel("levels/notchMedium/lvl-100.txt"), 100, 2, true, 21); //Disable renderRectangles in MarioRenderer.java
     	//new MarioGame().runGame(new Agent(), LevelHandler.getRandomTrainingLevel("notchParam"), 100, 2, true, 21);
     	//new MarioGame().runGame(new Agent(), LevelHandler.getRandomTrainingLevel("notchMedium"), 100, 2, true, 21);
-   }
+  // }
 }

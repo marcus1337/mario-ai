@@ -68,6 +68,7 @@ class MarioAITraining1(gym.Env, utils.EzPickle):
         print("Training don't have rendering enabled, try 'test-mode'")
 
     def close(self):
+        print("Closing env....")
         pass
 
     def setMapType(self, mapType):
