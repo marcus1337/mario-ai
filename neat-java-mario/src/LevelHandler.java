@@ -106,6 +106,18 @@ public class LevelHandler {
 		return game.getResult();
 	}
 	
+	private MarioResult runEliteMappingGameAndGetResult(NEATAgent agent) {
+		game.initGame(LevelHandler.eliteLvl, LevelHandler.gameTimeSeconds, 2);
+		while(!game.isGameDone()){
+			MarioForwardModel model = game.getModel();
+			agent.updateFields(model);
+			agent.calculateInput();
+			agent.setActions(model);
+			game.stepWorld(agent.action.actions, agent.action.shoot);
+		}
+		return game.getResult();
+	}
+	
 	public MarioResult simulateAndEvaluate(NEATAgent agent) {
 		MarioResult result = runGameAndGetResult(agent);
 		result.fitness += addGameEndFitness(result);

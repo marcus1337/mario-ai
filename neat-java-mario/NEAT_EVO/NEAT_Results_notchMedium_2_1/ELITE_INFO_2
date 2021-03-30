@@ -1,5 +1,5 @@
-NUM ELITES: 75
+NUM ELITES: 51
 BEHAVIORS: 1. Game Completion 2. Jump-Time Frequency 3. Enemy Kills
-BEST ELITE BEHAVIOUR: <86, 60, 14>
-Num unique dimension keys (100 is max): [28, 28, 18]
+BEST ELITE BEHAVIOUR: <0, 0, 0>
+Num unique dimension keys (100 is max): [24, 27, 7]
 

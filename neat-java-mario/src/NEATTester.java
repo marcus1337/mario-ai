@@ -20,19 +20,21 @@ public class NEATTester {
 	private IntVec behavior;
 	
 	public ArrayList<NEATAgent> agents;
+	public ArrayList<NEATAgent> eliteAgents;
 	
 
 	public NEATTester(int numAI, String fileName, String mapType) {
 		loadDll();
 		evolver = new JavaPorts();
 		behavior = new IntVec(new int[]{0,0,0});
-		this.numAI = numAI;
+		this.numAI = numAI;		
 		levelHandler = new LevelHandler(mapType);
 		this.fileName = fileName; 
 		eliteFolderName = fileName + "_Elite";
 		evolver.init(Observation.numObservations, 5, numAI);
 		
 		agents = new ArrayList<NEATAgent>();
+		eliteAgents = new ArrayList<NEATAgent>();
 		for (int i = 0; i < numAI; i++)
 			agents.add(new NEATAgent(evolver, i));
 		
@@ -89,13 +91,21 @@ public class NEATTester {
 	}
 
 	public void setAIResults(int aiIndex, MarioResult marioResult) {
-		int fitness = marioResult.fitness;
-		evolver.setFitness(aiIndex, fitness);
+		setBehaviorFields(marioResult);
+		evolver.setFitness(aiIndex, marioResult.fitness);
+		evolver.setBehavior(aiIndex, behavior);
+	}
+
+	private void setBehaviorFields(MarioResult marioResult) {
 		behavior.clear();
 		behavior.add(marioResult.gameCompletion);
 		behavior.add(marioResult.jumpFrequency);
-		behavior.add(marioResult.numKills);		
-		evolver.setBehavior(aiIndex, behavior);
+		behavior.add(marioResult.numKills);
+	}
+	
+	public void changeEliteAIResults(int aiIndex, MarioResult marioResult){
+		setBehaviorFields(marioResult);
+		evolver.changeEliteFitnessAndBehvaior(aiIndex, marioResult.fitness, behavior);
 	}
 
 	public void cleanUp() {
@@ -124,8 +134,11 @@ public class NEATTester {
 		long startTime = System.currentTimeMillis();
 		while (startTime + timeLimit > System.currentTimeMillis()) {
 			numGenerations++;
-			if(numGenerations % 5 == 0)
+			if(numGenerations % 5 == 0){
+				if(evolver.getNumElites() > 0)
+					changeEliteMapping();
 				testAndStoreElites();
+			}
 			if(numGenerations % 30 == 0)
 				evolver.randomizePopulationViaElites();
 			evolveGeneration();
@@ -136,12 +149,30 @@ public class NEATTester {
 	}
 	
 	private void testAndStoreElites(){
+		
 		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
 		{
 			MarioResult marioResult = levelHandler.simulateAndEvaluateElite(agents.get(aiIndex), evolver);
 			setAIResults(aiIndex, marioResult);
 		}
 		evolver.storeElites();
+	}
+
+	private void changeEliteMapping() {
+		LevelHandler.initEliteMap(levelHandler.mapType);
+		evolver.storeElitesInVector();
+
+		for(int i = eliteAgents.size() ; i < evolver.getNumElites(); i++){
+			NEATAgent tmpAgent = new NEATAgent(evolver,i);
+			tmpAgent.isElite = true;
+			eliteAgents.add(tmpAgent);
+		}
+		
+		for(int i = 0 ; i < evolver.getNumElites(); i++){
+			MarioResult marioResult = levelHandler.simulateAndEvaluateElite(eliteAgents.get(i), evolver);
+			changeEliteAIResults(i, marioResult);
+		}
+		evolver.refactorEliteMapping();
 	}
 	
 	private void evolveGeneration() {
