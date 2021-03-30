@@ -163,6 +163,18 @@ public class JavaPorts {
     exampleJNI.JavaPorts_setMutationRates__SWIG_1(swigCPtr, this, newNodeRate, newLinkRate, randomizeLinkRate, mutateLinkRate, enableDisableLinkRate);
   }
 
+  public void storeElitesInVector() {
+    exampleJNI.JavaPorts_storeElitesInVector(swigCPtr, this);
+  }
+
+  public void changeEliteFitnessAndBehvaior(int index, int newFitness, IntVec behaviors) {
+    exampleJNI.JavaPorts_changeEliteFitnessAndBehvaior(swigCPtr, this, index, newFitness, IntVec.getCPtr(behaviors), behaviors);
+  }
+
+  public void refactorEliteMapping() {
+    exampleJNI.JavaPorts_refactorEliteMapping(swigCPtr, this);
+  }
+
   public JavaPorts() {
     this(exampleJNI.new_JavaPorts(), true);
   }

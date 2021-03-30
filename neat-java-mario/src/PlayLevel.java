@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -6,6 +7,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 import engine.core.MarioForwardModel;
@@ -16,21 +18,53 @@ import engine.core.MarioWorld;
 
 public class PlayLevel {
 	
-	public static final int sampleSize = 5;
+	public static final int sampleSize = 2;
 	public static final int minutesPerSample = 1;
 	
 	private static final String mapType1 = "notchParam";
 	private static final String mapType2 = "notchMedium";
+	
+	public static ArrayList<File> getContent(){
+    	File contentDir = new File("NEAT_EVO//");
+    	ArrayList<File> content = new ArrayList<File>();
+    	if(contentDir.isDirectory()) {
+    	    File[] tmpContent = contentDir.listFiles();
+    	    for(int i = 0; i < tmpContent.length; i++) {
+    	    	if(tmpContent[i].isFile() || (tmpContent[i].isDirectory() && tmpContent[i].getName().equals("BEST_ELITES")))
+    	    		content.add(tmpContent[i]);
+    	    }
+    	}
+    	return content;
+	}
+	
+	public static void moveContentToFile(String fileName){
+		
+    	ArrayList<File> content = getContent();
+		File dir = new File("NEAT_EVO//" + fileName);
+		if (!dir.exists())
+			dir.mkdirs();
+		for(File file : content){
+			File targetFile = new File("NEAT_EVO//" + fileName + "//" + file.getName());
+			try {
+				Files.move(file.toPath(), targetFile.toPath(), StandardCopyOption.ATOMIC_MOVE);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-    public static void main(String[] args) {   
+    public static void main(String[] args) {  
+    	  	
 
     	String mapType = mapType1;
 		LevelHandler.initMaps();
     	boolean isExperimenting = true;
     	
 		if(isExperimenting){
-			//makeElites(mapType);
-			scoreElitesAndSaveStatistics(mapType);
+			makeElites(mapType1);
+			scoreElitesAndSaveStatistics(mapType1);
+			makeElites(mapType2);
+			scoreElitesAndSaveStatistics(mapType2);
 		}else
 			showSingleEliteVisually(5, mapType);
     }
@@ -84,12 +118,13 @@ public class PlayLevel {
 		System.out.println(scoreText);
 		
 		saveTextToFile(scoreText, "NEAT_Statistics.txt");
+    	moveContentToFile("NEAT_Results_"+mapType+"_"+Integer.toString(sampleSize)+"_"+Integer.toString(minutesPerSample));
 		
 	}
 
 	private static void saveTextToFile(String text, String fileName) {
 		try {
-			try (PrintStream out = new PrintStream(new FileOutputStream(fileName))) {
+			try (PrintStream out = new PrintStream(new FileOutputStream("NEAT_EVO//"+fileName))) {
 			    out.print(text);
 			}
 		} catch (FileNotFoundException e) {

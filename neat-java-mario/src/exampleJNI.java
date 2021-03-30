@@ -70,6 +70,9 @@ public class exampleJNI {
   public final static native long JavaPorts_getBestEliteBehavior(long jarg1, JavaPorts jarg1_);
   public final static native void JavaPorts_setMutationRates__SWIG_0(long jarg1, JavaPorts jarg1_, float jarg2, float jarg3, float jarg4, float jarg5, float jarg6, boolean jarg7);
   public final static native void JavaPorts_setMutationRates__SWIG_1(long jarg1, JavaPorts jarg1_, float jarg2, float jarg3, float jarg4, float jarg5, float jarg6);
+  public final static native void JavaPorts_storeElitesInVector(long jarg1, JavaPorts jarg1_);
+  public final static native void JavaPorts_changeEliteFitnessAndBehvaior(long jarg1, JavaPorts jarg1_, int jarg2, int jarg3, long jarg4, IntVec jarg4_);
+  public final static native void JavaPorts_refactorEliteMapping(long jarg1, JavaPorts jarg1_);
   public final static native long new_JavaPorts();
   public final static native void delete_JavaPorts(long jarg1);
 }
