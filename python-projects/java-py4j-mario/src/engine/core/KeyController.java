@@ -2,8 +2,6 @@ package engine.core;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import engine.core.MarioGame;
-
 public class KeyController implements KeyListener {
 	
 	public MarioGame marioGame = null;

@@ -3,7 +3,7 @@ package MarioPackage;
 import py4j.GatewayServer;
 
 public class Main {
-	
+	//Test comment1.
 	public static GatewayServer gatewayServer;
 	
 	public static void main(String[] args){
@@ -11,7 +11,7 @@ public class Main {
 	}
 
 	private static void startGateway() {
-		gatewayServer = new GatewayServer(new GenerateLevel());
+		gatewayServer = new GatewayServer(new GenerateLevel(), 25335);
         gatewayServer.start();
         System.out.println("Gateway Server Started");
 	}

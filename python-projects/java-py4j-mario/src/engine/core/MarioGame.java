@@ -1,19 +1,11 @@
 package engine.core;
 
-import java.awt.image.BufferedImage;
+import java.awt.Graphics;
+import java.awt.event.KeyAdapter;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import agents.human.Agent;
 import engine.helper.GameStatus;

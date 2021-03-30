@@ -1,19 +1,8 @@
 package MarioPackage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import _GA_TESTS.Action;
 import _GA_TESTS.Observation;
 import agents.human.Agent;
 import engine.core.MarioGame;
-import engine.core.MarioLevelGenerator;
-import engine.core.MarioLevelModel;
-import engine.core.MarioResult;
-import engine.core.MarioTimer;
 
 public class GenerateLevel {
 	
@@ -58,6 +47,7 @@ public class GenerateLevel {
     
     public void initTestMap(String lvlName){
     	String lvlStr = LevelHandler.getRandomTestLevel(lvlName);
+    	System.out.println("Only video?");
     	if(game == null)
         	game = new MarioGame(true);
 		game.initGame(lvlStr, LevelHandler.gameTimeSeconds, 2, true);
@@ -67,16 +57,20 @@ public class GenerateLevel {
     	String lvlStr = LevelHandler.getTestLevel(lvlName, lvlNumber);
     	if(game == null)
         	game = new MarioGame(true);
-		game.initGame(lvlStr, LevelHandler.gameTimeSeconds, 2, true);
+    	System.out.println("NUM " + Integer.toString(lvlNumber));
+		game.initGame(lvlStr, LevelHandler.gameTimeTestSeconds, 2, true);
     }
     
     public float getMapCompletionPercentage(){
     	return game.getResult().getCompletionPercentage();
     }
 
-    //public static void main(String[] args) {
-    	//LevelHandler.initMaps();
+    public static void main(String[] args) {
+    	LevelHandler.initMaps();
+    	
+    	new MarioGame().runGame(new Agent(), LevelHandler.getExactLevel("levels/notchMedium/lvl-100.txt"), 100, 2, true, 21); //Disable renderRectangles in MarioRenderer.java
+    	
     	//new MarioGame().runGame(new Agent(), LevelHandler.getRandomTrainingLevel("notchParam"), 100, 2, true, 21);
     	//new MarioGame().runGame(new Agent(), LevelHandler.getRandomTrainingLevel("notchMedium"), 100, 2, true, 21);
-   //}
+   }
 }

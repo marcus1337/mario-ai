@@ -2,7 +2,6 @@ package agents.human;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
 import _GA_TESTS.ReceptiveField;
 import engine.core.MarioAgent;

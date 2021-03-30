@@ -1,7 +1,6 @@
 package _GA_TESTS;
 
 import engine.core.MarioForwardModel;
-import engine.helper.MarioActions;
 
 public class Observation {
 

@@ -1,7 +1,5 @@
 package _GA_TESTS;
 
-import java.util.ArrayList;
-
 import engine.core.MarioForwardModel;
 
 public class ReceptiveField {

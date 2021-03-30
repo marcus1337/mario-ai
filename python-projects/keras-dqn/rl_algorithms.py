@@ -29,6 +29,10 @@ def getEnv(envName):
     print(envTmp.action_space)
     return envTmp
 
+def getDQNModel():
+    #return getBigDuelDQNModel()
+    return getSmallDuelDQNModel()
+
 def trainRL(agent, rlName, environment):
     agent.fit(environment, nb_steps=NUM_STEPS, visualize=False, verbose=2)
     agent.save_weights(rlName, overwrite=True)
@@ -69,7 +73,7 @@ def trainRLNetworks(numNetworks, mapType):
     env = getEnv(ENV_NAME_TRAINING)
     env.setMapType(mapType)
     for i in range(numNetworks):
-        rlModel = getSmallDuelDQNModel()
+        rlModel = getDQNModel()
         rlNetworkName = "duel_dqn_notchParam" + str(i+1)
         rlDataName = "dqnTrainingData" + str(i+1)
         sys.stdout = open(rlDataName + ".txt", 'w')
@@ -79,7 +83,7 @@ def testRLNetwork(networkNumber, mapType):
     env = getEnv(ENV_NAME_TESTING)
     env.setMapType(mapType)
     rlNetworkName = "duel_dqn_notchParam" + str(networkNumber)
-    rlModel = getSmallDuelDQNModel()
+    rlModel = getDQNModel()
     completionPercentage = 0.0
     completionRates = []
     for i in range(100):
@@ -99,7 +103,7 @@ def testRLNetworkVisually(networkNumber, mapType):
     env = getEnv(ENV_NAME_TESTING)
     env.setMapType(mapType)
     rlNetworkName = "duel_dqn_notchParam" + str(networkNumber)
-    rlModel = getSmallDuelDQNModel()
+    rlModel = getDQNModel()
     testRL(rlModel, rlNetworkName, True, env)
     print("Completion %:" + str(env.getCompletionPercentage()))
 

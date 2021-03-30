@@ -1,9 +1,11 @@
 package engine.core;
 
-import java.awt.*;
+import java.awt.Graphics;
 
 import engine.helper.SpriteType;
-import engine.sprites.*;
+import engine.sprites.Fireball;
+import engine.sprites.Mario;
+import engine.sprites.Shell;
 
 public abstract class MarioSprite {
     //    public static SpriteContext spriteContext;

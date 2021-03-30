@@ -6,15 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.ThreadLocalRandom;
 
-import engine.core.MarioAgentEvent;
-import engine.core.MarioEvent;
-import engine.core.MarioGame;
-import engine.core.MarioResult;
-import engine.helper.GameStatus;
-
 public class LevelHandler {
 	
-	public static final int gameTimeSeconds = 40;
+	public static final int gameTimeSeconds = 40, gameTimeTestSeconds = 60;
 	private static String[] notchParamMaps;
 	private static String[] notchMediumMaps;
 	
@@ -68,7 +62,7 @@ public class LevelHandler {
 		return "lvl-" + randomNum + ".txt";
 	}
 	
-    private static String getExactLevel(String filepath) {
+    public static String getExactLevel(String filepath) {
         String content = "";
         try {
             content = new String(Files.readAllBytes(Paths.get(filepath)));

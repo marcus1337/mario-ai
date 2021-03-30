@@ -4,14 +4,24 @@ import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.util.ArrayList;
 
-import engine.effects.*;
+import engine.effects.BrickEffect;
+import engine.effects.CoinEffect;
+import engine.effects.FireballEffect;
 import engine.graphics.MarioBackground;
 import engine.helper.EventType;
 import engine.helper.GameStatus;
 import engine.helper.MarioActions;
 import engine.helper.SpriteType;
 import engine.helper.TileFeature;
-import engine.sprites.*;
+import engine.sprites.BulletBill;
+import engine.sprites.Enemy;
+import engine.sprites.FireFlower;
+import engine.sprites.Fireball;
+import engine.sprites.FlowerEnemy;
+import engine.sprites.LifeMushroom;
+import engine.sprites.Mario;
+import engine.sprites.Mushroom;
+import engine.sprites.Shell;
 
 public class MarioWorld {
     public GameStatus gameStatus;

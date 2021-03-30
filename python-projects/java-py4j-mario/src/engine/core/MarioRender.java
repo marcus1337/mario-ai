@@ -1,15 +1,22 @@
 package engine.core;
 
-import javax.swing.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.Image;
+import java.awt.Stroke;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.geom.AffineTransform;
+
+import javax.swing.JComponent;
 
 import _GA_TESTS.ReceptiveField;
 import engine.helper.Assets;
 import engine.helper.MarioActions;
-
-import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.geom.AffineTransform;
 
 public class MarioRender extends JComponent implements FocusListener {
 	private static final long serialVersionUID = 790878775993203817L;
@@ -72,7 +79,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		g2.translate(0, 70);
 		g2.scale(2, 2);
 		world.render(og);
-		renderRectangles(og);
+		//renderRectangles(og);
 
 		g2.translate(0, -35);
 		renderTextInfo(world, og);
