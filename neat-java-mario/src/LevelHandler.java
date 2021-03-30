@@ -106,7 +106,7 @@ public class LevelHandler {
 		return game.getResult();
 	}
 	
-	private MarioResult runEliteMappingGameAndGetResult(NEATAgent agent) {
+	/*private MarioResult runEliteMappingGameAndGetResult(NEATAgent agent) {
 		game.initGame(LevelHandler.eliteLvl, LevelHandler.gameTimeSeconds, 2);
 		while(!game.isGameDone()){
 			MarioForwardModel model = game.getModel();
@@ -116,7 +116,7 @@ public class LevelHandler {
 			game.stepWorld(agent.action.actions, agent.action.shoot);
 		}
 		return game.getResult();
-	}
+	}*/
 	
 	public MarioResult simulateAndEvaluate(NEATAgent agent) {
 		MarioResult result = runGameAndGetResult(agent);
