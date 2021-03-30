@@ -20,36 +20,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84d61a9e-7006-49a6-99f1-cac484c7235d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../gym-mariopy/gym_marioai_java/envs/marioai_training1_env.py" beforeDir="false" afterPath="$PROJECT_DIR$/../gym-mariopy/gym_marioai_java/envs/marioai_training1_env.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java-py4j-mario/bin/MarioPackage/GenerateLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../java-py4j-mario/bin/MarioPackage/GenerateLevel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java-py4j-mario/bin/MarioPackage/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../java-py4j-mario/bin/MarioPackage/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java-py4j-mario/src/MarioPackage/GenerateLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java-py4j-mario/src/MarioPackage/GenerateLevel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../java-py4j-mario/src/MarioPackage/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../java-py4j-mario/src/MarioPackage/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ExperimentStarter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExperimentStarter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/checkpoint" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/dqnResult1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/dqnResult2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/dqnTrainingData1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/dqnTrainingData2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/duel_dqn_notchParam1.data-00000-of-00001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/duel_dqn_notchParam1.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/duel_dqn_notchParam2.data-00000-of-00001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/duel_dqn_notchParam2.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Experiments_notchParam_101_2/statisticsInfo.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/rl_algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/rl_algorithms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/checkpoint" beforeDir="false" afterPath="$PROJECT_DIR$/saves/checkpoint" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnResult1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/dqnResult1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnResult2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/dqnResult2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnResult3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnResult4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnResult5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnTrainingData1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/dqnTrainingData1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnTrainingData2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/dqnTrainingData2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnTrainingData3.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnTrainingData4.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/dqnTrainingData5.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam1.data-00000-of-00001" beforeDir="false" afterPath="$PROJECT_DIR$/saves/duel_dqn_notchParam1.data-00000-of-00001" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam1.index" beforeDir="false" afterPath="$PROJECT_DIR$/saves/duel_dqn_notchParam1.index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam2.data-00000-of-00001" beforeDir="false" afterPath="$PROJECT_DIR$/saves/duel_dqn_notchParam2.data-00000-of-00001" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam2.index" beforeDir="false" afterPath="$PROJECT_DIR$/saves/duel_dqn_notchParam2.index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam3.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam3.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam4.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam4.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam5.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam5.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/statistics.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/statisticsCalculation.py" beforeDir="false" afterPath="$PROJECT_DIR$/statisticsCalculation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/checkpoint" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/dqnResult1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/dqnResult2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/dqnTrainingData1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/dqnTrainingData2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam1.data-00000-of-00001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam1.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam2.data-00000-of-00001" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/duel_dqn_notchParam2.index" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/statisticsInfo.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,21 +139,21 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2660" y="275" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617103993626" />
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1617107621208">
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom" timestamp="1617108462911">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617107621208" />
-    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1617107621208">
+    <state width="1899" height="282" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617108462911" />
+    <state width="1899" height="282" key="GridCell.Tab.0.center" timestamp="1617108462911">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617107621208" />
-    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1617107621208">
+    <state width="1899" height="282" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617108462911" />
+    <state width="1899" height="282" key="GridCell.Tab.0.left" timestamp="1617108462911">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617107621208" />
-    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1617107621208">
+    <state width="1899" height="282" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617108462911" />
+    <state width="1899" height="282" key="GridCell.Tab.0.right" timestamp="1617108462911">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617107621208" />
+    <state width="1899" height="282" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617108462911" />
   </component>
 </project>

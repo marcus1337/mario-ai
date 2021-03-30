@@ -1,16 +1,6 @@
 Training for 101 steps ...
-done, took 11.466 seconds
-Discrete(5)
-Testing for 1 episodes ...
-LVL: 1
-Episode 1: reward: 800.000, steps: 400
-Testing for 1 episodes ...
-LVL: 2
-Episode 1: reward: 3186.000, steps: 14
-Discrete(5)
-Testing for 1 episodes ...
-LVL: 1
-Episode 1: reward: -400.000, steps: 400
-Testing for 1 episodes ...
-LVL: 2
-Episode 1: reward: -400.000, steps: 400
+  45/101: episode: 1, duration: 5.576s, episode steps:  45, steps per second:   8, episode reward: 1935.000, mean reward: 43.000 [-101.000, 299.000], mean action: 17.600 [2.000, 31.000],  loss: 2757.599071, mae: 2.889963, mean_q: 2.800885
+  57/101: episode: 2, duration: 1.444s, episode steps:  12, steps per second:   8, episode reward: 1088.000, mean reward: 90.667 [-201.000, 299.000], mean action: 10.750 [2.000, 20.000],  loss: 3861.294678, mae: 5.843754, mean_q: 7.665611
+  65/101: episode: 3, duration: 0.972s, episode steps:   8, steps per second:   8, episode reward: 992.000, mean reward: 124.000 [-201.000, 299.000], mean action: 17.000 [10.000, 30.000],  loss: 6107.530273, mae: 8.215817, mean_q: 11.136555
+ 100/101: episode: 4, duration: 3.877s, episode steps:  35, steps per second:   9, episode reward: 3165.000, mean reward: 90.429 [-201.000, 399.000], mean action: 12.800 [2.000, 30.000],  loss: 6545.923340, mae: 13.728504, mean_q: 23.501944
+done, took 12.075 seconds

@@ -78,6 +78,8 @@ def trainRLNetworks(numNetworks, mapType):
         rlDataName = "dqnTrainingData" + str(i+1)
         sys.stdout = open(rlDataName + ".txt", 'w')
         trainRL(rlModel, rlNetworkName, env)
+        sys.stdout.close()
+        sys.stdout = sys.__stdout__
 
 def testRLNetwork(networkNumber, mapType):
     env = getEnv(ENV_NAME_TESTING)
@@ -86,7 +88,7 @@ def testRLNetwork(networkNumber, mapType):
     rlModel = getDQNModel()
     completionPercentage = 0.0
     completionRates = []
-    for i in range(2):
+    for i in range(100):
         env.setLvl(i+1)
         testRL(rlModel, rlNetworkName, False, env)
         completionPercentage += env.getCompletionPercentage()
@@ -114,14 +116,6 @@ def setDirectoryToSavesFolder():
 def testRLNetworks(NUM_SAMPLES, ENV_MAP_NAME):
     for i in range(NUM_SAMPLES):
         testRLNetwork((i+1), ENV_MAP_NAME)
-
-#setDirectoryToSavesFolder()
-#testRLNetworks(2, ENV_MAP_NAME1)
-
-#trainRLNetworks(3, ENV_MAP_NAME1)
-#for i in range(NUM_SAMPLES):
-#    testRLNetwork((i+1), ENV_MAP_NAME2)
-
 
 
 
