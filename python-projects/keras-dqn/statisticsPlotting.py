@@ -55,11 +55,6 @@ def makeTwoComparativeHistograms(scores1, scores2):
     n2, bins2, patches2 = plt.hist(scores2,bins=range(min(scores2),max(scores2)+2,1), range=[0,100], color='blue' , edgecolor='midnightblue', linewidth=1.5, density=False, label="RL",alpha=0.5)
     plt.xlim([min(min(bins1),min(bins2)),max(max(bins1),max(bins2))])
 
-
-    #y1 = norm.pdf( bins1, mu1, sigma1)
-    #l1 = plt.plot(bins1, y1, 'r--', linewidth=1, label='$\mathcal{N}$ ' + f'$( \mu \\approx{ "{:.2f}".format(mu1) } , \sigma \\approx { "{:.2f}".format(sigma1) } )$')
-
-
     ax.yaxis.set_major_locator(MaxNLocator(integer=True))
 
     plt.xlabel('Score')
