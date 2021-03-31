@@ -287,9 +287,11 @@ public class MarioGame {
     	return world.gameStatus != GameStatus.RUNNING;
     }
     
+    public static boolean isTrainingMode = true;
     
     public void stepWorld(boolean[] actions, boolean shootFire){
-    	endGameIfStuck();
+    	if(isTrainingMode)
+    		endGameIfStuck();
     	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
     	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
             updateWorld(actions);

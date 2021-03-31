@@ -94,6 +94,7 @@ public class PlayLevel {
     }
 
 	private static void scoreElitesAndSaveStatistics(String mapType) {
+		MarioGame.isTrainingMode = false;
 		ArrayList<Double> scores = new ArrayList<Double>();
 		for(int testNum = 1; testNum < sampleSize + 1; testNum++){
 			scores.add((double)scoreElite(mapType, testNum));
@@ -142,6 +143,7 @@ public class PlayLevel {
     }
 
 	private static void makeElites(String mapType) {
+		MarioGame.isTrainingMode = true;
 		for(int testNum = 1; testNum < sampleSize + 1; testNum++){
 			LevelHandler.initEliteMap(mapType);
 			String neatName = "NEATS_" + mapType + "_" + Integer.toString(testNum);
