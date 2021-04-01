@@ -254,19 +254,18 @@ public class MarioGame {
 	}
 	
     public float getReward(){
-		int res = -1;
+		float res = -0.1f;
 		MarioForwardModel model = new MarioForwardModel(world.clone());
 		int nowXLocation = ((int) model.getMarioFloatPos()[0]) / 16;
-		int locationReward = (nowXLocation-previousXLocation) * 100;
-		if(locationReward < 0)
-			locationReward /= 10;
+		float locationReward = ((float)(nowXLocation-previousXLocation))/2.0f;
+
 		res += locationReward;
 		if (prevMarioState < model.getMarioMode()) {
 			prevMarioState = model.getMarioMode();
-			res -= 100;
+			res -= 0.5f;
 		}
 		if(model.getGameStatus() == GameStatus.LOSE){
-			res -= 200;
+			res -= 1.f;
 		}
 		
 		previousXLocation = nowXLocation;
