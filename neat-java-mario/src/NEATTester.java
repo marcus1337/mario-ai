@@ -135,13 +135,19 @@ public class NEATTester {
 		while (startTime + timeLimit > System.currentTimeMillis()) {
 			numGenerations++;
 			if(numGenerations % 5 == 0){
-				if(evolver.getNumElites() > 0)
+				if(evolver.getNumElites() > numAI / 2)
 					changeEliteMapping();
 				testAndStoreElites();
 			}
-			if(numGenerations % 30 == 0)
+			if(numGenerations % 30 == 0 || evolver.getNumElites() < numAI / 4)
 				evolver.randomizePopulationViaElites();
 			evolveGeneration();
+			
+			if(evolver.getNumElites() < 10 && numGenerations > 10){
+				evolver.randomizePopulation(-1, -1);
+				testAndStoreElites();
+				numGenerations++;
+			}
 			
 			if(numGenerations % 1 == 0)
 				System.out.println("Generations complete: " + Integer.toString(numGenerations));
