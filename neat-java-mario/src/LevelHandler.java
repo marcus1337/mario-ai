@@ -142,6 +142,7 @@ public class LevelHandler {
 		result.fitness += addCompletionRateFitness(result);
 		result.fitness = Math.max(0, result.fitness);
 		setBehaviors(result);
+		//System.out.println(Integer.toString(result.fitness) + "," + Integer.toString(result.gameCompletion) + "," + Integer.toString(result.jumpFrequency));
 		return result;
 	}
 	
