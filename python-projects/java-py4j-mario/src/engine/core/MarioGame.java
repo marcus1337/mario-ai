@@ -254,7 +254,7 @@ public class MarioGame {
 	}
 	
     public float getReward(){
-		float res = -0.1f;
+		float res = -0.01f;
 		MarioForwardModel model = new MarioForwardModel(world.clone());
 		int nowXLocation = ((int) model.getMarioFloatPos()[0]) / 16;
 		float locationReward = ((float)(nowXLocation-previousXLocation))/2.0f;
