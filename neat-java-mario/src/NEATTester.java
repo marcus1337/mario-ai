@@ -132,18 +132,21 @@ public class NEATTester {
 	
 	private void evolveNEATs(long timeLimit) {
 		long startTime = System.currentTimeMillis();
+		int lastGenerationToSwapEliteMap = 0;
 		while (startTime + timeLimit > System.currentTimeMillis()) {
 			numGenerations++;
 			if(numGenerations % 5 == 0){
-				if(evolver.getNumElites() > numAI / 2)
+				if(evolver.getNumElites() > numAI / 2){
 					changeEliteMapping();
+					lastGenerationToSwapEliteMap = numGenerations;
+				}
 				testAndStoreElites();
 			}
 			if(numGenerations % 30 == 0 || evolver.getNumElites() < numAI / 4)
 				evolver.randomizePopulationViaElites();
 			evolveGeneration();
 			
-			if(evolver.getNumElites() < 10 && numGenerations > 10){
+			if(evolver.getNumElites() <= 5 && numGenerations - lastGenerationToSwapEliteMap > 30){
 				evolver.randomizePopulation(-1, -1);
 				testAndStoreElites();
 				numGenerations++;
