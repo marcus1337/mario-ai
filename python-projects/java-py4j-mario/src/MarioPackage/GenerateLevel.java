@@ -30,7 +30,7 @@ public class GenerateLevel {
 		game.stepWorldWithVisuals(action.actions, action.shoot);
 	}
 	public float getReward(){
-		return game.getReward();
+		return game.getReward2();
 	}
 	public boolean isDone(){
 		return game.isGameDone();
