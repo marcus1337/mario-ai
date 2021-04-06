@@ -29,6 +29,7 @@ public class MarioRender extends JComponent implements FocusListener {
 	//public Thread animator;
 	boolean focused;
 	public MarioForwardModel model = null;
+	public boolean[] takenAIActions = new boolean[5];
 
 	private static final int ORIGIN_WIDTH = 400; // 256
 	private static final int ORIGIN_HEIGHT = 256; // 240
@@ -64,8 +65,39 @@ public class MarioRender extends JComponent implements FocusListener {
 		this.world = world;
 		renderBackGround(g, og);
 		renderMarioWorld(world, og);
+		
+		renderAIActions(og);
+		
 		renderSeparatorBar(og);
 		renderMarioImage(image, g);
+	}
+	
+	private void renderAIActions(Graphics og) {
+		for(int i = 0 ; i < 5; i++){
+			renderActionRectangle(915+65*i,40,og, false);	
+		}
+		for(int i = 0 ; i < 5; i++){
+			if(i == 0 && takenAIActions[MarioActions.LEFT.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);
+			if(i == 1 && takenAIActions[MarioActions.RIGHT.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+			if(i == 2 && takenAIActions[MarioActions.JUMP.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+			if(i == 3 && takenAIActions[MarioActions.SPEED.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+			if(i == 4 && takenAIActions[MarioActions.DOWN.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+		}
+	}
+	
+	public void renderActionRectangle(int x, int y, Graphics og, boolean active){
+		og.setColor(Color.BLACK);
+		og.fillRect(x-2, y-2, 19, 19);
+		if(active)
+			og.setColor(Color.GREEN);
+		else
+			og.setColor(Color.RED);
+		og.fillRect(x, y, 15, 15);
 	}
 
 	public void renderSeparatorBar(Graphics og) {

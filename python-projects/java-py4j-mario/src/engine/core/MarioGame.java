@@ -305,6 +305,7 @@ public class MarioGame {
             	actions[MarioActions.SPEED.getValue()] = wasRunning;
             }
         	MarioForwardModel model = new MarioForwardModel(world.clone());
+        	this.render.takenAIActions = actions;
             renderWorld(model);
             delay(21);
     	}

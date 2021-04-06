@@ -70,8 +70,15 @@ public class MarioRender extends JComponent implements FocusListener {
 		renderBackGround(g, og);
 		renderMarioWorld(world, og);
 		
-
+		renderAIActions(og);
+		
+		renderSeparatorBar(og);
+		renderMarioImage(image, g);
+		
 	
+	}
+
+	private void renderAIActions(Graphics og) {
 		for(int i = 0 ; i < 5; i++){
 			renderActionRectangle(915+65*i,40,og, false);	
 		}
@@ -87,11 +94,6 @@ public class MarioRender extends JComponent implements FocusListener {
 			if(i == 4 && takenAIActions[MarioActions.DOWN.getValue()])
 				renderActionRectangle(915+65*i,40,og, true);	
 		}
-		
-		renderSeparatorBar(og);
-		renderMarioImage(image, g);
-		
-	
 	}
 
 	public void renderSeparatorBar(Graphics og) {
