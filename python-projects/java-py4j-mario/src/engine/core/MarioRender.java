@@ -41,7 +41,8 @@ public class MarioRender extends JComponent implements FocusListener {
 		this.setEnabled(true);
 		this.scale = scale;
 
-		Dimension size = new Dimension(1280, 580); //720
+		//Dimension size = new Dimension(1280, 580); //720
+		Dimension size = new Dimension(1280, 720); 
 
 		setPreferredSize(size);
 		setMinimumSize(size);
@@ -111,7 +112,7 @@ public class MarioRender extends JComponent implements FocusListener {
 		g2.translate(0, 70);
 		g2.scale(2, 2);
 		world.render(og);
-		//renderRectangles(og);
+		renderRectangles(og);
 
 		g2.translate(0, -35);
 		renderTextInfo(world, og);
