@@ -171,6 +171,7 @@ public class MarioGame {
     
     
     public void initGame(String level, int timer, int marioState, boolean visual){
+    	this.steps = 1.0f;
     	prevMarioState = marioState;
         world = new MarioWorld(killEvents);
         world.visuals = visual;
