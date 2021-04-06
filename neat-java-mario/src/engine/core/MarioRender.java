@@ -27,14 +27,16 @@ public class MarioRender extends JComponent implements FocusListener {
 	private static final int ORIGIN_HEIGHT = 256; // 240
 	private static final int WIDTH = 480; // 256
 	private static final int HEIGHT = 270; // 240
+	
+	public boolean[] takenAIActions = new boolean[5];
 
 	public MarioRender(float scale) {
 		this.setFocusable(true);
 		this.setEnabled(true);
 		this.scale = scale;
 
-		Dimension size = new Dimension(1280, 580); //720
-
+		//Dimension size = new Dimension(1280, 580); //720
+		Dimension size = new Dimension(1280, 720);
 		setPreferredSize(size);
 		setMinimumSize(size);
 		setMaximumSize(size);
@@ -52,13 +54,44 @@ public class MarioRender extends JComponent implements FocusListener {
 	}
 
 	MarioWorld world = null;
+	
+	public void renderActionRectangle(int x, int y, Graphics og, boolean active){
+		og.setColor(Color.BLACK);
+		og.fillRect(x-2, y-2, 19, 19);
+		if(active)
+			og.setColor(Color.GREEN);
+		else
+			og.setColor(Color.RED);
+		og.fillRect(x, y, 15, 15);
+	}
 
 	public void renderWorld(MarioWorld world, Image image, Graphics g, Graphics og) {
 		this.world = world;
 		renderBackGround(g, og);
 		renderMarioWorld(world, og);
+		
+
+	
+		for(int i = 0 ; i < 5; i++){
+			renderActionRectangle(915+65*i,40,og, false);	
+		}
+		for(int i = 0 ; i < 5; i++){
+			if(i == 0 && takenAIActions[MarioActions.LEFT.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);
+			if(i == 1 && takenAIActions[MarioActions.RIGHT.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+			if(i == 2 && takenAIActions[MarioActions.JUMP.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+			if(i == 3 && takenAIActions[MarioActions.SPEED.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+			if(i == 4 && takenAIActions[MarioActions.DOWN.getValue()])
+				renderActionRectangle(915+65*i,40,og, true);	
+		}
+		
 		renderSeparatorBar(og);
 		renderMarioImage(image, g);
+		
+	
 	}
 
 	public void renderSeparatorBar(Graphics og) {
@@ -83,15 +116,22 @@ public class MarioRender extends JComponent implements FocusListener {
 		drawStringDropShadow(og, "Coins: " + world.coins, 0, 2, 4);
 		drawStringDropShadow(og,
 				"Time: " + (world.currentTimer == -1 ? "Inf" : (int) Math.ceil(world.currentTimer / 1000f)), 0, 0, 4);
-		if (MarioGame.verbose) {
+		
+		
+		drawStringDropShadow(og, "Left", 55, 0, 3);
+		drawStringDropShadow(og, "Right", 59, 4, 5);
+		drawStringDropShadow(og, "Jump", 63, 0, 2);
+		drawStringDropShadow(og, "Speed", 67, 4, 1);
+		drawStringDropShadow(og, "Duck", 71, 0, 0);
+		/*if (MarioGame.verbose) {
 			String pressedButtons = "";
 			for (int i = 0; i < world.mario.actions.length; i++) {
 				if (world.mario.actions[i]) {
 					pressedButtons += MarioActions.getAction(i).getString() + " ";
 				}
 			}
-			drawStringDropShadow(og, "Buttons: " + pressedButtons, 0, 4, 4);
-		}
+			drawStringDropShadow(og, "Buttons: " + pressedButtons, 40, 1, 4);
+		}*/
 	}
 
 	public void renderMarioImage(Image image, Graphics g) {

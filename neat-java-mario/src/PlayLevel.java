@@ -56,9 +56,9 @@ public class PlayLevel {
     public static void main(String[] args) {  
     	  	
 
-    	String mapType = mapType1;
+    	String mapType = mapType2;
 		LevelHandler.initMaps();
-    	boolean isExperimenting = true;
+    	boolean isExperimenting = false;
     	
 		if(isExperimenting){
 			makeElites(mapType1);
@@ -66,7 +66,7 @@ public class PlayLevel {
 			makeElites(mapType2);
 			scoreElitesAndSaveStatistics(mapType2);
 		}else
-			showSingleEliteVisually(5, mapType);
+			showSingleEliteVisually(11, mapType);
     }
     
     public static void showSingleEliteVisually(int ID, String mapType){

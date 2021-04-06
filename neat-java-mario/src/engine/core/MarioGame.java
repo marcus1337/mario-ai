@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import com.sun.scenario.effect.impl.Renderer;
+
 import agents.human.Agent;
 import engine.helper.EventType;
 import engine.helper.GameStatus;
@@ -322,6 +324,7 @@ public class MarioGame {
     
     public void stepWorldWithVisuals(boolean[] actions, boolean shootFire){
     	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
+    	
     	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
             updateWorld(actions);
             if(i == 1 && shootFire){
@@ -331,7 +334,8 @@ public class MarioGame {
             	actions[MarioActions.SPEED.getValue()] = wasRunning;
             }
         	MarioForwardModel model = new MarioForwardModel(world.clone());
-            renderWorld(model);
+            this.render.takenAIActions = actions;
+        	renderWorld(model);
             delay(21);
     	}
     }
