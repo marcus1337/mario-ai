@@ -253,6 +253,28 @@ public class MarioGame {
 		return new MarioForwardModel(world.clone());
 	}
 	
+    public float getReward2(){
+		float res = -0.005f;
+		
+		MarioForwardModel model = new MarioForwardModel(world.clone());
+		
+		res += Math.pow(model.getCompletionPercentage(), 0.4);
+		
+		if (prevMarioState < model.getMarioMode()) {
+			prevMarioState = model.getMarioMode();
+			res -= 0.1f;
+		}
+		if(model.getGameStatus() == GameStatus.LOSE)
+			res -= 0.1f;
+		
+		if(res > 1.0f)
+			res = 1.0f;
+		if(res < -1.0f)
+			res = -1.0f;
+		
+		return res;
+    }
+	
     public float getReward(){
 		float res = -0.01f;
 		MarioForwardModel model = new MarioForwardModel(world.clone());
