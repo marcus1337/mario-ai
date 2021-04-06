@@ -21,7 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="84d61a9e-7006-49a6-99f1-cac484c7235d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/statisticsPlotting.py" beforeDir="false" afterPath="$PROJECT_DIR$/statisticsPlotting.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ExperimentStarter.py" beforeDir="false" afterPath="$PROJECT_DIR$/ExperimentStarter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +51,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../gym-mariopy/gym_marioai_java/envs/marioai_test1_env.py" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
-  <component name="RunManager" selected="Python.statisticsPlotting">
+  <component name="RunManager" selected="Python.ExperimentStarter">
     <configuration name="ExperimentStarter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="keras-dqn" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -117,8 +117,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.statisticsPlotting" />
         <item itemvalue="Python.ExperimentStarter" />
+        <item itemvalue="Python.statisticsPlotting" />
         <item itemvalue="Python.statisticsCalculation" />
       </list>
     </recent_temporary>

@@ -37,7 +37,13 @@ def experiment(mapType, numSteps, numSamples):
 
     exitSavesAndRename(mapType, numSteps, numSamples)
 
+def testVisually(mapType, AI_ID):
+    print("showing visually...")
+    rl_algorithms.setDirectoryToSavesFolder()
+    rl_algorithms.testRLNetworkVisually(AI_ID, mapType)
 
-experiment(rl_algorithms.ENV_MAP_NAME1, 10000, 5)
+
+testVisually(rl_algorithms.ENV_MAP_NAME1, 5)
+#experiment(rl_algorithms.ENV_MAP_NAME1, 10000, 5)
 #experiment(rl_algorithms.ENV_MAP_NAME2, 101, 5)
 
