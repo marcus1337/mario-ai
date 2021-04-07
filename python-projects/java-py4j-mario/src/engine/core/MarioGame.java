@@ -171,7 +171,6 @@ public class MarioGame {
     
     
     public void initGame(String level, int timer, int marioState, boolean visual){
-    	this.steps = 1.0f;
     	prevMarioState = marioState;
         world = new MarioWorld(killEvents);
         world.visuals = visual;
@@ -254,29 +253,26 @@ public class MarioGame {
 		return new MarioForwardModel(world.clone());
 	}
 	
-	float steps = 1.0f;
-	
     public float getReward2(){
-		float res = -0.001f*steps;
-		
-		steps += 1.0f;
-		MarioForwardModel model = new MarioForwardModel(world.clone());
-		
-		res += Math.pow(model.getCompletionPercentage(), 0.4);
-		
-		if (prevMarioState < model.getMarioMode()) {
-			prevMarioState = model.getMarioMode();
-			res -= 0.1f;
-		}
-		if(model.getGameStatus() == GameStatus.LOSE)
-			res -= 0.2f;
-		
-		if(res > 1.0f)
-			res = 1.0f;
-		if(res < -1.0f)
-			res = -1.0f;
-		
-		return res;
+        float res = -0.005f;
+        
+        MarioForwardModel model = new MarioForwardModel(world.clone());
+        
+        res += Math.pow(model.getCompletionPercentage(), 0.4);
+        
+        if (prevMarioState < model.getMarioMode()) {
+            prevMarioState = model.getMarioMode();
+            res -= 0.1f;
+        }
+        if(model.getGameStatus() == GameStatus.LOSE)
+            res -= 0.1f;
+        
+        if(res > 1.0f)
+            res = 1.0f;
+        if(res < -1.0f)
+            res = -1.0f;
+        
+        return res;
     }
 	
     public float getReward(){

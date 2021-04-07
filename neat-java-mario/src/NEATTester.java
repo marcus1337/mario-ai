@@ -127,7 +127,6 @@ public class NEATTester {
 		System.out.println("Surprise effect configured...");
 		evolver.setMaxHiddenNodes(170);
 		numGenerations = 0;
-		evolver.setMutationRates(99, 99, 99, 99, 99);
 		evolveNEATs(timeLimit);
 	}
 	
