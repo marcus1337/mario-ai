@@ -2,6 +2,11 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import _GA_TESTS.Observation;
@@ -17,17 +22,20 @@ public class NEATTester {
 	
 	
 	private JavaPorts evolver;
-	private IntVec behavior;
+	private IntVec[] behaviors;
 	
 	public ArrayList<NEATAgent> agents;
 	public ArrayList<NEATAgent> eliteAgents;
 	
-
+	ExecutorService es;
 	public NEATTester(int numAI, String fileName, String mapType) {
 		loadDll();
 		evolver = new JavaPorts();
-		behavior = new IntVec(new int[]{0,0,0});
+		behaviors = new IntVec[numAI];
+		for(int i = 0 ; i < numAI; i++)
+			behaviors[i] = new IntVec(new int[]{0,0,0});
 		this.numAI = numAI;		
+		es = Executors.newFixedThreadPool(numAI);
 		levelHandler = new LevelHandler(mapType);
 		this.fileName = fileName; 
 		eliteFolderName = fileName + "_Elite";
@@ -91,26 +99,28 @@ public class NEATTester {
 	}
 
 	public void setAIResults(int aiIndex, MarioResult marioResult) {
-		setBehaviorFields(marioResult);
+		setBehaviorFields(marioResult, aiIndex);
 		evolver.setFitness(aiIndex, marioResult.fitness);
-		evolver.setBehavior(aiIndex, behavior);
+		evolver.setBehavior(aiIndex, behaviors[aiIndex]);
 	}
 
-	private void setBehaviorFields(MarioResult marioResult) {
-		behavior.clear();
-		behavior.add(marioResult.gameCompletion);
-		behavior.add(marioResult.jumpFrequency);
-		behavior.add(marioResult.numKills);
+	private void setBehaviorFields(MarioResult marioResult, int aiIndex) {
+		behaviors[aiIndex].clear();
+		behaviors[aiIndex].add(marioResult.gameCompletion);
+		behaviors[aiIndex].add(marioResult.jumpFrequency);
+		behaviors[aiIndex].add(marioResult.numKills);
 	}
 	
 	public void changeEliteAIResults(int aiIndex, MarioResult marioResult){
-		setBehaviorFields(marioResult);
-		evolver.changeEliteFitnessAndBehvaior(aiIndex, marioResult.fitness, behavior);
+		setBehaviorFields(marioResult, aiIndex);
+		evolver.changeEliteFitnessAndBehvaior(aiIndex, marioResult.fitness, behaviors[aiIndex]);
 	}
 
 	public void cleanUp() {
 		evolver.delete();
-		behavior.delete();
+		for(int i = 0 ; i < numAI; i++)
+			behaviors[i].delete();
+		es.shutdownNow();
 	}
 	
 	public int numGenerations;
@@ -152,19 +162,34 @@ public class NEATTester {
 				numGenerations++;
 			}
 			
-			if(numGenerations % 1 == 0)
-				System.out.println("Generations complete: " + Integer.toString(numGenerations));
+			if(numGenerations % 1 == 0){
+				System.out.println("Generations: " + Integer.toString(numGenerations) + 
+						" Elites: " + Integer.toString(evolver.getNumElites()));
+			}
 		}
 	}
 	
 	private void testAndStoreElites(){
 		
+		Future[] futures = new Future[numAI];
 		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
 		{
-			MarioResult marioResult = levelHandler.simulateAndEvaluateElite(agents.get(aiIndex), evolver);
-			setAIResults(aiIndex, marioResult);
+			final int index = aiIndex;
+			futures[index] = es.submit(new Runnable() {
+	            @Override
+	            public void run() {
+	            	evaluateSingleEliteNEAT(index);
+	            }
+	        });
 		}
+		waitForThreads(futures);
+
 		evolver.storeElites();
+	}
+
+	private void evaluateSingleEliteNEAT(int aiIndex) {
+		MarioResult marioResult = levelHandler.simulateAndEvaluateElite(agents.get(aiIndex), evolver);
+		setAIResults(aiIndex, marioResult);
 	}
 
 	private void changeEliteMapping() {
@@ -177,27 +202,56 @@ public class NEATTester {
 			eliteAgents.add(tmpAgent);
 		}
 		
-		for(int i = 0 ; i < evolver.getNumElites(); i++){
-			MarioResult marioResult = levelHandler.simulateAndEvaluateElite(eliteAgents.get(i), evolver);
-			changeEliteAIResults(i, marioResult);
+		Future[] futures = new Future[evolver.getNumElites()];
+		for(int i = 0 ; i < evolver.getNumElites(); i++)
+		{
+			final int index = i;
+			futures[index] = es.submit(new Runnable() {
+	            @Override
+	            public void run() {
+	    			MarioResult marioResult = levelHandler.simulateAndEvaluateElite(eliteAgents.get(index), evolver);
+	    			changeEliteAIResults(index, marioResult);
+	            }
+	        });
 		}
+		waitForThreads(futures);
+		
 		evolver.refactorEliteMapping();
 	}
 	
 	private void evolveGeneration() {
 		levelHandler.pickTrainingLevel();
+		
+		Future[] futures = new Future[numAI];
 		for (int aiIndex = 0; aiIndex < numAI; aiIndex++)
 		{
-			MarioResult marioResult = levelHandler.simulateAndEvaluate(agents.get(aiIndex));
-			setAIResults(aiIndex, marioResult);
+			final int index = aiIndex;
+			futures[index] = es.submit(new Runnable() {
+	            @Override
+	            public void run() {
+	            	evaluateSingleNEAT(index);
+	            }
+	        });
 		}
+		waitForThreads(futures);
+
+		
 		evolver.evolve();
 	}
+
+	private void waitForThreads(Future[] futures) {
+		for(Future f: futures) { try {
+			f.get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		} }
+	}
+
+	private void evaluateSingleNEAT(int aiIndex) {
+		MarioResult marioResult = levelHandler.simulateAndEvaluate(agents.get(aiIndex));
+		setAIResults(aiIndex, marioResult);
+	}
 	
-	/*private void populationElitism(int gen) {
-		if (gen > 0 && gen % 20 == 0){
-			testAndStoreElites();
-			evolver.randomizePopulationFromElites();
-		}
-	}*/
 }

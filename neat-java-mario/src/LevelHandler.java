@@ -18,10 +18,15 @@ public class LevelHandler {
 	
 	public static final int gameTimeSeconds = 40;
 	
+	public static MarioGame[] games = new MarioGame[200];
 	public static MarioGame game = new MarioGame();
 
 	public LevelHandler(String mapType) {
 		this.mapType = mapType;
+		
+		for(int i = 0 ; i < games.length; i++){
+			games[i] = new MarioGame();
+		}
 	}
 
 	
@@ -94,29 +99,19 @@ public class LevelHandler {
 
 	
 	private MarioResult runGameAndGetResult(NEATAgent agent) {
-		game.initGame(trainingLvl, LevelHandler.gameTimeSeconds, 2);
-		while(!game.isGameDone()){
-			MarioForwardModel model = game.getModel();
+		
+		games[agent.AIIndex].initGame(trainingLvl, LevelHandler.gameTimeSeconds, 2);
+		while(!games[agent.AIIndex].isGameDone()){
+			MarioForwardModel model = games[agent.AIIndex].getModel();
 			agent.updateFields(model);
 			agent.calculateInput();
 			agent.setActions(model);
 
-			game.stepWorld(agent.action.actions, agent.action.shoot);
+			games[agent.AIIndex].stepWorld(agent.action.actions, agent.action.shoot);
 		}
-		return game.getResult();
+		return games[agent.AIIndex].getResult();
 	}
 	
-	/*private MarioResult runEliteMappingGameAndGetResult(NEATAgent agent) {
-		game.initGame(LevelHandler.eliteLvl, LevelHandler.gameTimeSeconds, 2);
-		while(!game.isGameDone()){
-			MarioForwardModel model = game.getModel();
-			agent.updateFields(model);
-			agent.calculateInput();
-			agent.setActions(model);
-			game.stepWorld(agent.action.actions, agent.action.shoot);
-		}
-		return game.getResult();
-	}*/
 	
 	public MarioResult simulateAndEvaluate(NEATAgent agent) {
 		MarioResult result = runGameAndGetResult(agent);
@@ -127,14 +122,6 @@ public class LevelHandler {
 		return result;
 	}
 	
-	/*private MarioResult getMeanMarioResult(ArrayList<MarioResult> results){
-		MarioResult result = results.get(0);
-		for(int i = 1; i < results.size(); i++)
-			result.add(results.get(i));
-		result.divide(results.size());
-		return result;
-	}*/
-	
 	public MarioResult simulateAndEvaluateElite(NEATAgent agent, JavaPorts evolver){
 		trainingLvl = LevelHandler.eliteLvl;
 		MarioResult result = runGameAndGetResult(agent);
@@ -142,7 +129,6 @@ public class LevelHandler {
 		result.fitness += addCompletionRateFitness(result);
 		result.fitness = Math.max(0, result.fitness);
 		setBehaviors(result);
-		//System.out.println(Integer.toString(result.fitness) + "," + Integer.toString(result.gameCompletion) + "," + Integer.toString(result.jumpFrequency));
 		return result;
 	}
 	
