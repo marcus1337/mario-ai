@@ -35,7 +35,7 @@ public class NEATTester {
 		for(int i = 0 ; i < numAI; i++)
 			behaviors[i] = new IntVec(new int[]{0,0,0});
 		this.numAI = numAI;		
-		es = Executors.newFixedThreadPool(numAI);
+		es = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		levelHandler = new LevelHandler(mapType);
 		this.fileName = fileName; 
 		eliteFolderName = fileName + "_Elite";
