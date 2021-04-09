@@ -20,14 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="84d61a9e-7006-49a6-99f1-cac484c7235d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/BEST_ELITES/ELITE_1" beforeDir="false" afterPath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/BEST_ELITES/ELITE_1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/BEST_ELITES/ELITE_2" beforeDir="false" afterPath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/BEST_ELITES/ELITE_2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/ELITE_INFO_1" beforeDir="false" afterPath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/ELITE_INFO_1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/ELITE_INFO_2" beforeDir="false" afterPath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/ELITE_INFO_2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/NEAT_Statistics.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../neat-java-mario/NEAT_EVO/NEAT_Results_notchParam_2_5/NEAT_Statistics.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../neat-java-mario/bin/NEATTester.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../neat-java-mario/bin/NEATTester.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../neat-java-mario/src/NEATTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../neat-java-mario/src/NEATTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rl_algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/rl_algorithms.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

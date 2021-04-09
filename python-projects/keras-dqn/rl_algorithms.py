@@ -47,9 +47,9 @@ def getSmallDuelDQNModel():
     model.add(Dense(170, activation='relu', use_bias=False))
     model.add(Dense(nb_actions, activation='linear', use_bias=False))
     #print(model.summary())
-    memory = SequentialMemory(limit=50000, window_length=1)
+    memory = SequentialMemory(limit=100000, window_length=1)
     policy = BoltzmannQPolicy()
-    tmpDQN = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=10,
+    tmpDQN = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=1000,
                    enable_dueling_network=True, dueling_type='avg', enable_double_dqn=True, target_model_update=1e-2, policy=policy)
     tmpDQN.compile(Adam(lr=1e-3), metrics=['mae'])
     return tmpDQN
