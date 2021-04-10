@@ -3,7 +3,7 @@
 
 Python environment with the Open AI Gym interface. This package is used with another Java process that runs the game itself. This is more or less a python wrapper for the Java process such that it may be used by Python applications. In particular, this code is made to work with the Keras-rl2 library.
 
-#How to use
+# How to use
 
 Always start the Java process (server) before running this code (client), as it needs to connect via socket communication.
 
