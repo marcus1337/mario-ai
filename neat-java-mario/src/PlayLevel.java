@@ -18,8 +18,8 @@ import engine.core.MarioWorld;
 
 public class PlayLevel {
 	
-	public static final int sampleSize = 5;
-	public static final int minutesPerSample = 60;
+	public static final int sampleSize = 3;
+	public static final int minutesPerSample = 1;
 	
 	private static final String mapType1 = "notchParam";
 	private static final String mapType2 = "notchMedium";

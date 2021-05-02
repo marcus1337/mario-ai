@@ -1,0 +1,2 @@
+model_checkpoint_path: "duel_dqn_notchParam4"
+all_model_checkpoint_paths: "duel_dqn_notchParam4"

@@ -141,34 +141,7 @@ public class MarioGame {
     ArrayList<MarioAgentEvent> agentEvents = new ArrayList<>();
     MarioTimer agentTimer;
     
-    
-    /*public void initGame(String level, int timer, int marioState, boolean visual){
-    	prevMarioState = marioState;
-        world = new MarioWorld(killEvents);
-        world.visuals = visual;
-        world.initializeLevel(level, 1000 * timer);
-        if (visual) {
-            world.initializeVisuals(render.getGraphicsConfiguration());
-        }
-        world.mario.isLarge = marioState > 0;
-        world.mario.isFire = marioState > 1;
-        world.update(new boolean[MarioActions.numberOfActions()]);
-        currentTime = System.currentTimeMillis();
 
-        if (visual) {
-            renderTarget = render.createVolatileImage(1280, 720);
-            
-            backBuffer = render.getGraphics();
-            currentBuffer = renderTarget.getGraphics();
-            
-            render.addFocusListener(render);
-        }
-        gameEvents = new ArrayList<>();
-        agentEvents = new ArrayList<>();
-        agentTimer = new MarioTimer(MarioGame.maxTime);
-        agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
-    }*/
-    
     
     public void initGame(String level, int timer, int marioState, boolean visual){
     	prevMarioState = marioState;
@@ -197,7 +170,10 @@ public class MarioGame {
         if(agent != null)
         	agent.initialize(new MarioForwardModel(this.world.clone()), agentTimer);
         updateWorld(new boolean[5]);
-        previousXLocation = ((int) new MarioForwardModel(world.clone()).getMarioFloatPos()[0]) / 16;
+        
+        MarioForwardModel tmpModel = new MarioForwardModel(world.clone());
+        previousXLocation = ((int) tmpModel.getMarioFloatPos()[0]) / 16;
+        maxDistance = tmpModel.getCompletionPercentage();
     }
     
     
@@ -238,14 +214,7 @@ public class MarioGame {
         return actions;
     }
 
-    //Observation-klass
-    //Action-klass -getNumPossibleActions --3 nodes between 0...1 --All possible actions nodes between 0...1
-    //get Observation at step --> requires observation-klass
-    //initTrainingmap -Done
-    //initGame -Done
-    //bool isGameOver? -Done
-    //Get Reward at step -Done
-    
+
 	int previousXLocation = 0;
 	int prevMarioState = 2;
 	
@@ -300,6 +269,30 @@ public class MarioGame {
     
     public boolean isGameDone(){
     	return world.gameStatus != GameStatus.RUNNING;
+    }
+    
+    float maxDistance = 0;
+    
+    public float getReward3(){
+        float result = 0;
+        MarioForwardModel model = new MarioForwardModel(world.clone());
+        float currentCompletionRate = model.getCompletionPercentage();
+        result = currentCompletionRate - maxDistance;
+        maxDistance = Math.max(maxDistance, currentCompletionRate);
+        if(result < 0)
+            result = 0;
+        
+        if (prevMarioState < model.getMarioMode()) {
+            prevMarioState = model.getMarioMode();
+            result -= 0.001f;
+        }
+        if(model.getGameStatus() == GameStatus.LOSE)
+            result -= 0.001f;
+        
+        if(model.getGameStatus() == GameStatus.WIN)
+            result = 1.0f;
+        
+        return result;
     }
     
     

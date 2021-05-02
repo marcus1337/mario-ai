@@ -15,8 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import com.sun.scenario.effect.impl.Renderer;
-
 import agents.human.Agent;
 import engine.helper.EventType;
 import engine.helper.GameStatus;

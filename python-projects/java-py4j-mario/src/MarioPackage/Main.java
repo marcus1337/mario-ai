@@ -1,10 +1,15 @@
 package MarioPackage;
 
-import py4j.GatewayServer;
+//import py4j.GatewayServer;
 
 public class Main {
+	
+	public static void main(String[] args) {
+		System.out.println("Test1");
+	}
+	
 	//Test comment1.
-	public static GatewayServer gatewayServer;
+	/*public static GatewayServer gatewayServer;
 	
 	public static void main(String[] args){
         startGateway();
@@ -21,6 +26,6 @@ public class Main {
         gatewayServer = new GatewayServer(new GenerateLevel(), 25335);
         gatewayServer.start();
         System.out.println("Reset Java Server");
-	}
+	}*/
 
 }

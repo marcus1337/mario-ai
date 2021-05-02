@@ -1,4 +1,7 @@
 package MarioPackage;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
 import _GA_TESTS.Action;
 import _GA_TESTS.Observation;
 import agents.human.Agent;
@@ -6,11 +9,23 @@ import engine.core.MarioGame;
 
 public class GenerateLevel {
 	
+	
 	public GenerateLevel(){
-		System.out.println("Starting something...");
+		Path path = FileSystems.getDefault().getPath("").toAbsolutePath();
+
+		if(path.getFileName().toString().equals("saves")) {
+			String path2 = path.getParent().toAbsolutePath().toString() + "\\";
+			LevelHandler.lvlsFolder = path2;
+			System.out.println("Current path: (remember to put levels and images here) -- " + path2);
+		}else {
+			System.out.println("Folder path unchanged.");
+			System.out.println("Current path: (remember to put levels and images here) -- " + path.toString());
+		}
+		
 		LevelHandler.initMaps();
 		observation = new Observation();
 		action = new Action();
+		
 	}
 	
 	public boolean[] getDiscreteObservations(){
@@ -30,7 +45,7 @@ public class GenerateLevel {
 		game.stepWorldWithVisuals(action.actions, action.shoot);
 	}
 	public float getReward(){
-		return game.getReward2();
+		return game.getReward3();
 	}
 	public boolean isDone(){
 		return game.isGameDone();
@@ -49,7 +64,7 @@ public class GenerateLevel {
     
     public void initTestMap(String lvlName){
     	String lvlStr = LevelHandler.getRandomTestLevel(lvlName);
-    	System.out.println("Only video?");
+    	System.out.println("Initializing visual feedback... (remember to put the img-folder in the saves folder to allow Java have the right path when running the python-script)");
     	if(game == null)
         	game = new MarioGame(true);
 		game.initGame(lvlStr, LevelHandler.gameTimeSeconds, 2, true);

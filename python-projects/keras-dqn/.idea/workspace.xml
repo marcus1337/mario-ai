@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="84d61a9e-7006-49a6-99f1-cac484c7235d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rl_algorithms.py" beforeDir="false" afterPath="$PROJECT_DIR$/rl_algorithms.py" afterDir="false" />
-    </list>
+    <list default="true" id="84d61a9e-7006-49a6-99f1-cac484c7235d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,8 +45,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gym-mariopy/gym_marioai_java/envs/marioai_test1_env.py" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../gym-mariopy" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Python.ExperimentStarter">
     <configuration name="ExperimentStarter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -65,6 +64,48 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ExperimentStarter.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="JavaTests" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="keras-dqn" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/JavaTests.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="rl_algorithms" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="keras-dqn" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rl_algorithms.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -118,6 +159,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.ExperimentStarter" />
+        <item itemvalue="Python.JavaTests" />
+        <item itemvalue="Python.rl_algorithms" />
         <item itemvalue="Python.statisticsPlotting" />
         <item itemvalue="Python.statisticsCalculation" />
       </list>
@@ -145,43 +188,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="384" y="143" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1617179303318">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="384" y="143" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.680@0.0.1280.680" timestamp="1617179303318" />
-    <state x="2660" y="275" key="FileChooserDialogImpl" timestamp="1617103993626">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="2660" y="275" key="FileChooserDialogImpl/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617103993626" />
-    <state width="1259" height="112" key="GridCell.Tab.0.bottom" timestamp="1617742207187">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state width="1259" height="112" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1617742207187" />
-    <state width="1899" height="295" key="GridCell.Tab.0.bottom/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617631800539" />
-    <state width="1259" height="112" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1617711846928" />
-    <state width="1259" height="112" key="GridCell.Tab.0.center" timestamp="1617742207187">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state width="1259" height="112" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1617742207187" />
-    <state width="1899" height="295" key="GridCell.Tab.0.center/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617631800539" />
-    <state width="1259" height="112" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1617711846928" />
-    <state width="1259" height="112" key="GridCell.Tab.0.left" timestamp="1617742207187">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state width="1259" height="112" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1617742207187" />
-    <state width="1899" height="295" key="GridCell.Tab.0.left/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617631800539" />
-    <state width="1259" height="112" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1617711846928" />
-    <state width="1259" height="112" key="GridCell.Tab.0.right" timestamp="1617742207187">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state width="1259" height="112" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@0.0.1280.680" timestamp="1617742207187" />
-    <state width="1899" height="295" key="GridCell.Tab.0.right/0.0.1280.680/1920.0.1920.1040@1920.0.1920.1040" timestamp="1617631800539" />
-    <state width="1259" height="112" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1617711846928" />
-    <state x="458" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1617179357921">
-      <screen x="0" y="0" width="1280" height="680" />
-    </state>
-    <state x="458" y="255" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1617179357921" />
   </component>
 </project>

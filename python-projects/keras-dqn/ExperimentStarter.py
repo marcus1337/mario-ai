@@ -1,10 +1,12 @@
 
+import os
+os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
+
 import statisticsCalculation as sc
 import subprocess
 from subprocess import Popen, PIPE
 import time
 import rl_algorithms
-import os
 import sys
 from distutils.dir_util import copy_tree
 import shutil
@@ -43,7 +45,7 @@ def testVisually(mapType, AI_ID):
     rl_algorithms.testRLNetworkVisually(AI_ID, mapType)
 
 
-testVisually(rl_algorithms.ENV_MAP_NAME1, 5)
-#experiment(rl_algorithms.ENV_MAP_NAME1, 10000, 5)
+#testVisually(rl_algorithms.ENV_MAP_NAME1, 1)
+experiment(rl_algorithms.ENV_MAP_NAME1, 50000, 2)
 #experiment(rl_algorithms.ENV_MAP_NAME2, 101, 5)
 

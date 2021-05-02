@@ -5,7 +5,12 @@ from gym import error, spaces
 from gym import utils
 from gym.utils import seeding
 
-from py4j.java_gateway import JavaGateway, GatewayParameters
+import jpype
+import jpype.imports
+from jpype.types import *
+
+
+
 
 import logging
 logger = logging.getLogger(__name__)
@@ -17,8 +22,12 @@ class MarioAITest1(gym.Env, utils.EzPickle):
         self.observation_space = spaces.Discrete(237)
         self.action_space = spaces.Discrete(5)
         self.status = "Running"
-        self.gateway = JavaGateway(gateway_parameters=GatewayParameters(port=25335))
-        self.Main = self.gateway.entry_point
+
+        if (jpype.isJVMStarted() is False):
+            jpype.startJVM(classpath=['/JARS/*'])
+        from MarioPackage import GenerateLevel
+        self.Main = GenerateLevel()
+
         self.renderActive = False
         self.mapType = "notchParam"
         self.lvl = -1
@@ -39,15 +48,13 @@ class MarioAITest1(gym.Env, utils.EzPickle):
                     tmpArr[i] = 1
             action = tmpArr
 
-        bool_class = self.gateway.jvm.boolean
-        bool_array = self.gateway.new_array(bool_class, 5)
+        jarray = JArray(bool)(5)
         for i in range(5):
             if (action[i] >= 0.5):
-                bool_array[i] = True
+                jarray[i] = True
             else:
-                bool_array[i] = False
-
-        self.Main.setActions(bool_array)
+                jarray[i] = False
+        self.Main.setActions(jarray)
 
         if (self.renderActive == True):
             self.Main.stepWithVisuals()
@@ -60,8 +67,13 @@ class MarioAITest1(gym.Env, utils.EzPickle):
         return ob, reward, episode_over, {}
 
     def reset(self):
-        #self.lvl += 1
-        print("LVL: " + str(self.lvl))
+
+        if (jpype.isJVMStarted() is False):
+            jpype.startJVM(classpath=['/JARS/*'])
+        from MarioPackage import GenerateLevel
+        self.Main = GenerateLevel()
+
+        print("LVL: " + str(self.lvl) + " _ " + str(self.mapType))
         if(self.lvl == -1):
             self.Main.initTestMap(self.mapType)
         else:

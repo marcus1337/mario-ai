@@ -76,7 +76,7 @@ public class NEATTester {
 
 	private void loadDll() {
 		try {
-			System.load("C:/Users/Marcus/Documents/swigwin-4.0.1/swigwin-4.0.1/Examples/JavaPorts/JavaPorts/GA_Ports.dll");
+			System.load("C:/GA_Ports.dll");
 		} catch (UnsatisfiedLinkError e) {
 			System.err.println(
 					"Native code library failed to load. See the chapter on Dynamic Linking Problems in the SWIG Java documentation for help.\n"
