@@ -154,8 +154,24 @@ public class PlayLevel {
 	    	System.out.println(eliteInfo);
 	    	saveTextToFile(eliteInfo, "ELITE_INFO_" + Integer.toString(testNum));
 	    	
+	    	saveScoreHistory(mapType, testNum, neatTester);
+	    	
 	    	neatTester.saveBestElite(testNum);
 	    	neatTester.cleanUp();
 		}
+	}
+
+	private static void saveScoreHistory(String mapType, int testNum, NEATTester neatTester) {
+		String generationalScores = "[ ";
+		for(int i = 0 ; i < neatTester.numGenerations; i++) {
+			generationalScores += Integer.toString(neatTester.maxGenerationReward.get(i));
+			if(i != neatTester.numGenerations-1) {
+				generationalScores += ",";
+			}else {
+				generationalScores += " ]";
+			}
+		}
+		String generationalScoreHistoryFileName = "NEAT_" + mapType + Integer.toString(testNum) + ".history";
+		saveTextToFile(generationalScoreHistoryFileName, generationalScores);
 	}
 }

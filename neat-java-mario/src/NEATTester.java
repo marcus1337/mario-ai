@@ -27,8 +27,13 @@ public class NEATTester {
 	public ArrayList<NEATAgent> agents;
 	public ArrayList<NEATAgent> eliteAgents;
 	
+	public ArrayList<Integer> maxGenerationReward;
+	public int numGenerations;
+	public int fitnessValues[] = new int[200];
+	
 	ExecutorService es;
 	public NEATTester(int numAI, String fileName, String mapType) {
+		maxGenerationReward = new ArrayList<Integer>();
 		loadDll();
 		evolver = new JavaPorts();
 		behaviors = new IntVec[numAI];
@@ -123,7 +128,6 @@ public class NEATTester {
 		es.shutdownNow();
 	}
 	
-	public int numGenerations;
 	
 	//Assume the first AI in a generation is the ELITE.
 	public float scoreElite(){
@@ -234,9 +238,14 @@ public class NEATTester {
 	        });
 		}
 		waitForThreads(futures);
-
-		
 		evolver.evolve();
+		
+		int bestLocalReward = -1;
+		for(int i = 0 ; i < numAI; i++){
+			bestLocalReward = Math.max(bestLocalReward, fitnessValues[i]);
+		}
+		maxGenerationReward.add(bestLocalReward);
+		
 	}
 
 	private void waitForThreads(Future[] futures) {
@@ -252,6 +261,7 @@ public class NEATTester {
 	private void evaluateSingleNEAT(int aiIndex) {
 		MarioResult marioResult = levelHandler.simulateAndEvaluate(agents.get(aiIndex));
 		setAIResults(aiIndex, marioResult);
+		fitnessValues[aiIndex] = marioResult.fitness;
 	}
 	
 }

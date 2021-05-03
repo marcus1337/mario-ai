@@ -12,6 +12,7 @@ import gym_marioai_java
 
 import sys
 import os
+import pickle
 
 ENV_NAME_TRAINING = 'MarioAITraining-v0'
 ENV_NAME_TESTING = 'MarioAITest-v0'
@@ -30,12 +31,12 @@ def getEnv(envName):
     return envTmp
 
 def getDQNModel():
-    #return getBigDuelDQNModel()
     return getSmallDuelDQNModel()
 
 def trainRL(agent, rlName, environment):
-    agent.fit(environment, nb_steps=NUM_STEPS, visualize=False, verbose=2)
+    history = agent.fit(environment, nb_steps=NUM_STEPS, visualize=False, verbose=0)
     agent.save_weights(rlName, overwrite=True)
+    return history
 
 def testRL(agent, rlName, isVisual, environment):
     agent.load_weights(rlName)
@@ -47,44 +48,31 @@ def getSmallDuelDQNModel():
     model.add(Dense(170, activation='relu', use_bias=False))
     model.add(Dense(nb_actions, activation='linear', use_bias=False))
     #print(model.summary())
-    memory = SequentialMemory(limit=100000, window_length=1)
-    policy = BoltzmannQPolicy()
-    tmpDQN = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=1000,
-                   enable_dueling_network=True, dueling_type='avg', enable_double_dqn=True, target_model_update=1e-2, policy=policy)
-    tmpDQN.compile(Adam(lr=1e-3), metrics=['mae'])
-    return tmpDQN
-
-def getDuelDQNModel():
-    model = Sequential()
-    model.add(Flatten(input_shape=(1,) + (NUM_OBSERVATIONS,)))
-    model.add(Dense(95, activation='relu'))
-    model.add(Dense(95, activation='relu'))
-    model.add(Dense(nb_actions, activation='linear'))
-    #print(model.summary())
     memory = SequentialMemory(limit=50000, window_length=1)
     policy = BoltzmannQPolicy()
-    tmpDQN = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=10,
-                   enable_dueling_network=True, dueling_type='avg', enable_double_dqn=True, target_model_update=1e-2, policy=policy)
-    tmpDQN.compile(Adam(lr=1e-3), metrics=['mae'])
+    tmpDQN = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=1000,
+                   enable_dueling_network=True, dueling_type='avg', enable_double_dqn=True, target_model_update=1e-2, policy=policy, batch_size=512*2)
+    tmpDQN.compile(Adam(lr=0.01), metrics=['mae'])
     return tmpDQN
-
 
 def trainRLNetworks(numNetworks, mapType):
     env = getEnv(ENV_NAME_TRAINING)
     env.setMapType(mapType)
     for i in range(numNetworks):
         rlModel = getDQNModel()
-        rlNetworkName = "duel_dqn_notchParam" + str(i+1)
-        rlDataName = "dqnTrainingData" + str(i+1)
-        sys.stdout = open(rlDataName + ".txt", 'w')
-        trainRL(rlModel, rlNetworkName, env)
-        sys.stdout.close()
-        sys.stdout = sys.__stdout__
+
+        rlNetworkName = "duel_dqn_" + mapType + str(i+1)
+        rlHistoryFile = rlNetworkName + ".history"
+        history = trainRL(rlModel, rlNetworkName, env)
+        with open(rlHistoryFile, 'wb') as file_pi:
+            pickle.dump(history.history, file_pi)
+
+
 
 def testRLNetwork(networkNumber, mapType):
     env = getEnv(ENV_NAME_TESTING)
     env.setMapType(mapType)
-    rlNetworkName = "duel_dqn_notchParam" + str(networkNumber)
+    rlNetworkName = "duel_dqn_" + mapType + str(networkNumber)
     rlModel = getDQNModel()
     completionPercentage = 0.0
     completionRates = []
@@ -104,7 +92,7 @@ def testRLNetwork(networkNumber, mapType):
 def testRLNetworkVisually(networkNumber, mapType):
     env = getEnv(ENV_NAME_TESTING)
     env.setMapType(mapType)
-    rlNetworkName = "duel_dqn_notchParam" + str(networkNumber)
+    rlNetworkName = "duel_dqn_" + mapType + str(networkNumber+1)
     rlModel = getDQNModel()
     testRL(rlModel, rlNetworkName, True, env)
     print("Completion %:" + str(env.getCompletionPercentage()))
@@ -116,7 +104,5 @@ def setDirectoryToSavesFolder():
 def testRLNetworks(NUM_SAMPLES, ENV_MAP_NAME):
     for i in range(NUM_SAMPLES):
         testRLNetwork((i+1), ENV_MAP_NAME)
-
-
 
 #testRLNetworkVisually(2, ENV_MAP_NAME1) #For Video Recordings.
