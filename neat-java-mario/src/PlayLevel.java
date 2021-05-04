@@ -172,6 +172,7 @@ public class PlayLevel {
 		}
 		
 		generationalScores += "\n";
+		generationalScores += "[ ";
 		
 		for(int i = 0 ; i < neatTester.totalNumGameSteps.size(); i++) {
 			generationalScores += Long.toString(neatTester.totalNumGameSteps.get(i));
