@@ -53,8 +53,7 @@ public class PlayLevel {
 		}
 	}
 
-    public static void main(String[] args) {  
-    	  	
+    public static void main(String[] args) {      	  	
 
     	String mapType = mapType1;
 		LevelHandler.initMaps();
@@ -163,14 +162,26 @@ public class PlayLevel {
 
 	private static void saveScoreHistory(String mapType, int testNum, NEATTester neatTester) {
 		String generationalScores = "[ ";
-		for(int i = 0 ; i < neatTester.numGenerations; i++) {
+		for(int i = 0 ; i < neatTester.maxGenerationReward.size(); i++) {
 			generationalScores += Integer.toString(neatTester.maxGenerationReward.get(i));
-			if(i != neatTester.numGenerations-1) {
+			if(i != neatTester.maxGenerationReward.size()-1) {
 				generationalScores += ",";
 			}else {
 				generationalScores += " ]";
 			}
 		}
+		
+		generationalScores += "\n";
+		
+		for(int i = 0 ; i < neatTester.totalNumGameSteps.size(); i++) {
+			generationalScores += Long.toString(neatTester.totalNumGameSteps.get(i));
+			if(i != neatTester.totalNumGameSteps.size()-1) {
+				generationalScores += ",";
+			}else {
+				generationalScores += " ]";
+			}
+		}
+		
 		String generationalScoreHistoryFileName = "NEAT_" + mapType + Integer.toString(testNum) + ".history";
 		saveTextToFile(generationalScoreHistoryFileName, generationalScores);
 	}

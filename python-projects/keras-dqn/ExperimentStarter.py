@@ -45,9 +45,12 @@ def testVisually(mapType, AI_ID):
     rl_algorithms.testRLNetworkVisually(AI_ID, mapType)
 
 ##31 min 44 sec for 200000 steps or  1904 sec -- on average 105,0420168067227 steps per second.
-##60 minutes == 378151,2605 steps
+##60 minutes == 378151,2605 steps   378151
 
 #testVisually(rl_algorithms.ENV_MAP_NAME1, 1)
-experiment(rl_algorithms.ENV_MAP_NAME1, 5000, 2)
-#experiment(rl_algorithms.ENV_MAP_NAME2, 378151, 5)
+experiment(rl_algorithms.ENV_MAP_NAME1, 378150, 3)
+experiment(rl_algorithms.ENV_MAP_NAME2, 378150, 3)
 
+#rl_algorithms.setDirectoryToSavesFolder()
+#rl_algorithms.NUM_STEPS = numSteps
+#rl_algorithms.testRLNetworks(numSamples, mapType)

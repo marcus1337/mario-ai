@@ -15,6 +15,7 @@ public class MarioResult {
     public int gameCompletion = 0;
     public int jumpFrequency = 0;
     public int numKills = 0;
+    public int numGameSteps = 0;
     
     
     public void add(MarioResult other){

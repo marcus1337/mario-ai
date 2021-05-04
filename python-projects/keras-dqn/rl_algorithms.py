@@ -14,6 +14,9 @@ import sys
 import os
 import pickle
 
+import tensorflow as tf
+from tensorflow.python.keras import backend as K
+
 ENV_NAME_TRAINING = 'MarioAITraining-v0'
 ENV_NAME_TESTING = 'MarioAITest-v0'
 ENV_MAP_NAME1 = "notchParam"
@@ -34,7 +37,7 @@ def getDQNModel():
     return getSmallDuelDQNModel()
 
 def trainRL(agent, rlName, environment):
-    history = agent.fit(environment, nb_steps=NUM_STEPS, visualize=False, verbose=0)
+    history = agent.fit(environment, nb_steps=NUM_STEPS,  visualize=False, verbose=0)
     agent.save_weights(rlName, overwrite=True)
     return history
 
@@ -47,12 +50,11 @@ def getSmallDuelDQNModel():
     model.add(Flatten(input_shape=(1,) + (NUM_OBSERVATIONS,)))
     model.add(Dense(170, activation='relu', use_bias=False))
     model.add(Dense(nb_actions, activation='linear', use_bias=False))
-    #print(model.summary())
-    memory = SequentialMemory(limit=50000, window_length=1)
+    memory = SequentialMemory(limit=100000, window_length=1)
     policy = BoltzmannQPolicy()
     tmpDQN = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmup=1000,
-                   enable_dueling_network=True, dueling_type='avg', enable_double_dqn=True, target_model_update=1e-2, policy=policy, batch_size=512*2)
-    tmpDQN.compile(Adam(lr=0.01), metrics=['mae'])
+                   enable_dueling_network=True, dueling_type='avg', enable_double_dqn=True, target_model_update=1e-2, policy=policy)
+    tmpDQN.compile(Adam(lr=0.003), metrics=['mae'])
     return tmpDQN
 
 def trainRLNetworks(numNetworks, mapType):
@@ -102,6 +104,7 @@ def setDirectoryToSavesFolder():
     os.chdir(currentDirectory + "\\saves")
 
 def testRLNetworks(NUM_SAMPLES, ENV_MAP_NAME):
+
     for i in range(NUM_SAMPLES):
         testRLNetwork((i+1), ENV_MAP_NAME)
 

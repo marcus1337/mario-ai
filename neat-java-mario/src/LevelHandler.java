@@ -99,7 +99,7 @@ public class LevelHandler {
 
 	
 	private MarioResult runGameAndGetResult(NEATAgent agent) {
-		
+		int numGameSteps = 0;
 		games[agent.AIIndex].initGame(trainingLvl, LevelHandler.gameTimeSeconds, 2);
 		while(!games[agent.AIIndex].isGameDone()){
 			MarioForwardModel model = games[agent.AIIndex].getModel();
@@ -108,16 +108,19 @@ public class LevelHandler {
 			agent.setActions(model);
 
 			games[agent.AIIndex].stepWorld(agent.action.actions, agent.action.shoot);
+			numGameSteps++;
 		}
-		return games[agent.AIIndex].getResult();
+		MarioResult marioResult = games[agent.AIIndex].getResult();
+		marioResult.numGameSteps = numGameSteps;
+		return marioResult;
 	}
 	
 	
 	public MarioResult simulateAndEvaluate(NEATAgent agent) {
 		MarioResult result = runGameAndGetResult(agent);
-		result.fitness += addGameEndFitness(result);
-		result.fitness += addCompletionRateFitness(result);
-		result.fitness = Math.max(0, result.fitness);
+		//result.fitness += addGameEndFitness(result);
+		result.fitness = addCompletionRateFitness(result);
+		//result.fitness = Math.max(0, result.fitness);
 		setBehaviors(result);
 		return result;
 	}
@@ -125,9 +128,9 @@ public class LevelHandler {
 	public MarioResult simulateAndEvaluateElite(NEATAgent agent, JavaPorts evolver){
 		trainingLvl = LevelHandler.eliteLvl;
 		MarioResult result = runGameAndGetResult(agent);
-		result.fitness += addGameEndFitness(result);
-		result.fitness += addCompletionRateFitness(result);
-		result.fitness = Math.max(0, result.fitness);
+		//result.fitness += addGameEndFitness(result);
+		result.fitness = addCompletionRateFitness(result);
+		//result.fitness = Math.max(0, result.fitness);
 		setBehaviors(result);
 		return result;
 	}

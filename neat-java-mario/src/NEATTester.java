@@ -28,12 +28,15 @@ public class NEATTester {
 	public ArrayList<NEATAgent> eliteAgents;
 	
 	public ArrayList<Integer> maxGenerationReward;
+	public ArrayList<Long> totalNumGameSteps;
 	public int numGenerations;
 	public int fitnessValues[] = new int[200];
+	public int countedSteps[] = new int[200];
 	
 	ExecutorService es;
 	public NEATTester(int numAI, String fileName, String mapType) {
 		maxGenerationReward = new ArrayList<Integer>();
+		totalNumGameSteps = new ArrayList<Long>();
 		loadDll();
 		evolver = new JavaPorts();
 		behaviors = new IntVec[numAI];
@@ -107,6 +110,7 @@ public class NEATTester {
 		setBehaviorFields(marioResult, aiIndex);
 		evolver.setFitness(aiIndex, marioResult.fitness);
 		evolver.setBehavior(aiIndex, behaviors[aiIndex]);
+		this.countedSteps[aiIndex] += marioResult.numGameSteps;
 	}
 
 	private void setBehaviorFields(MarioResult marioResult, int aiIndex) {
@@ -149,27 +153,54 @@ public class NEATTester {
 		int lastGenerationToSwapEliteMap = 0;
 		while (startTime + timeLimit > System.currentTimeMillis()) {
 			numGenerations++;
+			
 			if(numGenerations % 5 == 0){
-				if(evolver.getNumElites() > numAI / 2){
-					changeEliteMapping();
-					lastGenerationToSwapEliteMap = numGenerations;
-				}
+				lastGenerationToSwapEliteMap = changeEliteEvaluationMapIfEnoughElites(lastGenerationToSwapEliteMap);
 				testAndStoreElites();
 			}
-			if(numGenerations % 30 == 0 || evolver.getNumElites() < numAI / 4)
-				evolver.randomizePopulationViaElites();
-			evolveGeneration();
 			
-			if(evolver.getNumElites() <= 5 && numGenerations - lastGenerationToSwapEliteMap > 30){
-				evolver.randomizePopulation(-1, -1);
+			sometimesReplacePopulationWithRandomElites();
+			evolveGeneration();
+			if(randomizePopulation(lastGenerationToSwapEliteMap)) {
 				testAndStoreElites();
 				numGenerations++;
 			}
 			
-			if(numGenerations % 1 == 0){
-				System.out.println("Generations: " + Integer.toString(numGenerations) + 
-						" Elites: " + Integer.toString(evolver.getNumElites()));
-			}
+			printNumAIInfo();
+		}
+	}
+
+	private int changeEliteEvaluationMapIfEnoughElites(int lastGenerationToSwapEliteMap) {
+		if(evolver.getNumElites() > numAI / 2){
+			changeEliteMapping();
+			lastGenerationToSwapEliteMap = numGenerations;
+		}
+		return lastGenerationToSwapEliteMap;
+	}
+
+	private void resetCountedSteps() {
+		for(int i = 0 ; i < numAI; i++) {
+			this.countedSteps[i] = 0;
+		}
+	}
+
+	private void sometimesReplacePopulationWithRandomElites() {
+		if(numGenerations % 30 == 0 || evolver.getNumElites() < numAI / 4)
+			evolver.randomizePopulationViaElites();
+	}
+
+	private boolean randomizePopulation(int lastGenerationToSwapEliteMap) {
+		if(evolver.getNumElites() <= 5 && numGenerations - lastGenerationToSwapEliteMap > 30){
+			evolver.randomizePopulation(-1, -1);
+			return true;
+		}
+		return false;
+	}
+
+	private void printNumAIInfo() {
+		if(numGenerations % 100 == 0){
+			System.out.println("Generations: " + Integer.toString(numGenerations) + 
+					" Elites: " + Integer.toString(evolver.getNumElites()));
 		}
 	}
 	
@@ -187,8 +218,9 @@ public class NEATTester {
 	        });
 		}
 		waitForThreads(futures);
-
 		evolver.storeElites();
+		
+		
 	}
 
 	private void evaluateSingleEliteNEAT(int aiIndex) {
@@ -219,7 +251,6 @@ public class NEATTester {
 	        });
 		}
 		waitForThreads(futures);
-		
 		evolver.refactorEliteMapping();
 	}
 	
@@ -240,12 +271,24 @@ public class NEATTester {
 		waitForThreads(futures);
 		evolver.evolve();
 		
+		addGenerationalInfoStats();
+		
+	}
+
+	private void addGenerationalInfoStats() {
 		int bestLocalReward = -1;
 		for(int i = 0 ; i < numAI; i++){
 			bestLocalReward = Math.max(bestLocalReward, fitnessValues[i]);
 		}
 		maxGenerationReward.add(bestLocalReward);
-		
+		long totalSteps = 0;
+		if(!totalNumGameSteps.isEmpty())
+			totalSteps = totalNumGameSteps.get(totalNumGameSteps.size()-1);
+		for(int i = 0 ; i < numAI ;i++) {
+			totalSteps += (long) this.countedSteps[i];
+		}
+		totalNumGameSteps.add(totalSteps);
+		resetCountedSteps();
 	}
 
 	private void waitForThreads(Future[] futures) {

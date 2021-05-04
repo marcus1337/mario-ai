@@ -279,19 +279,11 @@ public class MarioGame {
         float currentCompletionRate = model.getCompletionPercentage();
         result = currentCompletionRate - maxDistance;
         maxDistance = Math.max(maxDistance, currentCompletionRate);
+        result *= 10.0f;
         if(result < 0)
             result = 0;
-        
-        if (prevMarioState < model.getMarioMode()) {
-            prevMarioState = model.getMarioMode();
-            result -= 0.001f;
-        }
-        if(model.getGameStatus() == GameStatus.LOSE)
-            result -= 0.001f;
-        
-        if(model.getGameStatus() == GameStatus.WIN)
-            result = 1.0f;
-        
+        if(result > 1)
+            result = 1;
         return result;
     }
     

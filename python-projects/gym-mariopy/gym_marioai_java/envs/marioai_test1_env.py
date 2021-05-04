@@ -71,7 +71,9 @@ class MarioAITest1(gym.Env, utils.EzPickle):
         if (jpype.isJVMStarted() is False):
             jpype.startJVM(classpath=['/JARS/*'])
         from MarioPackage import GenerateLevel
-        self.Main = GenerateLevel()
+
+        if(self.lvl == -1):
+            self.Main = GenerateLevel()
 
         print("LVL: " + str(self.lvl) + " _ " + str(self.mapType))
         if(self.lvl == -1):
