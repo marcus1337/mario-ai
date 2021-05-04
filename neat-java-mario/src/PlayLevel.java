@@ -18,7 +18,7 @@ import engine.core.MarioWorld;
 
 public class PlayLevel {
 	
-	public static final int sampleSize = 3;
+	public static final int sampleSize = 1;
 	public static final int minutesPerSample = 1;
 	
 	private static final String mapType1 = "notchParam";
@@ -183,6 +183,6 @@ public class PlayLevel {
 		}
 		
 		String generationalScoreHistoryFileName = "NEAT_" + mapType + Integer.toString(testNum) + ".history";
-		saveTextToFile(generationalScoreHistoryFileName, generationalScores);
+		saveTextToFile(generationalScores, generationalScoreHistoryFileName);
 	}
 }
