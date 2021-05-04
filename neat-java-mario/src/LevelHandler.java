@@ -47,25 +47,17 @@ public class LevelHandler {
 	}
 
 
-	private int addGameEndFitness(MarioResult result) {
-		int bonusScore = 0;
-		if (result.getGameStatus() == GameStatus.LOSE)
-			bonusScore -= 10;
-		if (result.getGameStatus() == GameStatus.WIN)
-			bonusScore += 10;
-		if(result.getMarioMode() < 2)
-			bonusScore -= 10;
-		if(result.getMarioMode() < 1)
-			bonusScore -= 10;
-		return bonusScore;
-	}
-
 	public int addCompletionRateFitness(MarioResult result) {
 		float maxX = 0;
+		float firstX = 0;
+		if(!result.getAgentEvents().isEmpty()) {
+			firstX = result.getAgentEvents().get(0).getMarioX();
+		}
+		
 		for (MarioAgentEvent ev : result.getAgentEvents())
 			if (ev.getMarioX() > maxX)
 				maxX = ev.getMarioX();
-		return (int) ((maxX / result.getMaxXTile()) * 1000.0f);
+		return (int) (((maxX-firstX) / result.getMaxXTile()) * 1000.0f);
 	}
 
 	private int getNumAirTimeFrames(MarioResult result) {
@@ -118,9 +110,7 @@ public class LevelHandler {
 	
 	public MarioResult simulateAndEvaluate(NEATAgent agent) {
 		MarioResult result = runGameAndGetResult(agent);
-		//result.fitness += addGameEndFitness(result);
 		result.fitness = addCompletionRateFitness(result);
-		//result.fitness = Math.max(0, result.fitness);
 		setBehaviors(result);
 		return result;
 	}
@@ -128,9 +118,7 @@ public class LevelHandler {
 	public MarioResult simulateAndEvaluateElite(NEATAgent agent, JavaPorts evolver){
 		trainingLvl = LevelHandler.eliteLvl;
 		MarioResult result = runGameAndGetResult(agent);
-		//result.fitness += addGameEndFitness(result);
 		result.fitness = addCompletionRateFitness(result);
-		//result.fitness = Math.max(0, result.fitness);
 		setBehaviors(result);
 		return result;
 	}
