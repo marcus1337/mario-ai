@@ -44,12 +44,35 @@ def testVisually(mapType, AI_ID):
     rl_algorithms.setDirectoryToSavesFolder()
     rl_algorithms.testRLNetworkVisually(AI_ID, mapType)
 
+def testWithoutVisuals(mapType, AI_ID):
+    print("Logging decisions to files...")
+    rl_algorithms.setDirectoryToSavesFolder()
+    rl_algorithms.testRLNetwork(AI_ID, mapType)
+
+def removeNonEventsFromDecisionFiles():
+    import os
+    folderPath = "./decisionSaves"
+    for filename in os.listdir(folderPath):
+        filePathAndName = folderPath + "/" + filename
+        lines = None
+        with open(filePathAndName, "r") as f:
+            lines = f.readlines()
+        with open(filePathAndName, "w") as f:
+            for line in lines:
+                if line.startswith("EVENT"):
+                    f.write(line)
+
 ##31 min 44 sec for 200000 steps or  1904 sec -- on average 105,0420168067227 steps per second.
 ##60 minutes == 378151,2605 steps   378151
 
-#testVisually(rl_algorithms.ENV_MAP_NAME1, 1)
-experiment(rl_algorithms.ENV_MAP_NAME1, 378150, 3)
-experiment(rl_algorithms.ENV_MAP_NAME2, 378150, 3)
+#testWithoutVisuals(rl_algorithms.ENV_MAP_NAME1, int(sys.argv[1]))
+
+#logDecisions(rl_algorithms.ENV_MAP_NAME2)
+#testVisually(rl_algorithms.ENV_MAP_NAME2, 2)
+#testBlind(rl_algorithms.ENV_MAP_NAME1, 2)
+
+#experiment(rl_algorithms.ENV_MAP_NAME1, 378150, 3)
+#experiment(rl_algorithms.ENV_MAP_NAME2, 378150, 3)
 
 #rl_algorithms.setDirectoryToSavesFolder()
 #rl_algorithms.NUM_STEPS = numSteps
