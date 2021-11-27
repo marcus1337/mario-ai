@@ -4,6 +4,9 @@ import engine.core.MarioForwardModel;
 import engine.helper.MarioActions;
 
 public class Action {
+	
+	public boolean shoot;
+	public boolean[] actions;
 
 	public Action() {
 		actions = new boolean[5];
@@ -24,8 +27,6 @@ public class Action {
 	// jump? y/n (only if possible)
 	// move right y/n (only if not move left)
 	// move left y/n (only if not move right)
-	public boolean shoot;
-	public boolean[] actions;
 	public void setActions(boolean shoot, boolean speed, boolean jump, boolean right, boolean left) {
 		actions = new boolean[5];
 		this.shoot = shoot;
@@ -36,6 +37,33 @@ public class Action {
 			actions[MarioActions.RIGHT.getValue()] = true;
 		if (!right && left)
 			actions[MarioActions.LEFT.getValue()] = true;
+	}
+	
+	public boolean isRunning() {
+		return actions[MarioActions.SPEED.getValue()];
+	}
+	
+	public boolean isJumping() {
+		return actions[MarioActions.JUMP.getValue()];
+	}
+	
+	public boolean isMovingRight() {
+		return actions[MarioActions.RIGHT.getValue()];
+	}
+	
+	public boolean isMovingLeft() {
+		return actions[MarioActions.LEFT.getValue()];
+	}
+	
+	public boolean isNotMovingLeftOrRight() {
+		return !actions[MarioActions.RIGHT.getValue()] && !actions[MarioActions.LEFT.getValue()];
+	}
+	
+	public Action copyAction() {
+		Action action = new Action();
+		action.shoot = this.shoot;
+		action.actions = this.actions.clone();
+		return action;
 	}
 
 }

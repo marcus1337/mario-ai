@@ -53,7 +53,8 @@ public class Assets {
 
         if (source == null) {
             imageName = img + imageName;
-            System.out.println("TEST: " +  Paths.get("").toAbsolutePath().toString() + " | " +imageName.toString());
+            //System.out.println("file-change test...");
+            //System.out.println("TEST: " +  Paths.get("").toAbsolutePath().toString() + " | " +imageName.toString());
             File file = new File(imageName);
             source = ImageIO.read(file);
         }

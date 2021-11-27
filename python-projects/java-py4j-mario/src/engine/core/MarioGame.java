@@ -287,9 +287,16 @@ public class MarioGame {
         return result;
     }
     
+    public void logActionChanges() {
+    	
+    }
     
     public void stepWorld(boolean[] actions, boolean shootFire){
     	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
+    	
+    	//Check for decisions here....
+    	//Given one actions_prev and one actions_now and receptiveField_prev and receptiveField_now log action changes...
+    	
     	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
             updateWorld(actions);
             if(i == 1 && shootFire){

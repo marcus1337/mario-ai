@@ -3,11 +3,18 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 import _GA_TESTS.Action;
+import _GA_TESTS.DecisionLogger;
 import _GA_TESTS.Observation;
 import agents.human.Agent;
 import engine.core.MarioGame;
 
 public class GenerateLevel {
+	
+	public boolean isLoggingDecisions = true;
+    private MarioGame game;
+    private Observation observation;
+    private Action action;
+    private DecisionLogger decisionLogger;
 	
 	
 	public GenerateLevel(){
@@ -25,7 +32,14 @@ public class GenerateLevel {
 		LevelHandler.initMaps();
 		observation = new Observation();
 		action = new Action();
+		decisionLogger = new DecisionLogger();
 		
+	}
+
+	
+	public void logDecisions() {
+		observation.updateModel(game.getModel());
+		decisionLogger.logDecision(action, observation);
 	}
 	
 	public boolean[] getDiscreteObservations(){
@@ -40,9 +54,15 @@ public class GenerateLevel {
 	}
 	public void step(){
 		game.stepWorld(action.actions, action.shoot);
+		
+		if(isLoggingDecisions)
+			logDecisions();
 	}
 	public void stepWithVisuals(){
 		game.stepWorldWithVisuals(action.actions, action.shoot);
+		
+		if(isLoggingDecisions)
+			logDecisions();
 	}
 	public float getReward(){
 		return game.getReward3();
@@ -50,10 +70,6 @@ public class GenerateLevel {
 	public boolean isDone(){
 		return game.isGameDone();
 	}
-    
-    private MarioGame game;
-    private Observation observation;
-    private Action action;
     
     public void initTrainingMap(String lvlName){
     	String lvlStr = LevelHandler.getRandomTrainingLevel(lvlName);
@@ -76,6 +92,7 @@ public class GenerateLevel {
         	game = new MarioGame(); //Bool for visuals...
     	//System.out.println("NUM " + Integer.toString(lvlNumber) + ": " + lvlName);
 		game.initGame(lvlStr, LevelHandler.gameTimeTestSeconds, 2, false);  //Bool for visuals...
+		decisionLogger = new DecisionLogger();
     }
     
     public float getMapCompletionPercentage(){
@@ -83,9 +100,9 @@ public class GenerateLevel {
     }
 
     //public static void main(String[] args) {
-    //	LevelHandler.initMaps();
-    //	new MarioGame().runGame(new Agent(), LevelHandler.getExactLevel("levels/notchMedium/lvl-100.txt"), 100, 2, true, 21); //Disable renderRectangles in MarioRenderer.java
+   // 	LevelHandler.initMaps();
+    //	new MarioGame().runGame(new Agent(), LevelHandler.getExactLevel("levels/notchParam/lvl-100.txt"), 100, 2, true, 21); //Disable renderRectangles in MarioRenderer.java
     	//new MarioGame().runGame(new Agent(), LevelHandler.getRandomTrainingLevel("notchParam"), 100, 2, true, 21);
     	//new MarioGame().runGame(new Agent(), LevelHandler.getRandomTrainingLevel("notchMedium"), 100, 2, true, 21);
-  // }
+   //}
 }
