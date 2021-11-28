@@ -18,8 +18,8 @@ import engine.core.MarioWorld;
 
 public class PlayLevel {
 	
-	public static final int sampleSize = 1;
-	public static final int minutesPerSample = 1;
+	public static final int sampleSize = 20;
+	public static final int minutesPerSample = 60;
 	
 	private static final String mapType1 = "notchParam";
 	private static final String mapType2 = "notchMedium";
@@ -55,28 +55,59 @@ public class PlayLevel {
 
     public static void main(String[] args) {      	  	
 
+    	System.out.println("Starting....");
     	String mapType = mapType1;
 		LevelHandler.initMaps();
-    	boolean isExperimenting = true;
+    	boolean isExperimenting = false;
     	
-		if(isExperimenting){
-			makeElites(mapType1);
-			scoreElitesAndSaveStatistics(mapType1);
-			makeElites(mapType2);
-			scoreElitesAndSaveStatistics(mapType2);
-		}else
-			showSingleEliteVisually(5, mapType);
+    	logEliteDecisions();
+		//if(isExperimenting){
+		//	makeElites(mapType1, 1);
+		//	scoreElitesAndSaveStatistics(mapType1);
+			//makeElites(mapType2, 1);
+			//scoreElitesAndSaveStatistics(mapType2);
+		//}else
+		//	showSingleEliteVisually(5, mapType);
     }
     
     public static void showSingleEliteVisually(int ID, String mapType){
     	
     	NEATTester neatTester = new NEATTester(1, "", mapType);
     	neatTester.loadBestElite(ID);
-    
     	neatTester.levelHandler.runGameWithVisuals(neatTester.agents.get(0), 21);	
-    	
     	neatTester.cleanUp();
     	
+    }
+    
+    public static void redirectOutputToFile(String filename) {
+    	String foldername = "decisionLogs";
+    	String filepath = foldername + "//" +filename;
+        PrintStream o = null;
+		File file = new File(foldername);
+		if (!file.exists())
+			file.mkdirs();
+		
+        try {
+			o = new PrintStream(new File(filepath));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+        System.setOut(o);
+        
+    }
+    
+    public static String getDecisionFileName(String mapType, int eliteID) {
+    	return "neatDecisions_" + mapType + Integer.toString(eliteID) + ".txt";
+    }
+    
+    public static void logEliteDecisions() {
+    	LevelHandler.isLogDecisionsMode = true;
+    	MarioGame.isTrainingMode = false;
+    	for(int i = 1; i <= 20; i++) {
+        	redirectOutputToFile(getDecisionFileName(mapType2, i));
+        	scoreElite(mapType2, i);
+    	}
     }
     
     public static double calcStandardDeviation(ArrayList<Double> table, double mean)
@@ -141,13 +172,13 @@ public class PlayLevel {
     	return result;
     }
 
-	private static void makeElites(String mapType) {
+	private static void makeElites(String mapType, int startFrom) {
 		MarioGame.isTrainingMode = true;
-		for(int testNum = 1; testNum < sampleSize + 1; testNum++){
+		for(int testNum = startFrom; testNum < sampleSize + 1; testNum++){
 			LevelHandler.initEliteMap(mapType);
 			String neatName = "NEATS_" + mapType + "_" + Integer.toString(testNum);
 	    	NEATTester neatTester = new NEATTester(200, neatName, mapType);
-	    	neatTester.evolveNEATsFromScratch( minutesPerSample * 60 * 1000);
+	    	neatTester.evolveNEATsFromScratch( minutesPerSample * 1 * 1000);
 	    	
 	    	String eliteInfo = neatTester.getEliteInfo();
 	    	System.out.println(eliteInfo);

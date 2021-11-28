@@ -5,8 +5,25 @@ import engine.helper.MarioActions;
 
 public class Observation {
 
-	private MarioForwardModel model;
+	public MarioForwardModel model;
 	public static final int numObservations = 237;
+	
+	public ReceptiveField recField = new ReceptiveField();
+	public int[][] solidBlocks = null;
+	public int[][] platformBlocks = null;
+	public int[][] stompableEnemies = null;
+	public int[][] nonStompableEnemies = null;
+	
+	public Observation copyObservation() {
+		Observation observation = new Observation();
+		observation.model = model;
+		observation.recField = recField;
+		observation.solidBlocks = solidBlocks.clone();
+		observation.platformBlocks = platformBlocks.clone();
+		observation.stompableEnemies = stompableEnemies.clone();
+		observation.nonStompableEnemies = nonStompableEnemies.clone();
+		return observation;
+	}
 
 	public void updateModel(MarioForwardModel model) {
 		this.model = model;
@@ -19,12 +36,6 @@ public class Observation {
 		platformBlocks = recField.getPlatformReceptiveField(model);
 		nonStompableEnemies = recField.getEnemyReceptiveFieldNonStompable(model);
 	}
-
-	private ReceptiveField recField = new ReceptiveField();
-	private int[][] solidBlocks = null;
-	private int[][] platformBlocks = null;
-	private int[][] stompableEnemies = null;
-	private int[][] nonStompableEnemies = null;
 	
 	public boolean[] getStateArray() {
 		boolean[] result = new boolean[numObservations];
@@ -95,6 +106,64 @@ public class Observation {
 			}
 		}
 		return result;
+	}
+	
+	
+	
+	public boolean isStompableEnemyDetectedCloseToTheRight() {
+		boolean[] enemyBools = getEnemyBlocks();
+		for(int i = 6*5; i < 6*8; i++) {
+			if(enemyBools[i])
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isNonStompableEnemyDetectedCloseToTheRight() {
+		int start = 66;
+		boolean[] enemyBools = getEnemyBlocks();
+		for(int i = 6*5 + start; i < 6*8 + start; i++) {
+			if(enemyBools[i])
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isStompableEnemyDetectedToTheRight() {
+		boolean[] enemyBools = getEnemyBlocks();
+		for(int i = 6*5; i < 6*11; i++) {
+			if(enemyBools[i])
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isNonStompableEnemyDetectedToTheRight() {
+		int start = 66;
+		boolean[] enemyBools = getEnemyBlocks();
+		for(int i = 6*5 + start; i < 6*11 + start; i++) {
+			if(enemyBools[i])
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isGapDetectedToTheRight() {
+		boolean[] floorMarks = recField.getFloor(model);		
+		for(int i = 6; i < 11; i++) {
+			if(!floorMarks[i])
+				return true;
+		}
+		return false;
+	}
+
+	public boolean isGapDetectedCloseToTheRight() {
+		boolean[] floorMarks = recField.getFloor(model);
+		for(int i = 6; i < 8; i++) {
+			if(!floorMarks[i])
+				return true;
+		}
+		return false;
 	}
 
 }

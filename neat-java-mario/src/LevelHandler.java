@@ -89,8 +89,11 @@ public class LevelHandler {
 		result.numKills += Math.min(100, result.getKillsTotal());
 	}
 
+	public static boolean isLogDecisionsMode = false;
+	public DecisionLogger decisionLogger = null;
 	
 	private MarioResult runGameAndGetResult(NEATAgent agent) {
+		decisionLogger = new DecisionLogger();
 		int numGameSteps = 0;
 		games[agent.AIIndex].initGame(trainingLvl, LevelHandler.gameTimeSeconds, 2);
 		while(!games[agent.AIIndex].isGameDone()){
@@ -100,6 +103,12 @@ public class LevelHandler {
 			agent.setActions(model);
 
 			games[agent.AIIndex].stepWorld(agent.action.actions, agent.action.shoot);
+			
+			if(isLogDecisionsMode) {
+				decisionLogger.logDecision(agent.action.copyAction(), agent.observation.copyObservation());
+			}
+			
+			
 			numGameSteps++;
 		}
 		MarioResult marioResult = games[agent.AIIndex].getResult();

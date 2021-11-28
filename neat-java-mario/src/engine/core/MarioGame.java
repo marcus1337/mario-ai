@@ -292,6 +292,7 @@ public class MarioGame {
     public void stepWorld(boolean[] actions, boolean shootFire){
     	if(isTrainingMode)
     		endGameIfStuck();
+    
     	boolean wasRunning = actions[MarioActions.SPEED.getValue()];
     	for(int i = 0 ; i < 5; i++){ //update world 5 frames each step
             updateWorld(actions);
