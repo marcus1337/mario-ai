@@ -10,8 +10,16 @@ neat_param_counter = file_handler.countEvents(file_handler.neat_param_lines)
 
 resultPrinter = ResultPrinter()
 resultPrinter.printResults(dqn_medium_counter, "DQN MEDIUM")
+resultPrinter.printPercentageResults(dqn_medium_counter, "DQN MEDIUM")
+
 resultPrinter.printResults(dqn_param_counter, "DQN PARAM")
+resultPrinter.printPercentageResults(dqn_param_counter, "DQN PARAM")
+
 resultPrinter.printResults(neat_medium_counter, "NEAT MEDIUM")
+resultPrinter.printPercentageResults(neat_medium_counter, "NEAT MEDIUM")
+
 resultPrinter.printResults(neat_param_counter, "NEAT PARAM")
+resultPrinter.printPercentageResults(neat_param_counter, "NEAT PARAM")
+
 
 

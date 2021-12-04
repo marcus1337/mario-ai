@@ -16,7 +16,10 @@ class ResultPrinter:
 
     def addEventPercentage(self, text, value, maxValue):
         perc = (value/maxValue)*100.0
-        text += str(int(perc)) +"%"
+        valueStr = "{:.1f}".format(perc)
+        text += valueStr
+        text = text.ljust(len(text) - len(valueStr) + 5, ' ')
+        text += "%"
         text = self.addLjust(text, 10)
         return text
     
@@ -70,5 +73,14 @@ class ResultPrinter:
         for key in counter.events:
             row = self.firstTableColumn(key)
             row = self.addTableContent(row, counter.events[key])
+            result += row + "\n"
+        print(result)
+
+    def printPercentageResults(self, counter, title):
+        result = self.getTitle(title) + "\n"
+        result += self.tableTop
+        for key in counter.events:
+            row = self.firstTableColumn(key)
+            row = self.addTableContentPercentages(row, counter.events[key])
             result += row + "\n"
         print(result)
