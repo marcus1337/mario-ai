@@ -13,6 +13,12 @@ class ResultPrinter:
         text += str(value)
         text = self.addLjust(text, 10)
         return text
+
+    def addEventPercentage(self, text, value, maxValue):
+        perc = (value/maxValue)*100.0
+        text += str(int(perc)) +"%"
+        text = self.addLjust(text, 10)
+        return text
     
     def addTableTopHeader(self, tableStr, header):
         tableStr += header
@@ -51,6 +57,13 @@ class ResultPrinter:
             tableStr = self.addEventValue(tableStr, values.get(i))
         return tableStr
 
+    def addTableContentPercentages(self, tableStr, values):
+        tableStr = self.addEventValue(tableStr, values.num_event_occurances)
+        num_events = values.num_event_occurances
+        for i in range(0, 6):
+            tableStr = self.addEventPercentage(tableStr, values.get(i), num_events)
+        return tableStr
+
     def printResults(self, counter, title):
         result = self.getTitle(title) + "\n"
         result += self.tableTop
@@ -59,5 +72,3 @@ class ResultPrinter:
             row = self.addTableContent(row, counter.events[key])
             result += row + "\n"
         print(result)
-
-#num_events = values.num_event_occurances
