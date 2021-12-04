@@ -1,58 +1,60 @@
 class ResultPrinter:
     def __init__(self):
-        pass
+        self.ljustValue = 0
+        self.tableTop = self.getTableTop()
+        self.ljustValue = 0
 
-    def addLjust(self, text, ljustValue, extraSpace):
-        ljustValue += extraSpace
-        text = text.ljust(ljustValue, ' ')
-        return text, ljustValue
+    def addLjust(self, text, extraSpace):
+        self.ljustValue += extraSpace
+        text = text.ljust(self.ljustValue, ' ')
+        return text
 
-    def addEventValue(self, text, ljustValue, value):
+    def addEventValue(self, text, value):
         text += str(value)
-        text, ljustValue = self.addLjust(text, ljustValue, 10)
-        return text, ljustValue
+        text = self.addLjust(text, 10)
+        return text
+    
+    def addTableTopHeader(self, tableStr, header):
+        tableStr += header
+        return self.addLjust(tableStr, 10)
 
-    def getResultTitle(self):
-        titleLjustValue = 0
+    def getTableTop(self):
         result = "EVENT"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 30)
-        result += "Events"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 10)
-        result += "Right"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 10)
-        result += "Left"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 10)
-        result += "None"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 10)
-        result += "Shoot"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 10)
-        result += "Run"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 10)
-        result += "Jump"
-        result, titleLjustValue = self.addLjust(result, titleLjustValue, 10)
+        result = self.addLjust(result, 30)
+        result = self.addTableTopHeader(result, "Events")
+        result = self.addTableTopHeader(result, "Right")
+        result = self.addTableTopHeader(result, "Left")
+        result = self.addTableTopHeader(result, "None")
+        result = self.addTableTopHeader(result, "Shoot")
+        result = self.addTableTopHeader(result, "Run")
+        result = self.addTableTopHeader(result, "Jump")
         result += "\n"
+        self.ljustValue = 0
         return result
 
+    def getTitle(self, title):
+        result = "|"
+        result = result.ljust(40, '-')
+        result += title
+        result = result.ljust(len(result) + 55 - len(title), '-')
+        result += "|"
+        return result
 
     def printResults(self, counter, title):
 
-        print("|-------------------" + title + "-------------------------|")
-
-        result = self.getResultTitle()
+        result = self.getTitle(title) + "\n"
+        result += self.tableTop
 
         for key in counter.events:
+            self.ljustValue = 0
             row = key
-            ljustValue = 0
             values = counter.events[key]
 
-            row, ljustValue = self.addLjust(row, ljustValue, 30)
-            row, ljustValue = self.addEventValue(row, ljustValue, values.num_event_occurances)
-            row, ljustValue = self.addEventValue(row, ljustValue, values.num_right)
-            row, ljustValue = self.addEventValue(row, ljustValue, values.num_left)
-            row, ljustValue = self.addEventValue(row, ljustValue, values.num_none)
-            row, ljustValue = self.addEventValue(row, ljustValue, values.num_shoot)
-            row, ljustValue = self.addEventValue(row, ljustValue, values.num_run)
-            row, ljustValue = self.addEventValue(row, ljustValue, values.num_jump)
+            row = self.addLjust(row, 30)
+            num_events = values.num_event_occurances
+            row = self.addEventValue(row, values.num_event_occurances)
+            for i in range(0, 6):
+                row = self.addEventValue(row, values.get(i))
             result += row + "\n"
         
         print(result)

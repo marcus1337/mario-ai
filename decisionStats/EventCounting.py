@@ -9,6 +9,21 @@ class Event:
         self.num_run = 0
         self.num_jump = 0
         self.num_event_occurances = 0
+    
+    def get(self, index):
+        if index == 0:
+            return self.num_right
+        if index == 1:
+            return self.num_left
+        if index == 2:
+            return self.num_none
+        if index == 3:
+            return self.num_shoot
+        if index == 4:
+            return self.num_run
+        if index == 5:
+            return self.num_jump
+        
 
 class EventCounter:
     def __init__(self, eventTypes):
