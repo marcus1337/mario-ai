@@ -107,7 +107,61 @@ def countEvents(files):
     event_counter = EventCounter(eventTypes)
     for i in range(0, 20):
         event_counter.count_events(files[i])
-    return event_counter            
+    return event_counter
+
+def addLjust(text, ljustValue, extraSpace):
+    ljustValue += extraSpace
+    text = text.ljust(ljustValue, ' ')
+    return text, ljustValue
+
+def addEventValue(text, ljustValue, value):
+    text += str(value)
+    text, ljustValue = addLjust(text, ljustValue, 10)
+    return text, ljustValue
+
+def getResultTitle():
+    titleLjustValue = 0
+    result = "EVENT"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 30)
+    result += "Events"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 10)
+    result += "Right"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 10)
+    result += "Left"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 10)
+    result += "None"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 10)
+    result += "Shoot"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 10)
+    result += "Run"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 10)
+    result += "Jump"
+    result, titleLjustValue = addLjust(result, titleLjustValue, 10)
+    result += "\n"
+    return result
+
+
+def printResults(counter):
+
+    result = getResultTitle()
+
+    for key in counter.events:
+        row = key
+        ljustValue = 0
+        values = counter.events[key]
+
+        row, ljustValue = addLjust(row, ljustValue, 30)
+        row, ljustValue = addEventValue(row, ljustValue, values.num_event_occurances)
+        row, ljustValue = addEventValue(row, ljustValue, values.num_right)
+        row, ljustValue = addEventValue(row, ljustValue, values.num_left)
+        row, ljustValue = addEventValue(row, ljustValue, values.num_none)
+        row, ljustValue = addEventValue(row, ljustValue, values.num_shoot)
+        row, ljustValue = addEventValue(row, ljustValue, values.num_run)
+        row, ljustValue = addEventValue(row, ljustValue, values.num_jump)
+        result += row + "\n"
+    
+    print(result)
+
 
 file_handler = FileHandler()
 dqn_medium_counter = countEvents(file_handler.dqn_medium_lines)
@@ -115,8 +169,14 @@ dqn_param_counter = countEvents(file_handler.dqn_param_lines)
 neat_medium_counter = countEvents(file_handler.neat_medium_lines)
 neat_param_counter = countEvents(file_handler.neat_param_lines)
 
-for key in dqn_medium_counter.events:
-    values = dqn_medium_counter.events[key]
-    print(vars(values))
+print("|-------------------DQN MEDIUM-------------------------|")
+printResults(dqn_medium_counter)
+print("|-------------------DQN PARAM--------------------------|")
+printResults(dqn_param_counter)
+print("|-------------------NEAT MEDIUM------------------------|")
+printResults(neat_medium_counter)
+print("|-------------------NEAT PARAM-------------------------|")
+printResults(neat_param_counter)
+print("|------------------------------------------------------|")
 
 
